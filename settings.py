@@ -4,6 +4,7 @@ import os
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
@@ -12,12 +13,18 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'sqlite3'    # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_NAME = 'db'           # Or path to database file if using sqlite3.
-DATABASE_USER = ''             # Not used with sqlite3.
-DATABASE_PASSWORD = ''         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+     'default' : {
+        'ENGINE' : 'django.db.backends.sqlite3',
+ 	    'NAME' : os.path.join(PROJECT_PATH, 'db.sqlite3'),
+ 	    'PORT' : '',
+ 	    'USER' : '',
+	    'PASSWORD' : '',
+ 	    'HOST' : '',
+ 	    'CHARSET' : 'utf8',
+ 	    'USE_UNICODE' : True,
+        }
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://www.postgresql.org/docs/8.1/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
@@ -39,11 +46,13 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = 'site_media'
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
-MEDIA_URL = ''
+#MEDIA_URL = '/site_media'
+#STATIC_URL = '/site_media'
+
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -55,9 +64,17 @@ SECRET_KEY = '^(*+wz_l2paerc)u(si)-a#aotpk#6___9e*o4(_0tlegdmfl+'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+    ('django.template.loaders.cached.Loader', (
+
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+     )),
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -65,11 +82,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
-ROOT_URLCONF = 'zapisy_zosia.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -82,21 +100,23 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.messages',
     'django.contrib.markup',
     #'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.formtools',
-    'zapisy_zosia.newrooms',
-    'zapisy_zosia.lectures',
-    'zapisy_zosia.registration',
-    'zapisy_zosia.blog',
-    'zapisy_zosia.common',
-    'zapisy_zosia.blurb',
+    'south',
+    'newrooms',
+    'lectures',
+    'registration',
+    'blog',
+    'common',
+    'blurb',
 )
 
-AUTHENTICATION_BACKENDS = (
-    'zapisy_zosia.email-auth.EmailBackend',
-)
+#AUTHENTICATION_BACKENDS = (
+#    'email-auth.EmailBackend',
+#)
 
 # well, it's temporary, of course...
 EMAIL_HOST = 'smtp.gmail.com'
@@ -109,3 +129,9 @@ CACHE_BACKEND = 'locmem:///'
 CACHE_MIDDLEWARE_SECONDS = 30
 
 SESSION_ENGINE = "django.contrib.sessions.backends.file"
+
+
+try:
+    from settings_local import *
+except ImportError:
+    pass

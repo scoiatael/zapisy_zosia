@@ -1,6 +1,6 @@
 import os
 
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url, include
 from django.contrib import admin
 import registration.views
 import blog.views
@@ -15,6 +15,8 @@ feeds = {
 }
 
 admin.autodiscover()
+
+
 
 urlpatterns = patterns('',
     # Example:
@@ -35,8 +37,7 @@ urlpatterns = patterns('',
      (r'^blog/$', blog.views.index),
 
      # rss feed
-     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed',
-        {'feed_dict': feeds}),
+     (r'^feeds/$', LatestBlogEntries()),
 
      # admin related
      (r'^admin/register_payment/$', registration.views.register_payment),
@@ -67,8 +68,6 @@ urlpatterns = patterns('',
      # static media
      # note, that this should be disabled for production code
 	 # (may be disabled outside of django, though)
-     (r'^static_media/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root': os.getcwd()+os.sep+'static_media', 'show_indexes': True}),
 
      # urls required for password change/reset
      (r'^password_change/$', common.views.password_change),
@@ -87,4 +86,12 @@ urlpatterns = patterns('',
          'django.contrib.auth.views.password_reset_complete',
          { 'template_name':'password_reset_complete.html' }),
 )
+import settings
 
+if settings.DEBUG:
+    urlpatterns += patterns('',
+#        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+#            'document_root': settings.MEDIA_ROOT,
+#        }),
+        (r'^static_media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'static_media')})
+   )

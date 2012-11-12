@@ -14,7 +14,7 @@ def is_registration_enabled():
         raise Http404
     start_date = definition.registration_start
     final_date = definition.registration_final
-    assert start_date < final_date
+    assert start_date <= final_date
     return datetime.now() > start_date and datetime.now() < final_date
 
 
