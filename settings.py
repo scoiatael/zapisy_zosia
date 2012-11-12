@@ -1,6 +1,11 @@
-# -*- coding: UTF-8 -*-
 # Django settings for zapisy_zosia project.
-import os
+#-*- coding: utf-8 -*- 
+import os, sys 
+from os.path import abspath, dirname, join 
+ 
+ 
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__)) 
+
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -46,12 +51,14 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = 'site_media'
+#MEDIA_ROOT = 'site_media'  
+
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'site_media')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
 #MEDIA_URL = '/site_media'
-#STATIC_URL = '/site_media'
+STATIC_URL = '/static_media/'
 
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -95,6 +102,15 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.getcwd()+os.sep+'templates'
 )
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_ROOT, 'templates'),
+)
+
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
