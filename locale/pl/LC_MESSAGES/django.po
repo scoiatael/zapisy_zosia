@@ -304,7 +304,7 @@ msgstr "Preferuję kuchnię wegetariańską."
 msgid "bussies"
 msgstr ""
 "Jestem zainteresowany zorganizowanym transportem autokarowym na trasie "
-"Wrocław - Przesieka - Wrocław"
+"Wrocław - Karpacz - Wrocław"
 
 #: registration/templates/change_preferences.html:168
 #: registration/templates/register_form.html:209
