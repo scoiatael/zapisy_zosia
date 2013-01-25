@@ -34,6 +34,7 @@ def lambda_clean_meal(meal,p1,p2,p3,z):
     return lambda(s):f(s)
 
 
+
 class RegisterForm(forms.Form):
 
     def __init__(self, *args, **kwargs) :
@@ -66,6 +67,7 @@ class RegisterForm(forms.Form):
     shirt_size = forms.ChoiceField(choices=SHIRT_SIZE_CHOICES)
     shirt_type = forms.ChoiceField(choices=SHIRT_TYPES_CHOICES)
     bus        = forms.BooleanField(required=False)
+    want_bus   = forms.BooleanField(required=False)
 
     def validate_nonempty(self,x):
         x = self.cleaned_data.get(x, '').strip()
@@ -156,6 +158,8 @@ class ChangePrefsForm(ModelForm):
         if not free_seats:
             self.disable_field('bus')
             self.disable_field('bus_hour')
+        else:
+            self.disable_field('want_bus')
 
         if self.instance and self.instance.paid:
             self.disable_field('bus')

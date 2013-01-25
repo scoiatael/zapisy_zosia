@@ -81,6 +81,8 @@ class UserPreferences(models.Model):
     shirt_size  = models.CharField(max_length=5, choices=SHIRT_SIZE_CHOICES)
     shirt_type  = models.CharField(max_length=1, choices=SHIRT_TYPES_CHOICES)
 
+    want_bus = models.BooleanField(default=False)
+
     # used for opening rooms faster per-user;
     # e.g. 5 means room registration will open 5 minutes before global datetime
     # e.g. -5 means room registration will open 5 minutes after global datetime

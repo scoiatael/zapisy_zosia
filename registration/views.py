@@ -121,10 +121,13 @@ def register(request):
             prefs.dinner_1    = form.cleaned_data['dinner_1']
             prefs.dinner_2    = form.cleaned_data['dinner_2']
             prefs.dinner_3    = form.cleaned_data['dinner_3']
-            if not free_seats:
+            if False and not free_seats:
                 prefs.bus         = False
+                prefs.want_bus    = form.cleaned_data['want_bus']
             else:
                 prefs.bus         = form.cleaned_data['bus']
+                prefs.want_bus    = prefs.bus
+
             prefs.vegetarian  = form.cleaned_data['vegetarian']
             prefs.shirt_size  = form.cleaned_data['shirt_size']
             prefs.shirt_type  = form.cleaned_data['shirt_type']

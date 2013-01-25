@@ -141,7 +141,7 @@ Potwierdzenie przyjęcia wpłaty zostanie wysłane na&nbsp;Twój adres e-mail.
             </li>
 
             <li>
-            <label>{% trans "bus hour" %}</label> {{ form.bus_hour}} 
+            <label>{% trans "bus hour" %}</label> {{ form.bus_hour}}
             </li>
 
 
@@ -234,15 +234,28 @@ Potwierdzenie przyjęcia wpłaty zostanie wysłane na&nbsp;Twój adres e-mail.
             {% endfor %}
             </ul>
             {% endif %}
-            {% if free_seats %}{{ form.bus }}  <label for="id_bus">{% trans "bussies" %}</label>{% else %}
-                <div style="display:none">{{ form.bus }}  <label for="id_bus">{% trans "bussies" %}</label></div>
-                <div class="messages"><div style="height: auto; background-image: none;">
-                    Wszystkie dosŧępne miejsca w autokarach na ZOSIĘ zostały już zarezerwowane. :(
-                    Jeżeli jesteś zainteresowany transportem autokarowym - skontaktuj się bezpośrednio z organizatorami..</div>
+            {% if form.instance.bus %}
+                <div style="height: auto; background-image: none;">
+               <strong>Uwaga!</strong> Odznaczenie poniższej opcji spowoduje brak możliwości zaznaczenia jej ponownie.
                 </div>
+                {{ form.bus }}  <label for="id_bus">{% trans "bussies" %}</label>
+
+            {% else %}
+                <div class="messages">
+                    <div style="height: auto; background-image: none;">
+                   Skończyły się miejsca w dwóch zaplanowanych autokarach. Zamówienie kolejnego zależy od liczby chętnych. Jeżeli jesteś zainteresowana/y taką formą transportu, zaznacz poniższą opcję.
+                    </div>
+                </div>
+                   {{ form.want_bus }}
+               <label for="id_want_bus">Jestem zainteresowany zorganizowanym transportem autokarowym na trasie Wrocław - {{ city }} - Wrocław</label>
             {% endif %}
             </li>
             <li class="nasty_choices_li">
+                <div class="messages"><div style="height: auto; background-image: none;">
+                    Szczegóły koszulek damskich: <a href="/static_media/images/stedman_damska.jpg">[link]</a>
+                    Szczegóły koszulek męskich:  <a href="/static_media/images/stedman_meska.jpg">[link]</a>
+                </div>
+                </div>
             <label for="id_shirt_size">{% trans "shirties" %}</label> {{ form.shirt_size}}  
             </li>
             <li class="nasty_choices_li">
