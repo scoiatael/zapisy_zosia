@@ -126,7 +126,7 @@ def register(request):
                 prefs.want_bus    = form.cleaned_data['want_bus']
             else:
                 prefs.bus         = form.cleaned_data['bus']
-                prefs.want_bus    = prefs.bus
+                prefs.want_bus    = form.cleaned_data['want_bus']
 
             prefs.vegetarian  = form.cleaned_data['vegetarian']
             prefs.shirt_size  = form.cleaned_data['shirt_size']
