@@ -20,7 +20,7 @@ class UserPreferencesAdmin(admin.ModelAdmin):
     'minutes_early',
     )
     search_fields = ('user__last_name', 'user__last_name')
-    list_filter = ['bus_hour', 'paid', 'bus', 'bus_hour', 'breakfast_2', 'breakfast_3', 'breakfast_4', 'dinner_1', 'dinner_2', 'dinner_3', 'day_1', 'day_2', 'day_3']
+    list_filter = ['bus_hour', 'paid', 'bus', 'want_bus', 'breakfast_2', 'breakfast_3', 'breakfast_4', 'dinner_1', 'dinner_2', 'dinner_3', 'day_1', 'day_2', 'day_3', 'shirt_size', 'shirt_type', 'org']
     list_editable = ('minutes_early', 'paid')
 
     def anim_icon(self,id):
