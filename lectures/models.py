@@ -22,12 +22,24 @@ class LectureManager(models.Manager):
         return lecture
 
 
+type_choices = ((0, u'Wykład'), (1, u'Warsztaty'))
+person_type_choices = ((0, u'Sponsor'), (1, u'Gość'), (2, u'Normalny'))
+
 class Lecture(models.Model):
     title     = models.CharField(max_length=128)
     duration  = models.PositiveIntegerField(max_length=3)
     abstract  = models.TextField(max_length=512)
     info      = models.TextField(max_length=2048, blank=True)
     #dodatkowe info dla organizatorów
+#
+    type        = models.IntegerField(choices=type_choices, verbose_name=u'Typ zajęć', default=0)
+    person_type = models.IntegerField(choices=type_choices, verbose_name=u'Typ wykładowcy', default=2)
+
+    photo   = models.ImageField(upload_to='/upload', null=True, blank=True, verbose_name=u'Zdjęcie prelegenta/ki')
+    company = models.ImageField(upload_to='/upload', null=True, blank=True, verbose_name=u'Logo sponsora')
+
+    description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
+
     author    = models.ForeignKey(User)
     date_time = models.DateTimeField()
     accepted  = models.BooleanField()

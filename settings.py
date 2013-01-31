@@ -121,13 +121,13 @@ INSTALLED_APPS = (
     #'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.formtools',
-    'south',
     'newrooms',
     'lectures',
     'registration',
     'blog',
     'common',
     'blurb',
+    'south',
 )
 
 #AUTHENTICATION_BACKENDS = (
