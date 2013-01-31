@@ -33,7 +33,7 @@ class Lecture(models.Model):
     #dodatkowe info dla organizatorów
 #
     type        = models.IntegerField(choices=type_choices, verbose_name=u'Typ zajęć', default=0)
-    person_type = models.IntegerField(choices=type_choices, verbose_name=u'Typ wykładowcy', default=2)
+    person_type = models.IntegerField(choices=person_type_choices, verbose_name=u'Typ wykładowcy', default=2)
 
     photo   = models.ImageField(upload_to='/upload', null=True, blank=True, verbose_name=u'Zdjęcie prelegenta/ki')
     company = models.ImageField(upload_to='/upload', null=True, blank=True, verbose_name=u'Logo sponsora')
