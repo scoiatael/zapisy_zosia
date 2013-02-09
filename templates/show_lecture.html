@@ -1,0 +1,24 @@
+
+{% load markup %}
+
+{% for lecture in lectures %}
+{##}
+	<article class="lecture">
+        {% if lecture.photo_url %}
+        <aside>
+            <img style="max-width:100px" src="{{ lecture.photo_url }}">
+        </aside>
+        {% endif %}
+
+        <div>
+        <header>
+            <h4>{{ lecture.title }}</h4>
+        </header>
+		{{ lecture.abstract|textile }}
+
+        <p class="author_description">
+            <strong class="lecture_author">{{ lecture.author }}</strong>{% if lecture.description %}, {{ lecture.description }}{% endif %}</p>
+        </div>
+	</article>
+{##}
+{% endfor %}

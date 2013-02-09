@@ -16,7 +16,9 @@ from forms import *
 def index(request):
     title = "Lectures"
     user = request.user
-    lectures = Lecture.objects.filter(accepted=True)
+    sponslectures = Lecture.objects.filter(accepted=True, person_type=0)
+    lectures = Lecture.objects.filter(accepted=True, person_type__gte=1, type=0).order_by('person_type')
+    workshops = Lecture.objects.filter(accepted=True, person_type__gte=1, type=1).order_by('person_type')
     if is_lecture_suggesting_enabled():
         login_form = LoginForm()
         if user.is_authenticated() and user.is_active:

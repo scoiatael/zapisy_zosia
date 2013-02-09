@@ -35,8 +35,7 @@ class Lecture(models.Model):
     type        = models.IntegerField(choices=type_choices, verbose_name=u'Typ zajęć', default=0)
     person_type = models.IntegerField(choices=person_type_choices, verbose_name=u'Typ wykładowcy', default=2)
 
-    photo   = models.ImageField(upload_to='/upload', null=True, blank=True, verbose_name=u'Zdjęcie prelegenta/ki')
-    company = models.ImageField(upload_to='/upload', null=True, blank=True, verbose_name=u'Logo sponsora')
+    photo_url = models.CharField(max_length=250, null=True, blank=True)
 
     description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
 
