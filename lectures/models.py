@@ -40,6 +40,7 @@ class Lecture(models.Model):
     description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
 
     author    = models.ForeignKey(User)
+    author_show = models.CharField(max_length=256, null=True, blank=True)
     date_time = models.DateTimeField()
     accepted  = models.BooleanField()
     #sprezentujpl_email = models.EmailField()
