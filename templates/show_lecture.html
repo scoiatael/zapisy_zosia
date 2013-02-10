@@ -3,7 +3,7 @@
 
 {% for lecture in lectures %}
 {##}
-	<article class="lecture">
+	<article class="lecture {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
         {% if lecture.photo_url %}
         <aside>
             <img style="max-width:100px" src="{{ lecture.photo_url }}">
