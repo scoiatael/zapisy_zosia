@@ -43,6 +43,8 @@ class Lecture(models.Model):
     author_show = models.CharField(max_length=256, null=True, blank=True)
     date_time = models.DateTimeField()
     accepted  = models.BooleanField()
+
+    order = models.IntegerField(default=99)
     #sprezentujpl_email = models.EmailField()
 
     objects = LectureManager()
