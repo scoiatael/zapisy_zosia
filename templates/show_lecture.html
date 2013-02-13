@@ -17,7 +17,7 @@
 		{{ lecture.abstract|textile }}
 
         <p class="author_description">
-            <strong class="lecture_author">{% if lecture.author_show %}{{ lecture.author_show|safe }}{% else %}{{ lecture.author }}{% endif %}</strong>{% if lecture.description %}, {{ lecture.description }}{% endif %}</p>
+            <strong class="lecture_author">{% if lecture.author_show %}{{ lecture.author_show|safe }}{% else %}{{ lecture.author }}{% endif %}</strong>{% if lecture.description %}, {{ lecture.description|safe }}{% endif %}</p>
         </div>
 	</article>
 {##}
