@@ -38,7 +38,6 @@ class Lecture(models.Model):
     photo_url = models.CharField(max_length=250, null=True, blank=True)
 
     description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
-
     author    = models.ForeignKey(User)
     author_show = models.CharField(max_length=256, null=True, blank=True)
     date_time = models.DateTimeField()

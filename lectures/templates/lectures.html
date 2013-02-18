@@ -30,6 +30,7 @@ article { border-bottom: 1px solid #efefef;}
 
 article.even div {margin-left: 130px;width: 550px;}
 article.odd div {margin-left: 10px;width: 550px;}
+article.normal p {max-width: 57em;}
 
 article { margin-bottom: 25px; min-height:160px}
 
@@ -72,15 +73,13 @@ article { margin-bottom: 25px; min-height:160px}
     {% include 'show_lecture.html' with lectures=sponslectures %}
 {% endif %}
 
-    {% if lectures %}
+    {% if lectures or lectures_normal %}
     <h2>Wykłady uczestników</h2>
      {% include "show_lecture.html" with lectures=lectures %}
+     {% include "show_lecture.html" with lectures=lectures_normal %}
+     {% include "show_lecture.html" with lectures=lectures_null %}
     {% endif %}
 
-    {% if workshops %}
-    <h2>Warsztaty</h2>
-    {% include 'show_lecture.html' with lectures=workshops %}
-    {% endif %}
 
 
 {% if not messages %}

@@ -17,7 +17,11 @@ def index(request):
     title = "Lectures"
     user = request.user
     sponslectures = Lecture.objects.filter(accepted=True, person_type=0).order_by('order')
-    lectures = Lecture.objects.filter(accepted=True, person_type__gte=1, type=0).order_by('person_type', 'order')
+    lectures = Lecture.objects.filter(accepted=True, person_type__gte=1, photo_url__isnull=False).exclude(photo_url='').order_by('person_type', 'order')
+    lectures_normal = Lecture.objects.filter(accepted=True, person_type__gte=1, photo_url='').order_by('person_type', 'order')
+    lectures_null = Lecture.objects.filter(accepted=True, person_type__gte=1, photo_url__isnull=True).order_by('person_type', 'order')
+
+
     workshops = Lecture.objects.filter(accepted=True, person_type__gte=1, type=1).order_by('person_type', 'order')
     if is_lecture_suggesting_enabled():
         login_form = LoginForm()
