@@ -28,7 +28,7 @@ def index(request):
 #@login_required
 @cache_page(30)
 def json_rooms_list(request):
-    json = NRoom.objects.to_json()
+    json = NRoom.objects.to_json(request)
     return HttpResponse(json, mimetype="application/json")
 
 def dict_to_json(d):

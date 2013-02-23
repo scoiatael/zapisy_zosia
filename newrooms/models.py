@@ -32,9 +32,9 @@ class RoomManager(models.Manager):
     cache = ""
     update_required = True
     
-    def to_json(self):
+    def to_json(self, request=None):
         if self.update_required:
-            self.cache = [ x.to_json() for x in self.all() ]
+            self.cache = [ x.to_json(request) for x in self.all() ]
             # self.update_required = False # comment this line to disable caching
         return "[%s]" % (','.join(self.cache))
 
@@ -77,7 +77,7 @@ class NRoom(models.Model):
         return 0     # default; it's ok to sign into room
 
 
-    def to_json(self):
+    def to_json(self, request=None):
         # json format:
         # id - number
         # st - status
@@ -86,8 +86,10 @@ class NRoom(models.Model):
         # lt - unlock time (optional)
         # features? (optional)
         #"""[{"id":"id","st":0,"nl":0,"mx":1}]"""
+
+
         no_locators = self.get_no_locators()
-        status= self.get_status()
+        status= self.get_status(request)
         # this is soo wrong... (but works)
         optional = ''
         # short unlock time is in the future
