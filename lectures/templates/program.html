@@ -1,363 +1,388 @@
-{% extends "index.html"%}
+{% extends "index.html" %}
 {% load i18n %}
 {% load markup %}
 
 {% block css %}
 
-.lecture p, #lecture_abstract {
-	text-indent: 1.5em;
-	text-align: justify;
-	text-justify: inter-word;
-	text-align-last: left;
-	max-width: 45em;
-}
-strong.lecture_author + p { text-indent: 0; }
-#lecture_author { margin-bottom: 2px;}
-#lecture_abstract { margin-bottom: 5px;text-indent: 0;}
-#lecture_time { margin-bottom: 1em;}
-#note {
+    .lecture p, #lecture_abstract {
+    text-indent: 1.5em;
+    text-align: justify;
+    text-justify: inter-word;
+    text-align-last: left;
+    max-width: 45em;
+    }
+    strong.lecture_author + p { text-indent: 0; }
+    #lecture_author { margin-bottom: 2px;}
+    #lecture_abstract { margin-bottom: 5px;text-indent: 0;}
+    #lecture_time { margin-bottom: 1em;}
+    #note {
     color: #444444;
     font-family: 'Lucida Grande','Trebuchet MS',Verdana,Helvetica,Arial,sans-serif;
     font-size: 11px;
-}
+    }
 
-div.program {background: #fff; display: block;}
-.cell_text1{margin-left: 10px; display:inline; }
-.cell_text2{margin-left: 10px; display:inline; }
-.cell_text3{margin-left: 30px; display:inline; }
-div.cell_part_hour {margin-left: 30px; display: inline;}
-div.cell_hour {display: inline; margin-top:10px;}
-div.cell_hour_1 {display: inline; margin-left:6px;}
+    div.program {background: #fff; display: block;}
+    .cell_text1{margin-left: 10px; display:inline; }
+    .cell_text2{margin-left: 10px; display:inline; }
+    .cell_text3{margin-left: 30px; display:inline; }
+    div.cell_part_hour {margin-left: 30px; display: inline;}
+    div.cell_hour {display: inline; margin-top:10px;}
+    div.cell_hour_1 {display: inline; margin-left:6px;}
 
 {% endblock css %}
 
 {% block content %}
 
     <h2>Program</h2>
-      <br>
-      <h3>Czwartek 28.02.2013</h3>
-      <div class="program">
+    <br>
+    <h3>Czwartek 28.02.2013</h3>
+    <div class="program">
         <div class="row">
-          <div class="cell_hour">20:00 - 21:30</div>
-          <div class="cell_text1">Obiadokolacja</div>
+            <div class="cell_hour">20:00 - 21:30</div>
+            <div class="cell_text1">Obiadokolacja</div>
         </div>
 
-      <br>
-      <div style="margin-bottom: 8px">
-      <div class="row">
-          	<div class="cell_hour">21:30 - 21:40</div>
-          	<div class="cell_text1"><strong>Oficjalne rozpoczęcie ZOSI 2013</strong></div>
-      </div>
-      </div>
+        <br>
 
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">21:40 - 00:05</div>
+        <div style="margin-bottom: 8px">
+            <div class="row">
+                <div class="cell_hour">21:30 - 21:40</div>
+                <div class="cell_text1"><strong>Oficjalne rozpoczęcie ZOSI 2013</strong></div>
+            </div>
+        </div>
 
-      	<div class="cell_text1"><strong>Sesja inauguracyjna</strong>, prowadząca: <strong>Dorota Suchocka</strong></div>
-      </div>
+        <div style="margin-bottom: 8px">
+            <div class="row">
+                <div class="cell_hour">21:40 - 00:05</div>
 
-
-      	<div class="row">
-      		<div class="cell_part_hour">21:40 - 22:20</div>
-       		<div class="cell_text2"><strong>prof. Jerzy Marcinkowski</strong>, <i>Między Scyllą nudy a Charybdą dystrakcji</i></div>
-
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:25 - 23:05</div>
-      		<div class="cell_text2"><strong>Maciej Piróg</strong>, <i>Po co znać najprostszy język programowania na świecie? Żeby dostać pracę!</i></div>
-      	</div>
-
-      	<div class="row">
-      		<div class="cell_part_hour">23:10 - 23:30</div>
-  			<div class="cell_text2"><strong>Marcin Włodarczak</strong>, <i>Wirtualny torcik</i></div>
-      	</div>
-
-      	<div class="row">
-      		<div class="cell_part_hour">23:35 - 00:05</div>
-      		<div class="cell_text2"><strong>Kamil Skalski</strong>, <i>Jak działa wyszukiwarka</i></div>
-      	</div>
-      </div>
-
-      </div><br><br>
-      <h3>Piątek</h3>
-      <div class="program">
-      <div class="row">
-      	<div class="cell_hour_1">8:00 - 9:30</div>
-      	<div class="cell_text1">Śniadanie</div>
-      </div>
-      <br>
-
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">13:00 - 	15:30</div>
-      	<div class="cell_text1"><strong>Aleksander Szymanek, Jakub Stępniewicz</strong>, Warsztaty: <i>Bądź jak Chuck Norris. Czyli jak modyfikować stan pamięci gier</i></div>
-      </div>
-      <br>
-
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">16:00 - 18:00</div>
-      	<div class="cell_text1"><strong>Sesja 2</strong>, prowadzący: <strong>Jakub Stępniewicz</strong></div>
-
-      </div>
-      	<div class="row">
-      		<div class="cell_part_hour">16:00 - 16:25</div>
-      		<div class="cell_text2"><strong>Michał Stempkowski</strong>, <i>Scala – Edward Nożycoręki, czy twór doktora Frankensteina?</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">16:30 - 17:00</div>
-      		<div class="cell_text2"><strong>Łukasz Pietrucha</strong>, <i>Testowanie zwinne</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">17:05 - 17:25</div>
-      		<div class="cell_text2"><strong>Radosław Warzocha</strong>, <i>Czy te zbiory mogą kłamać? Filtry Blooma i ich zastosowania</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">17:30 - 18:00</div>
-      		<div class="cell_text2"><strong>Maciek Kotowicz</strong>, <i>Z wężem wśród robaków</i></div>
-      	</div>
-      </div>
-      <br>
-
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">17:30 - 19:00</div>
-      	<div class="cell_text1">Obiadokolacja</div>
-      </div>
-      <br>
+                <div class="cell_text1"><strong>Sesja inauguracyjna</strong>, prowadząca: <strong>Dorota
+                    Suchocka</strong></div>
+            </div>
 
 
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">19:00 - 21:05</div>
-      	<div class="cell_text1"><strong>Sesja 3</strong>, prowadzący: <strong>Karol Błażejowski</strong></div>
+            <div class="row">
+                <div class="cell_part_hour">21:40 - 22:20</div>
+                <div class="cell_text2"><strong>prof. Jerzy Marcinkowski</strong>, <i>Między Scyllą nudy a Charybdą
+                    dystrakcji</i></div>
 
-      </div>
-      	<div class="row">
-      		<div class="cell_part_hour">19:00 - 19:30</div>
-      		<div class="cell_text2"><strong>Krzysiek Kercz, Darek Stokłosa</strong>, <a>AXIT</a>, <i>Język schematów blokowych</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">19:35 - 20:05</div>
+            </div>
+            <div class="row">
+                <div class="cell_part_hour">22:25 - 23:05</div>
+                <div class="cell_text2"><strong>Maciej Piróg</strong>, <i>Po co znać najprostszy język programowania na
+                    świecie? Żeby dostać pracę!</i></div>
+            </div>
 
-      		<div class="cell_text2"><strong>Michał Michaluk</strong>, Capgemini, <i>10 przykazań clean codera</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">20:10 - 20:40</div>
-      		<div class="cell_text2"><strong>Piotr Mężyk, Adam Szeptycki</strong>, Nomtek, <i>O pomarańczowych krasnalach, białej kartce papieru i tajemniczej szafie</i></div>
-      	</div>
-          <div class="row">
-              <div class="cell_part_hour">20:45 - 21:05</div>
-              <div class="cell_text2"><strong>Jakub Michaliszyn</strong>, <i>Studia trzeciego stopnia z jedną niewiadomą</i></div>
-          </div>
-      </div>
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">21:30 - 00:15</div>
+            <div class="row">
+                <div class="cell_part_hour">23:10 - 23:30</div>
+                <div class="cell_text2"><strong>Marcin Włodarczak</strong>, <i>Wirtualny torcik</i></div>
+            </div>
 
-      	<div class="cell_text1"><strong>Sesja 4 - BLOK A</strong>, prowadzący: <strong>Jerzy Marcinkowski</strong></div>
-      </div>
-      	<div class="row">
-      		<div class="cell_part_hour">21:30 - 21:55</div>
-      		<div class="cell_text2"><strong>Filip Sieczkowski</strong>, <i>Call by push-value: dualność w działaniu</i> </div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:00 - 22:30</div>
-      		<div class="cell_text2"><strong>Hans de Nivelle</strong>, <i>Logic with Partial Functions</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:35 - 22:55</div>
+            <div class="row">
+                <div class="cell_part_hour">23:35 - 00:05</div>
+                <div class="cell_text2"><strong>Kamil Skalski</strong>, <i>Jak działa wyszukiwarka</i></div>
+            </div>
+        </div>
 
-      		<div class="cell_text2"><strong>Jakub Kowalski</strong>, <i>Nie graj w gry – naucz swoje programy robić to za Ciebie</i></div>
-      	</div>
-          <div class="row">
-              <div class="cell_part_hour">23:10 - 23:35</div>
+    </div><br><br>
+    <h3>Piątek</h3>
+    <div class="program">
+    <div class="row">
+        <div class="cell_hour_1">8:00 - 9:30</div>
+        <div class="cell_text1">Śniadanie</div>
+    </div>
+    <br>
 
-              <div class="cell_text2"><strong>Paweł Hałdrzyński</strong>, <i>(Nie)bezpieczeństwo serwisów społecznościowych</i></div>
-          </div>
-          <div class="row">
-              <div class="cell_part_hour">23:40 - 23:55</div>
+    <div style="margin-bottom: 8px">
+    <div class="row">
+        <div class="cell_hour">13:00 - 15:30</div>
+        <div class="cell_text1"><strong>Aleksander Szymanek, Jakub Stępniewicz</strong>, Warsztaty: <i>Bądź jak Chuck
+            Norris. Czyli jak modyfikować stan pamięci gier</i></div>
+    </div>
+    <br>
 
-              <div class="cell_text2"><strong>Krzysztof Nowicki</strong>, <i>Ciąg Fibonacciego, a zawartość twojego talerza</i></div>
-          </div>
-          <div class="row">
-              <div class="cell_part_hour">00:00 - 00:15</div>
-
-              <div class="cell_text2"><strong>Aleksander Szymanek</strong>, <i>Jak WEP został złamany</i></div>
-          </div>
-      </div>
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">21:30 - 00:00</div>
-      	<div class="cell_text1"><strong>Sesja 4 - BLOK B</strong>, prowadzący: <strong>Jerzy Marcinkowski</strong></div>
-      </div>
-
-      	<div class="row">
-      		<div class="cell_part_hour">21:30 - 22:00</div>
-      		<div class="cell_text2"><strong>Tomasz Piasecki</strong>, <i>Informatyk i językoznawca w jednym łóżku. Wordnet, korpusy i inne narzędzia językoznawcze w Sieci</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:05 - 22:20</div>
-
-      		<div class="cell_text2"><strong>Krystyna Konopko</strong>, <i>Nie tylko jogurt jest malinowy. Międzypłciowy konflikt postrzegania kolorów.</i></div>
-      	</div>
-          <div class="row">
-              <div class="cell_part_hour">22:25 - 22:30</div>
-              <div class="cell_text2"><strong>Maciek Kotowicz</strong>, <i>Hackerspace Wrocław</i></div>
-          </div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:40 - 23:25</div>
-      		<div class="cell_text2"><strong>Krzysztof Sakwerda</strong>, <i>I Ty możesz wydrukować gwizdek</i></div>
-
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">23:30 - …</div>
-      		<div class="cell_text2"><strong>Adam Działak</strong>, <i>Rok pomiędzy technologią a sztuką</i></div>
-      	</div>
-      </div>
-      <br><br>
-      <h3>Sobota</h3>
-      <div class="program">
-      <div class="row">
-
-      	<div class="cell_hour"> 8:00 -  9:30</div>
-      	<div class="cell_text1">Śniadanie</div>
-      </div>
-      <div style="margin-bottom: 8px">
-      <div class="row">
-          <div class="cell_hour">10:00 - 13:00    </div>
-          <div class="cell_text1"><strong>Roman Kierzkowski</strong>, <i>Warsztaty; REST API dla aplikacji mobilnych</i></div>
-      </div>
-      </div>
-      <div style="margin-bottom: 8px">
-      <div class="row">
-          <div class="cell_hour">16:00 - 18:00</div>
-          <div class="cell_text1"><strong>Sesja 5</strong>, prowadzący: <strong>Oskar Miś</strong></div>
-      </div>
-
-          <div class="row">
-              <div class="cell_part_hour">16:00 - 16:25</div>
-              <div class="cell_text2"><strong>Patryk Kajdas</strong>, <i>Cos inaczej</i></div>
-          </div>
-          <div class="row">
-              <div class="cell_part_hour">16:30 - 16:50</div>
-
-              <div class="cell_text2"><strong>Mateusz Bajorski</strong>, <i>CoffeeDesktop</i></div>
-          </div>
-          <div class="row">
-              <div class="cell_part_hour">16:55 - 17:25</div>
-              <div class="cell_text2"><strong>Kacper Górski</strong>, <i>A może własny biznes?</i></div>
-          </div>
-          <div class="row">
-              <div class="cell_part_hour">17:30 - 18:00</div>
-              <div class="cell_text2"><strong>Maciek Jabłoński</strong>, <i>Tam i z powrotem</i></div>
-          </div>
-      </div>
-      <div class="row">
-      	<div class="cell_hour">17:30 - 19:00</div>
-      	<div class="cell_text1">Obiadokolacja</div>
-      </div>
-      <br>
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">19:00 - 21:05</div>
-      	<div class="cell_text1"><strong>Sesja 6</strong>, prowadzący: <strong>Arkadiusz Flinik</strong></div>
-      </div>
-      	<div class="row">
-      		<div class="cell_part_hour">19:00 - 19:20</div>
-      		<div class="cell_text2"><strong>Wiktor Janas</strong>, Ten Square Games<i>W górach jest diagram Voronoia</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">19:25 - 19:55</div>
-      		<div class="cell_text2"><strong>Daniel Dobrijałowski</strong>, <i>O routerach słów kilka</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">20:00 - 20:30</div>
-
-      		<div class="cell_text2"><strong>Miëtek Bak</strong>, <i>Podstawy Podstawy, czyli Yesod od podstaw</i></div>
-      	</div>
-          <div class="row">
-              <div class="cell_part_hour">20:35 - 21:05</div>
-
-              <div class="cell_text2"><strong>Janusz Dziemidowicz</strong>, <i>Przestępwa i bestie</i></div>
-          </div>
-      </div>
-
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">21:30 - 00:15</div>
-      	<div class="cell_text1"><strong>Sesja 7 - BLOK A</strong>, prowadzący: <strong>Jerzy Marcinkowski</strong></div>
-      </div>
-      	<div class="row">
-      		<div class="cell_part_hour">21:30 - 22:00</div>
-      		<div class="cell_text2"><strong>Patryk Obara</strong>, <i>JungleType, czyli krótka pogadanka o webfontach</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:05 - 22:35</div>
-      		<div class="cell_text2"><strong>Dariusz Jackowski</strong>, <i>NIME - New interfaces for musical expression</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:40 - 22:55</div>
-      		<div class="cell_text2"><strong>Kamila Tatarynowicz</strong>, <i>Robot BIMO</i></div>
-      	</div>
-          <div class="row">
-              <div class="cell_part_hour">23:10 - 23:45</div>
-              <div class="cell_text2"><strong>Jakub Stępniewicz</strong>, <i>„Panie, ale gdzie ja jestem?”, czyli smaczki GPS</i></div>
-          </div>
-          <div class="row">
-              <div class="cell_part_hour">23:50 - 00:15</div>
-              <div class="cell_text2"><strong>Tomasz Kominiarczuk</strong>, <i>Niecodzienna kolejka priorytetowa = sukces w działaniu algorytmu Dijkstry</i></div>
-          </div>
-      </div>
-      <div style="margin-bottom: 8px">
-      <div class="row">
-      	<div class="cell_hour">21:30 - 00:00</div>
-      	<div class="cell_text1"><strong>Sesja 7 - BLOK B</strong>, prowadzący: <strong>Maciej Piróg</strong></div>
-
-      </div>
-      	<div class="row">
-      		<div class="cell_part_hour">21:30 - 21:45</div>
-      		<div class="cell_text2"><strong>Kinga Mielcarska</strong>, <i>Social brain in social network</i></div>
-      	</div>
-      	<div class="row">
-
-      		<div class="cell_part_hour">21:50 - 22:10</div>
-      		<div class="cell_text2"><strong>Linda Smug</strong>, <i>Jedz z głową, czyli fakty i mity dotyczące żywności</i></div>
-      	</div>
-      	<div class="row">
-      		<div class="cell_part_hour">22:15 - 22:45</div>
-
-      		<div class="cell_text2"><strong>Anna Kapuścińska</strong>, <i>Opowieść o lataniu w kosmos</i></div>
-      	</div>
-          <div class="row">
-              <div class="cell_part_hour">22:50 - 23:20</div>
-
-              <div class="cell_text2"><strong>Justyna Cisło</strong>, <i>Jak pije się w Rosji?</i></div>
-          </div>
-          <div class="row">
-              <div class="cell_part_hour">22:15 - 22:45</div>
-
-              <div class="cell_text2"><strong>Paweł Nowoświat</strong>, <i>E-sport</i></div>
-          </div>
-      </div>
-      <br><br>
-      <h3>Niedziela</h3>
-      <div class="program">
+    <div style="margin-bottom: 8px">
         <div class="row">
-          <div class="cell_hour">8:00-9:30</div>
-          <div class="cell_text1">Śniadanie</div>
+            <div class="cell_hour">16:00 - 18:00</div>
+            <div class="cell_text1"><strong>Sesja 2</strong>, prowadzący: <strong>Jakub Stępniewicz</strong></div>
 
         </div>
         <div class="row">
-          <div class="cell_hour">12:30</div>
-          <div class="cell_text1">Wyjazd z ośrodka</div>
+            <div class="cell_part_hour">16:00 - 16:25</div>
+            <div class="cell_text2"><strong>Michał Stempkowski</strong>, <i>Scala – Edward Nożycoręki, czy twór doktora
+                Frankensteina?</i></div>
         </div>
         <div class="row">
-          <div class="cell_hour">15:00</div>
-          <div class="cell_text1">Powrót do Wrocławia</div>
+            <div class="cell_part_hour">16:30 - 17:00</div>
+            <div class="cell_text2"><strong>Łukasz Pietrucha</strong>, <i>Testowanie zwinne</i></div>
         </div>
-      </div>
-      <br><br><br><br><br><br>
+        <div class="row">
+            <div class="cell_part_hour">17:05 - 17:25</div>
+            <div class="cell_text2"><strong>Radosław Warzocha</strong>, <i>Czy te zbiory mogą kłamać? Filtry Blooma i
+                ich zastosowania</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">17:30 - 18:00</div>
+            <div class="cell_text2"><strong>Maciek Kotowicz</strong>, <i>Z wężem wśród robaków</i></div>
+        </div>
+    </div>
+    <br>
 
+    <div style="margin-bottom: 8px">
+    <div class="row">
+        <div class="cell_hour">17:30 - 19:00</div>
+        <div class="cell_text1">Obiadokolacja</div>
+    </div>
+    <br>
+
+
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">19:00 - 21:05</div>
+            <div class="cell_text1"><strong>Sesja 3</strong>, prowadzący: <strong>Karol Błażejowski</strong></div>
+
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">19:00 - 19:30</div>
+            <div class="cell_text2"><strong>Krzysiek Kercz, Darek Stokłosa</strong>, <a>AXIT</a>, <i>Język schematów
+                blokowych</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">19:35 - 20:05</div>
+
+            <div class="cell_text2"><strong>Michał Michaluk</strong>, Capgemini, <i>10 przykazań clean codera</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">20:10 - 20:40</div>
+            <div class="cell_text2"><strong>Piotr Mężyk, Adam Szeptycki</strong>, Nomtek, <i>O pomarańczowych
+                krasnalach, białej kartce papieru i tajemniczej szafie</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">20:45 - 21:05</div>
+            <div class="cell_text2"><strong>Jakub Michaliszyn</strong>, <i>Studia trzeciego stopnia z jedną
+                niewiadomą</i></div>
+        </div>
+    </div>
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">21:30 - 00:15</div>
+
+            <div class="cell_text1"><strong>Sesja 4 - BLOK A</strong>, prowadzący: <strong>Jerzy Marcinkowski</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">21:30 - 21:55</div>
+            <div class="cell_text2"><strong>Filip Sieczkowski</strong>, <i>Call by push-value: dualność w działaniu</i>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:00 - 22:30</div>
+            <div class="cell_text2"><strong>Hans de Nivelle</strong>, <i>Logic with Partial Functions</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:35 - 22:55</div>
+
+            <div class="cell_text2"><strong>Jakub Kowalski</strong>, <i>Nie graj w gry – naucz swoje programy robić to
+                za Ciebie</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">23:10 - 23:35</div>
+
+            <div class="cell_text2"><strong>Paweł Hałdrzyński</strong>, <i>(Nie)bezpieczeństwo serwisów
+                społecznościowych</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">23:40 - 23:55</div>
+
+            <div class="cell_text2"><strong>Krzysztof Nowicki</strong>, <i>Ciąg Fibonacciego, a zawartość twojego
+                talerza</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">00:00 - 00:15</div>
+
+            <div class="cell_text2"><strong>Aleksander Szymanek</strong>, <i>Jak WEP został złamany</i></div>
+        </div>
+    </div>
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">21:30 - 00:00</div>
+            <div class="cell_text1"><strong>Sesja 4 - BLOK B</strong>, prowadzący: <strong>Jerzy Marcinkowski</strong>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="cell_part_hour">21:30 - 22:00</div>
+            <div class="cell_text2"><strong>Tomasz Piasecki</strong>, <i>Informatyk i językoznawca w jednym łóżku.
+                Wordnet, korpusy i inne narzędzia językoznawcze w Sieci</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:05 - 22:20</div>
+
+            <div class="cell_text2"><strong>Krystyna Konopko</strong>, <i>Nie tylko jogurt jest malinowy. Międzypłciowy
+                konflikt postrzegania kolorów.</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:25 - 22:30</div>
+            <div class="cell_text2"><strong>Maciek Kotowicz</strong>, <i>Hackerspace Wrocław</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:40 - 23:25</div>
+            <div class="cell_text2"><strong>Krzysztof Sakwerda</strong>, <i>I Ty możesz wydrukować gwizdek</i></div>
+
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">23:30 - …</div>
+            <div class="cell_text2"><strong>Adam Działak</strong>, <i>Rok pomiędzy technologią a sztuką</i></div>
+        </div>
+    </div>
+    <br><br>
+    <h3>Sobota</h3>
+    <div class="program">
+    <div class="row">
+
+        <div class="cell_hour"> 8:00 - 9:30</div>
+        <div class="cell_text1">Śniadanie</div>
+    </div>
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">10:00 - 13:00</div>
+            <div class="cell_text1"><strong>Roman Kierzkowski</strong>, <i>Warsztaty; REST API dla aplikacji
+                mobilnych</i></div>
+        </div>
+    </div>
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">16:00 - 18:00</div>
+            <div class="cell_text1"><strong>Sesja 5</strong>, prowadzący: <strong>Oskar Miś</strong></div>
+        </div>
+
+        <div class="row">
+            <div class="cell_part_hour">16:00 - 16:25</div>
+            <div class="cell_text2"><strong>Patryk Kajdas</strong>, <i>Cos inaczej</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">16:30 - 16:50</div>
+
+            <div class="cell_text2"><strong>Mateusz Bajorski</strong>, <i>CoffeeDesktop</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">16:55 - 17:25</div>
+            <div class="cell_text2"><strong>Kacper Górski</strong>, <i>A może własny biznes?</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">17:30 - 18:00</div>
+            <div class="cell_text2"><strong>Maciek Jabłoński</strong>, <i>Tam i z powrotem</i></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="cell_hour">17:30 - 19:00</div>
+        <div class="cell_text1">Obiadokolacja</div>
+    </div>
+    <br>
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">19:00 - 21:05</div>
+            <div class="cell_text1"><strong>Sesja 6</strong>, prowadzący: <strong>Arkadiusz Flinik</strong></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">19:00 - 19:20</div>
+            <div class="cell_text2"><strong>Wiktor Janas</strong>, Ten Square Games<i>W górach jest diagram Voronoia</i>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">19:25 - 19:55</div>
+            <div class="cell_text2"><strong>Daniel Dobrijałowski</strong>, <i>O routerach słów kilka</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">20:00 - 20:30</div>
+
+            <div class="cell_text2"><strong>Miëtek Bak</strong>, <i>Podstawy Podstawy, czyli Yesod od podstaw</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">20:35 - 21:05</div>
+
+            <div class="cell_text2"><strong>Janusz Dziemidowicz</strong>, <i>Przestępwa i bestie</i></div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">21:30 - 00:15</div>
+            <div class="cell_text1"><strong>Sesja 7 - BLOK A</strong>, prowadzący: <strong>Jerzy Marcinkowski</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">21:30 - 22:00</div>
+            <div class="cell_text2"><strong>Patryk Obara</strong>, <i>JungleType, czyli krótka pogadanka o
+                webfontach</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:05 - 22:35</div>
+            <div class="cell_text2"><strong>Dariusz Jackowski</strong>, <i>NIME - New interfaces for musical
+                expression</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:40 - 22:55</div>
+            <div class="cell_text2"><strong>Kamila Tatarynowicz</strong>, <i>Robot BIMO</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">23:10 - 23:45</div>
+            <div class="cell_text2"><strong>Jakub Stępniewicz</strong>, <i>„Panie, ale gdzie ja jestem?”, czyli smaczki
+                GPS</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">23:50 - 00:15</div>
+            <div class="cell_text2"><strong>Tomasz Kominiarczuk</strong>, <i>Niecodzienna kolejka priorytetowa = sukces
+                w działaniu algorytmu Dijkstry</i></div>
+        </div>
+    </div>
+    <div style="margin-bottom: 8px">
+        <div class="row">
+            <div class="cell_hour">21:30 - 00:00</div>
+            <div class="cell_text1"><strong>Sesja 7 - BLOK B</strong>, prowadzący: <strong>Maciej Piróg</strong></div>
+
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">21:30 - 21:45</div>
+            <div class="cell_text2"><strong>Kinga Mielcarska</strong>, <i>Social brain in social network</i></div>
+        </div>
+        <div class="row">
+
+            <div class="cell_part_hour">21:50 - 22:10</div>
+            <div class="cell_text2"><strong>Linda Smug</strong>, <i>Jedz z głową, czyli fakty i mity dotyczące
+                żywności</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:15 - 22:45</div>
+
+            <div class="cell_text2"><strong>Anna Kapuścińska</strong>, <i>Opowieść o lataniu w kosmos</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:50 - 23:20</div>
+
+            <div class="cell_text2"><strong>Justyna Cisło</strong>, <i>Jak pije się w Rosji?</i></div>
+        </div>
+        <div class="row">
+            <div class="cell_part_hour">22:15 - 22:45</div>
+
+            <div class="cell_text2"><strong>Paweł Nowoświat</strong>, <i>E-sport</i></div>
+        </div>
+    </div>
+    <br><br>
+    <h3>Niedziela</h3>
+    <div class="program">
+        <div class="row">
+            <div class="cell_hour">8:00-9:30</div>
+            <div class="cell_text1">Śniadanie</div>
+
+        </div>
+        <div class="row">
+            <div class="cell_hour">12:30</div>
+            <div class="cell_text1">Wyjazd z ośrodka</div>
+        </div>
+        <div class="row">
+            <div class="cell_hour">15:00</div>
+            <div class="cell_text1">Powrót do Wrocławia</div>
+        </div>
+    </div>
+    <br><br><br><br><br><br>
 {% endblock content %}
