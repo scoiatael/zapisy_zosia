@@ -10,15 +10,30 @@ class Command(BaseCommand):
         preferences = UserPreferences.objects.filter(user__is_active=True)
 
         for i in range(0, preferences.count(), 2):
-            first_name = generate_name(preferences[i])
-            second_name = generate_name(preferences[i + 1 if i +1 < preferences.count() else i])
-            first_meals = generate_meals(preferences[i])
-            second_meals = generate_meals(preferences[i + 1 if i + 1< preferences.count() else i])
+            b = preferences[i + 1 if i + 1< preferences.count() else i]
 
-            print "\confpin" + smart_unicode(first_name) + "\confpin" + smart_unicode(second_name) + " \confpinrot"\
-                  + smart_unicode(first_name) + " \confpinrot" + smart_unicode(second_name) + " \confpinfood" + \
+            first_name = generate_name(preferences[i])
+            second_name = generate_name(b)
+            first_meals = generate_meals(preferences[i])
+            second_meals = generate_meals(b)
+
+            print smart_unicode(get_ping(preferences[i])) + smart_unicode(first_name) + smart_unicode(get_ping(b)) + smart_unicode(second_name) + smart_unicode(get_rot(preferences[i])) +\
+                  smart_unicode(first_name) + smart_unicode(get_rot(b)) + smart_unicode(second_name) + " \confpinfood" + \
                   smart_unicode(first_meals) + " \confpinfood" + smart_unicode(second_meals)
             print ''
+
+
+def get_ping(preference):
+    if preference.org:
+        return u' \confpin'
+    else:
+        return u' \confpinnoorg'
+
+def get_rot(preference):
+    if preference.org:
+        return u' \confpinrot'
+    else:
+        return u' \confpinnoorgrot'
 
 
 def generate_name(preference):
