@@ -59,4 +59,4 @@ def is_vegetarian(preference):
     if preference.vegetarian:
         return ' W '
     else:
-        return '   '
+        return ''
