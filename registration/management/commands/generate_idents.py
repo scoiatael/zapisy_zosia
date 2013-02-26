@@ -37,7 +37,10 @@ def get_rot(preference):
 
 
 def generate_name(preference):
-    return u"{" + smart_unicode(preference.user.get_full_name()) + u"}{ " + smart_unicode(preference.org) + u"}"
+    result = u"{" + smart_unicode(preference.user.get_full_name()) + u"}"
+    if preference.org.name.strip() <> '':
+        result += "{ " + smart_unicode(preference.org.name.strip()) + u"}"
+    return result
 
 
 def generate_meals(preference):
