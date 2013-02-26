@@ -94,7 +94,8 @@ class UserPreferences(models.Model):
     bus_hour = models.CharField(max_length=10, choices=BUS_HOUR_CHOICES, null=True, default=None)
 
     # ? anonimowy - nie chce zeby jego imie/nazwisko/mail pojawialy sie na stronie
-    
+
+
     def __unicode__(self):
         return u"%s %s" % (self.user.first_name, self.user.last_name)
 
@@ -118,6 +119,15 @@ class UserPreferences(models.Model):
             pass
         super(UserPreferences, self).save() 
 
+    @property
+    def get_room(self):
+        from newrooms.models import UserInRoom
+        if not hasattr(self, 'user_room'):
+            try:
+                self.user_room = UserInRoom.objects.get(locator=self.user).room
+            except:
+                self.user_room = 0
+        return self.user_room
 
     @staticmethod
     def get_free_seats():
@@ -130,3 +140,6 @@ class UserPreferences(models.Model):
     @staticmethod
     def get_second_time():
         return  (BUS_SECOND_SIZE - UserPreferences.objects.filter(bus=True, bus_hour=BUS_HOUR_CHOICES[2][0]).count()) > 0
+
+
+
