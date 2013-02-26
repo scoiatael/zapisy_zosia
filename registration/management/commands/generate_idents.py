@@ -24,13 +24,13 @@ class Command(BaseCommand):
 
 
 def get_ping(preference):
-    if preference.org:
+    if preference.org.name:
         return u' \confpin'
     else:
         return u' \confpinnoorg'
 
 def get_rot(preference):
-    if preference.org:
+    if preference.org.name:
         return u' \confpinrot'
     else:
         return u' \confpinnoorgrot'
