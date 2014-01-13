@@ -1,6 +1,5 @@
 # -*- coding: UTF-8 -*-
 from datetime import datetime, timedelta
-from registration.models import UserPreferences
 from common.models import ZosiaDefinition
 from django.http import Http404
 
@@ -58,8 +57,7 @@ def has_user_opened_records(user):
         definition = ZosiaDefinition.objects.get(active_definition=True)
     except Exception:
         raise Http404
-    prefs = UserPreferences.objects.get(user=user)
-    user_openning_hour = definition.rooming_start - timedelta(minutes=prefs.minutes_early)
+    user_openning_hour = definition.rooming_start - timedelta(minutes=user.minutes_early)
     return user_openning_hour <= datetime.now() <= definition.rooming_final
 
 

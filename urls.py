@@ -1,11 +1,10 @@
 import os
 
-from django.conf.urls import patterns, url, include
 from django.contrib import admin
-import registration.views
+from django.conf.urls import patterns, url, include
 import blog.views
 import lectures.views
-import newrooms.views
+import rooms.views
 import common.views
 
 from blog.feeds import *
@@ -23,16 +22,7 @@ urlpatterns = patterns('',
     # (r'^zapisy_zosia/', include('zapisy_zosia.foo.urls')),
 
      (r'^$', blog.views.index),
-
-     (r'^rooms/$', newrooms.views.index),
-     (r'^rooms/list.json$', newrooms.views.json_rooms_list),
-
-     # (r'^rooms/fill/$', newrooms.views.fill_rooms),
-     (r'^rooms/modify/$', newrooms.views.modify_room),
-     (r'^rooms/open/$', newrooms.views.open_room),
-     (r'^rooms/close/$', newrooms.views.close_room),
-     (r'^rooms/trytogetin/$', newrooms.views.trytogetin_room),
-     (r'^leave_room/$', newrooms.views.leave_room),
+     # url(r'^rooms/$', include('rooms.url', namespace='rooms')),
 
      (r'^blog/$', blog.views.index),
 
@@ -40,20 +30,18 @@ urlpatterns = patterns('',
      (r'^feeds/$', LatestBlogEntries()),
 
      # admin related
-     (r'^admin/register_payment/$', registration.views.register_payment),
-     # TODO(Karol): we disable separate transportation payment for this edition.
-     # (r'^admin/register_bus_payment/$', registration.views.register_bus_payment),
+     # (r'^admin/register_payment/$', registration.views.register_payment),
      url(r'^admin/', include(admin.site.urls)),
 
      # registration related
-     (r'^register/$', registration.views.register),
-     (r'^register/thanks/$', registration.views.thanks),
-     (r'^register/regulations/$', registration.views.regulations),
+     # (r'^register/$', registration.views.register),
+     # (r'^register/thanks/$', registration.views.thanks),
+     # (r'^register/regulations/$', registration.views.regulations),
 
      # (r'^register/add_org/$', registration.views.add_organization),
-     (r'^register/activate/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', registration.views.activate_user),
+     # (r'^register/activate/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', registration.views.activate_user),
 
-     (r'^change_preferences/$', registration.views.change_preferences),
+     # (r'^change_preferences/$', registration.views.change_preferences),
 
      # login / logout
      (r'^login/$', common.views.login_view),
@@ -85,13 +73,14 @@ urlpatterns = patterns('',
      (r'^reset/done/$',
          'django.contrib.auth.views.password_reset_complete',
          { 'template_name':'password_reset_complete.html' }),
+     (r'^static_media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'static_media')})
 )
 import settings
 
-if settings.DEBUG:
-    urlpatterns += patterns('',
-#        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-#            'document_root': settings.MEDIA_ROOT,
-#        }),
-        (r'^static_media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'static_media')})
-   )
+# if settings.DEBUG:
+#     urlpatterns += patterns('',
+# #        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+# #            'document_root': settings.MEDIA_ROOT,
+# #        }),
+#         (r'^static_media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'static_media')})
+#    )

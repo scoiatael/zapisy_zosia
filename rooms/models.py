@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
@@ -39,10 +40,12 @@ class RoomManager(models.Manager):
         return "[%s]" % (','.join(self.cache))
 
 
-class NRoom(models.Model):
+class Room(models.Model):
     number              = models.CharField(max_length=16)
     capacity            = models.PositiveIntegerField(max_length=1) # burżuje jesteśmy :P
     password            = models.CharField(max_length=16)
+
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='UserInRoom')
 
     # unlock time for first locator
     short_unlock_time   = models.DateTimeField()
@@ -117,8 +120,8 @@ class NRoom(models.Model):
 
 class UserInRoom(models.Model):
     # user-room-ownership relation # it REALLY should be better implemented...
-    locator   = models.ForeignKey(User, unique=True)
-    room      = models.ForeignKey(NRoom)
+    locator   = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
+    room      = models.ForeignKey(Room)
     ownership = models.BooleanField()
 
     def firstname(self):

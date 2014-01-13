@@ -2,7 +2,6 @@
 {% load cache %}
 {% cache 120 blog_template %}
 
-{% load markup %}
 {% load blurb_edit %}
 
 {% block content %}
@@ -10,7 +9,7 @@
         <h2>{{ post.title }}</h2>
         <div class="bp_author">by {{ post.author.get_full_name }}</div>
         <span class="bp_date"><em>{{ post.pub_date|date:"l, j E Y"|lower }}</em></span>
-        <div class="blog_post">{{ post.text|textile }}</div>
+        <div class="blog_post">{{ post.text }}</div>
     {% endfor %}
 {% endblock %}
 
@@ -36,11 +35,11 @@
 </p>
 
 
-<h4 style="margin-bottom:20px;">Sponsor główny</h4>
-    <p style="text-align: center">
-
-    <a href="http://www.pl.capgemini-sdm.com/"><img  style="margin-bottom:10px;" src='/static_media/images/capgemini.png' alt='Capgemini' title='Capgemini'/></a>
-    </p>
+{#<h4 style="margin-bottom:20px;">Sponsor główny</h4>#}
+{#    <p style="text-align: center">#}
+{##}
+{#    <a href="http://www.pl.capgemini-sdm.com/"><img  style="margin-bottom:10px;" src='/static_media/images/capgemini.png' alt='Capgemini' title='Capgemini'/></a>#}
+{#    </p>#}
 
 
 <h4>Miejsce</h4>
@@ -60,28 +59,28 @@
 </ul>
 </p>
 
-<h4>Patronat</h4>
-   <p>
-   <ul>
+{#<h4>Patronat</h4>#}
+{#   <p>#}
+{#   <ul>#}
 {#       <li><a href="http://www.wmi.uni.wroc.pl/">Wydział Matematyki i Informatyki Uniwersytetu Wrocławskiego</a></li>#}
 {#       <li><a href="http://www.uni.wroc.pl/">JM. Rektor Uniwersytetu Wrocławskiego</a></li> #}
-       <li>Dyrektor Insytutu Informatyki Uniwersytetu Wrocławskiego - prof. Leszek Pacholski</li>
-   </ul>
-   </p>
-<h4 style="margin-bottom:20px;">Partnerzy i sponsorzy</h4>
-   <p style="text-align: center">
-	<a href="http://www.axit.pl"><img style="margin-bottom:30px;" src='/static_media/images/axit.png' alt='AXIT Sp. z o.o.' title='AXIT Sp. z o.o.'/></a>
-	<a href="http://gemius.pl/"><img style="margin-bottom:30px;" src='/static_media/images/logo_gemius_pl.gif' alt='Gemius SA' title='Gemius SA' /></a>
-       <a href="http://tensquaregames.com/"><img  style="margin-bottom:10px;" src='/static_media/images/tensquaregames.jpeg' alt='Ten Square Games Sp. z o.o.' title='Ten Square Games Sp. z o.o.'/>
-       </a>
-       <a href="http://tensquaregames.com">tensquaregames.com</a>
-       <a href="http://nomtek.com"><img style="margin-top:30px;" src="/static_media/images/nomtek.png" alt="Nomtek" title="Nomtek"></a>
-       <a href="http://leastfixed.com"><img src="/static_media/images/least-fixed.png" alt="Least Fixed" title="Least Fixed"></a>
+{#       <li>Dyrektor Insytutu Informatyki Uniwersytetu Wrocławskiego - prof. Leszek Pacholski</li>#}
+{#   </ul>#}
+{#   </p>#}
+{#<h4 style="margin-bottom:20px;">Partnerzy i sponsorzy</h4>#}
+{#   <p style="text-align: center">#}
+{#	<a href="http://www.axit.pl"><img style="margin-bottom:30px;" src='/static_media/images/axit.png' alt='AXIT Sp. z o.o.' title='AXIT Sp. z o.o.'/></a>#}
+{#	<a href="http://gemius.pl/"><img style="margin-bottom:30px;" src='/static_media/images/logo_gemius_pl.gif' alt='Gemius SA' title='Gemius SA' /></a>#}
+{#       <a href="http://tensquaregames.com/"><img  style="margin-bottom:10px;" src='/static_media/images/tensquaregames.jpeg' alt='Ten Square Games Sp. z o.o.' title='Ten Square Games Sp. z o.o.'/>#}
+{#       </a>#}
+{#       <a href="http://tensquaregames.com">tensquaregames.com</a>#}
+{#       <a href="http://nomtek.com"><img style="margin-top:30px;" src="/static_media/images/nomtek.png" alt="Nomtek" title="Nomtek"></a>#}
+{#       <a href="http://leastfixed.com"><img src="/static_media/images/least-fixed.png" alt="Least Fixed" title="Least Fixed"></a>#}
    {#    <a href="http://clearcode.cc/"><img  style="margin-bottom:10px;" src='/static_media/images/logo_clearcode.jpg' alt='DataX' title='ClearCode'/></a>#}
    {#    <a href="http://www.datax.pl/"><img  style="margin-bottom:15px;" src='/static_media/images/logo_datax.jpg' alt='DataX' title='DataX'/></a>#}
    {#    <a href="http://www.google.com/"><img  style="margin-bottom:10px;" src='/static_media/images/logo_google.png' alt='Google' title='Google'/></a>#}
    {#    <div style="text-align: center"><a href="http://moosefs.org"><img  style="margin-bottom:10px;" src='/static_media/images/logo_MooseFS.png' alt='MooseFS' title='MooseFS'/></a></div>#}
-   </p>
+{#   </p>#}
 
 
 

@@ -79,13 +79,10 @@ def thanks(request):
 def password_change(request):
     user = request.user
     title = "Change password"
-    if request.method == "POST":
-        pc_form = ValidatedPasswordChangeForm(request.user, request.POST)
-        if pc_form.is_valid():
-            pc_form.save()
-            return HttpResponseRedirect("done/")
-    else:
-        pc_form = ValidatedPasswordChangeForm(request.user)
+    pc_form = ValidatedPasswordChangeForm(request.user, request.POST or None)
+    if pc_form.is_valid():
+        pc_form.save()
+        return HttpResponseRedirect("done/")
     return render_to_response("change_password.html", locals())
 
 @login_required

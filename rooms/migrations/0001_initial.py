@@ -8,29 +8,32 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Lecture'
-        db.create_table(u'lectures_lecture', (
+        # Adding model 'Room'
+        db.create_table(u'rooms_room', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('title', self.gf('django.db.models.fields.CharField')(max_length=256)),
-            ('duration', self.gf('django.db.models.fields.PositiveIntegerField')(max_length=3)),
-            ('abstract', self.gf('django.db.models.fields.TextField')(max_length=512)),
-            ('info', self.gf('django.db.models.fields.TextField')(max_length=2048, blank=True)),
-            ('type', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('person_type', self.gf('django.db.models.fields.IntegerField')(default=2)),
-            ('photo_url', self.gf('django.db.models.fields.CharField')(max_length=250, null=True, blank=True)),
-            ('description', self.gf('django.db.models.fields.TextField')(max_length=2048, blank=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.Participant'])),
-            ('author_show', self.gf('django.db.models.fields.CharField')(max_length=256, null=True, blank=True)),
-            ('date_time', self.gf('django.db.models.fields.DateTimeField')()),
-            ('accepted', self.gf('django.db.models.fields.BooleanField')()),
-            ('order', self.gf('django.db.models.fields.IntegerField')(default=99)),
+            ('number', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('capacity', self.gf('django.db.models.fields.PositiveIntegerField')(max_length=1)),
+            ('password', self.gf('django.db.models.fields.CharField')(max_length=16)),
+            ('short_unlock_time', self.gf('django.db.models.fields.DateTimeField')()),
         ))
-        db.send_create_signal(u'lectures', ['Lecture'])
+        db.send_create_signal(u'rooms', ['Room'])
+
+        # Adding model 'UserInRoom'
+        db.create_table(u'rooms_userinroom', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('locator', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.Participant'], unique=True)),
+            ('room', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['rooms.Room'])),
+            ('ownership', self.gf('django.db.models.fields.BooleanField')()),
+        ))
+        db.send_create_signal(u'rooms', ['UserInRoom'])
 
 
     def backwards(self, orm):
-        # Deleting model 'Lecture'
-        db.delete_table(u'lectures_lecture')
+        # Deleting model 'Room'
+        db.delete_table(u'rooms_room')
+
+        # Deleting model 'UserInRoom'
+        db.delete_table(u'rooms_userinroom')
 
 
     models = {
@@ -54,22 +57,21 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'lectures.lecture': {
-            'Meta': {'object_name': 'Lecture'},
-            'abstract': ('django.db.models.fields.TextField', [], {'max_length': '512'}),
-            'accepted': ('django.db.models.fields.BooleanField', [], {}),
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.Participant']"}),
-            'author_show': ('django.db.models.fields.CharField', [], {'max_length': '256', 'null': 'True', 'blank': 'True'}),
-            'date_time': ('django.db.models.fields.DateTimeField', [], {}),
-            'description': ('django.db.models.fields.TextField', [], {'max_length': '2048', 'blank': 'True'}),
-            'duration': ('django.db.models.fields.PositiveIntegerField', [], {'max_length': '3'}),
+        u'rooms.room': {
+            'Meta': {'object_name': 'Room'},
+            'capacity': ('django.db.models.fields.PositiveIntegerField', [], {'max_length': '1'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'info': ('django.db.models.fields.TextField', [], {'max_length': '2048', 'blank': 'True'}),
-            'order': ('django.db.models.fields.IntegerField', [], {'default': '99'}),
-            'person_type': ('django.db.models.fields.IntegerField', [], {'default': '2'}),
-            'photo_url': ('django.db.models.fields.CharField', [], {'max_length': '250', 'null': 'True', 'blank': 'True'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '256'}),
-            'type': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+            'number': ('django.db.models.fields.CharField', [], {'max_length': '16'}),
+            'password': ('django.db.models.fields.CharField', [], {'max_length': '16'}),
+            'short_unlock_time': ('django.db.models.fields.DateTimeField', [], {}),
+            'users': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['users.Participant']", 'through': u"orm['rooms.UserInRoom']", 'symmetrical': 'False'})
+        },
+        u'rooms.userinroom': {
+            'Meta': {'ordering': "['locator__last_name', 'locator__first_name']", 'object_name': 'UserInRoom'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'locator': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.Participant']", 'unique': 'True'}),
+            'ownership': ('django.db.models.fields.BooleanField', [], {}),
+            'room': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['rooms.Room']"})
         },
         u'users.participant': {
             'Meta': {'object_name': 'Participant'},
@@ -88,4 +90,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['lectures']
+    complete_apps = ['rooms']

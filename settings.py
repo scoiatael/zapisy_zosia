@@ -7,7 +7,7 @@ from os.path import abspath, dirname, join
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__)) 
 
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
@@ -100,34 +100,28 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.getcwd()+os.sep+'templates'
-)
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
     os.path.join(PROJECT_ROOT, 'templates'),
 )
 
-
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.markup',
     #'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.formtools',
-    'newrooms',
+    'rooms',
     'lectures',
-    'registration',
     'blog',
     'common',
     'blurb',
     'south',
+    'users'
 )
 
 #AUTHENTICATION_BACKENDS = (
@@ -151,3 +145,13 @@ try:
     from settings_local import *
 except ImportError:
     pass
+
+
+ALLOWED_HOSTS = [
+    '.zosia.org',
+    '.zosia2014.pl',
+    '.zosia.dev',
+]
+
+
+AUTH_USER_MODEL = 'users.Participant'

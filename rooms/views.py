@@ -7,7 +7,6 @@ from django.template.loader import get_template
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
-from registration.models import UserPreferences
 import random
 from models import *
 from datetime import *
@@ -28,7 +27,7 @@ def index(request):
 #@login_required
 @cache_page(30)
 def json_rooms_list(request):
-    json = NRoom.objects.to_json(request)
+    json = Room.objects.to_json(request)
     return HttpResponse(json, mimetype="application/json")
 
 def dict_to_json(d):
@@ -57,7 +56,7 @@ def get_room_locators(room):
 def trytogetin_room(request):
     if not request.POST: raise Http404
     if not has_user_opened_records(request.user): return HttpResponse('fail')
-    room = NRoom.objects.get(id=int(request.POST['rid']))
+    room = Room.objects.get(id=int(request.POST['rid']))
     if room.password == request.POST['key']:
         get_in_room(request.user, room)
         return HttpResponse('ok')
@@ -117,7 +116,7 @@ def modify_room(request):
     if not request.POST: raise Http404
     # get correct room based on rid
     room_number = request.POST['rid'][1:]
-    room = NRoom.objects.get(number=room_number)
+    room = Room.objects.get(number=room_number)
     status = room.get_status(request)
     json = { "room_number":room_number, "buttons":'', 'msg':'', 'form':'' }
     prev_occupation = None

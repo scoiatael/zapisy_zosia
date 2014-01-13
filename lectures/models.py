@@ -1,4 +1,5 @@
 # -*- coding: UTF-8 -*-
+from django.conf import settings
 
 from django.db import models
 from django.contrib.auth.models import User
@@ -38,7 +39,7 @@ class Lecture(models.Model):
     photo_url = models.CharField(max_length=250, null=True, blank=True)
 
     description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
-    author    = models.ForeignKey(User)
+    author    = models.ForeignKey(settings.AUTH_USER_MODEL)
     author_show = models.CharField(max_length=256, null=True, blank=True)
     date_time = models.DateTimeField()
     accepted  = models.BooleanField()

@@ -1,0 +1,194 @@
+# -*- coding: utf-8 -*-
+from south.utils import datetime_utils as datetime
+from south.db import db
+from south.v2 import SchemaMigration
+from django.db import models
+
+
+class Migration(SchemaMigration):
+
+    def forwards(self, orm):
+        # Adding model 'Organization'
+        db.create_table(u'users_organization', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(default='', max_length=64)),
+            ('accepted', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        ))
+        db.send_create_signal(u'users', ['Organization'])
+
+        # Adding model 'Participant'
+        db.create_table(u'users_participant', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('password', self.gf('django.db.models.fields.CharField')(max_length=128)),
+            ('last_login', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+            ('is_superuser', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('email', self.gf('django.db.models.fields.EmailField')(unique=True, max_length=254)),
+            ('first_name', self.gf('django.db.models.fields.TextField')()),
+            ('last_name', self.gf('django.db.models.fields.TextField')()),
+            ('is_staff', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('is_active', self.gf('django.db.models.fields.BooleanField')(default=True)),
+            ('date_joined', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
+        ))
+        db.send_create_signal(u'users', ['Participant'])
+
+        # Adding M2M table for field groups on 'Participant'
+        m2m_table_name = db.shorten_name(u'users_participant_groups')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('participant', models.ForeignKey(orm[u'users.participant'], null=False)),
+            ('group', models.ForeignKey(orm[u'auth.group'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['participant_id', 'group_id'])
+
+        # Adding M2M table for field user_permissions on 'Participant'
+        m2m_table_name = db.shorten_name(u'users_participant_user_permissions')
+        db.create_table(m2m_table_name, (
+            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
+            ('participant', models.ForeignKey(orm[u'users.participant'], null=False)),
+            ('permission', models.ForeignKey(orm[u'auth.permission'], null=False))
+        ))
+        db.create_unique(m2m_table_name, ['participant_id', 'permission_id'])
+
+        # Adding model 'UserPreferences'
+        db.create_table(u'users_userpreferences', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.Participant'], unique=True)),
+            ('state', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['common.ZosiaDefinition'])),
+            ('org', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.Organization'])),
+            ('day_1', self.gf('django.db.models.fields.BooleanField')()),
+            ('day_2', self.gf('django.db.models.fields.BooleanField')()),
+            ('day_3', self.gf('django.db.models.fields.BooleanField')()),
+            ('breakfast_2', self.gf('django.db.models.fields.BooleanField')()),
+            ('breakfast_3', self.gf('django.db.models.fields.BooleanField')()),
+            ('breakfast_4', self.gf('django.db.models.fields.BooleanField')()),
+            ('dinner_1', self.gf('django.db.models.fields.BooleanField')()),
+            ('dinner_2', self.gf('django.db.models.fields.BooleanField')()),
+            ('dinner_3', self.gf('django.db.models.fields.BooleanField')()),
+            ('bus', self.gf('django.db.models.fields.BooleanField')()),
+            ('vegetarian', self.gf('django.db.models.fields.BooleanField')()),
+            ('paid', self.gf('django.db.models.fields.BooleanField')()),
+            ('shirt_size', self.gf('django.db.models.fields.CharField')(max_length=5)),
+            ('shirt_type', self.gf('django.db.models.fields.CharField')(max_length=1)),
+            ('want_bus', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('minutes_early', self.gf('django.db.models.fields.IntegerField')()),
+            ('bus_hour', self.gf('django.db.models.fields.CharField')(default=None, max_length=10, null=True)),
+        ))
+        db.send_create_signal(u'users', ['UserPreferences'])
+
+
+    def backwards(self, orm):
+        # Deleting model 'Organization'
+        db.delete_table(u'users_organization')
+
+        # Deleting model 'Participant'
+        db.delete_table(u'users_participant')
+
+        # Removing M2M table for field groups on 'Participant'
+        db.delete_table(db.shorten_name(u'users_participant_groups'))
+
+        # Removing M2M table for field user_permissions on 'Participant'
+        db.delete_table(db.shorten_name(u'users_participant_user_permissions'))
+
+        # Deleting model 'UserPreferences'
+        db.delete_table(u'users_userpreferences')
+
+
+    models = {
+        u'auth.group': {
+            'Meta': {'object_name': 'Group'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '80'}),
+            'permissions': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['auth.Permission']", 'symmetrical': 'False', 'blank': 'True'})
+        },
+        u'auth.permission': {
+            'Meta': {'ordering': "(u'content_type__app_label', u'content_type__model', u'codename')", 'unique_together': "((u'content_type', u'codename'),)", 'object_name': 'Permission'},
+            'codename': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['contenttypes.ContentType']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
+        },
+        u'common.zosiadefinition': {
+            'Meta': {'object_name': 'ZosiaDefinition'},
+            'account_data_1': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'account_data_2': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'account_data_3': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
+            'account_number': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'active_definition': ('django.db.models.fields.BooleanField', [], {}),
+            'city': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'city_c': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
+            'city_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
+            'hotel': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
+            'hotel_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'lectures_suggesting_final': ('django.db.models.fields.DateTimeField', [], {}),
+            'lectures_suggesting_start': ('django.db.models.fields.DateTimeField', [], {}),
+            'payment_deadline': ('django.db.models.fields.DateTimeField', [], {}),
+            'price_organization': ('django.db.models.fields.IntegerField', [], {}),
+            'price_overnight': ('django.db.models.fields.IntegerField', [], {}),
+            'price_overnight_breakfast': ('django.db.models.fields.IntegerField', [], {}),
+            'price_overnight_dinner': ('django.db.models.fields.IntegerField', [], {}),
+            'price_overnight_full': ('django.db.models.fields.IntegerField', [], {}),
+            'price_transport': ('django.db.models.fields.IntegerField', [], {}),
+            'registration_final': ('django.db.models.fields.DateTimeField', [], {}),
+            'registration_start': ('django.db.models.fields.DateTimeField', [], {}),
+            'rooming_final': ('django.db.models.fields.DateTimeField', [], {}),
+            'rooming_start': ('django.db.models.fields.DateTimeField', [], {}),
+            'zosia_final': ('django.db.models.fields.DateTimeField', [], {}),
+            'zosia_start': ('django.db.models.fields.DateTimeField', [], {})
+        },
+        u'contenttypes.contenttype': {
+            'Meta': {'ordering': "('name',)", 'unique_together': "(('app_label', 'model'),)", 'object_name': 'ContentType', 'db_table': "'django_content_type'"},
+            'app_label': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
+        },
+        u'users.organization': {
+            'Meta': {'object_name': 'Organization'},
+            'accepted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'default': "''", 'max_length': '64'})
+        },
+        u'users.participant': {
+            'Meta': {'object_name': 'Participant'},
+            'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'email': ('django.db.models.fields.EmailField', [], {'unique': 'True', 'max_length': '254'}),
+            'first_name': ('django.db.models.fields.TextField', [], {}),
+            'groups': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Group']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'is_active': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'is_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'is_superuser': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'last_login': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
+            'last_name': ('django.db.models.fields.TextField', [], {}),
+            'password': ('django.db.models.fields.CharField', [], {'max_length': '128'}),
+            'user_permissions': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "u'user_set'", 'blank': 'True', 'to': u"orm['auth.Permission']"})
+        },
+        u'users.userpreferences': {
+            'Meta': {'object_name': 'UserPreferences'},
+            'breakfast_2': ('django.db.models.fields.BooleanField', [], {}),
+            'breakfast_3': ('django.db.models.fields.BooleanField', [], {}),
+            'breakfast_4': ('django.db.models.fields.BooleanField', [], {}),
+            'bus': ('django.db.models.fields.BooleanField', [], {}),
+            'bus_hour': ('django.db.models.fields.CharField', [], {'default': 'None', 'max_length': '10', 'null': 'True'}),
+            'day_1': ('django.db.models.fields.BooleanField', [], {}),
+            'day_2': ('django.db.models.fields.BooleanField', [], {}),
+            'day_3': ('django.db.models.fields.BooleanField', [], {}),
+            'dinner_1': ('django.db.models.fields.BooleanField', [], {}),
+            'dinner_2': ('django.db.models.fields.BooleanField', [], {}),
+            'dinner_3': ('django.db.models.fields.BooleanField', [], {}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'minutes_early': ('django.db.models.fields.IntegerField', [], {}),
+            'org': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.Organization']"}),
+            'paid': ('django.db.models.fields.BooleanField', [], {}),
+            'shirt_size': ('django.db.models.fields.CharField', [], {'max_length': '5'}),
+            'shirt_type': ('django.db.models.fields.CharField', [], {'max_length': '1'}),
+            'state': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['common.ZosiaDefinition']"}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['users.Participant']", 'unique': 'True'}),
+            'vegetarian': ('django.db.models.fields.BooleanField', [], {}),
+            'want_bus': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+        }
+    }
+
+    complete_apps = ['users']

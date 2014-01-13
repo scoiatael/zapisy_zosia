@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import datetime
+from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
@@ -9,9 +9,9 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         # Adding model 'ZosiaDefinition'
-        db.create_table('common_zosiadefinition', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('active_definition', self.gf('django.db.models.fields.BooleanField')(default=False)),
+        db.create_table(u'common_zosiadefinition', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('active_definition', self.gf('django.db.models.fields.BooleanField')()),
             ('registration_start', self.gf('django.db.models.fields.DateTimeField')()),
             ('registration_final', self.gf('django.db.models.fields.DateTimeField')()),
             ('payment_deadline', self.gf('django.db.models.fields.DateTimeField')()),
@@ -36,29 +36,31 @@ class Migration(SchemaMigration):
             ('city_url', self.gf('django.db.models.fields.URLField')(max_length=200)),
             ('hotel', self.gf('django.db.models.fields.CharField')(max_length=30)),
             ('hotel_url', self.gf('django.db.models.fields.URLField')(max_length=200)),
+            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
-        db.send_create_signal('common', ['ZosiaDefinition'])
+        db.send_create_signal(u'common', ['ZosiaDefinition'])
 
 
     def backwards(self, orm):
         # Deleting model 'ZosiaDefinition'
-        db.delete_table('common_zosiadefinition')
+        db.delete_table(u'common_zosiadefinition')
 
 
     models = {
-        'common.zosiadefinition': {
+        u'common.zosiadefinition': {
             'Meta': {'object_name': 'ZosiaDefinition'},
             'account_data_1': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'account_data_2': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'account_data_3': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
             'account_number': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'active_definition': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'active_definition': ('django.db.models.fields.BooleanField', [], {}),
             'city': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'city_c': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
             'city_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
             'hotel': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
             'hotel_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'lectures_suggesting_final': ('django.db.models.fields.DateTimeField', [], {}),
             'lectures_suggesting_start': ('django.db.models.fields.DateTimeField', [], {}),
             'payment_deadline': ('django.db.models.fields.DateTimeField', [], {}),

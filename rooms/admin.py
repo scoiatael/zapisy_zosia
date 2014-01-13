@@ -7,7 +7,7 @@ class NewroomsAdmin(admin.ModelAdmin):
     def locators(self,obj):
         return ",".join([])
 
-admin.site.register(NRoom, NewroomsAdmin)
+admin.site.register(Room, NewroomsAdmin)
 
 class UserInRoomAdmin(admin.ModelAdmin):
     list_display = ['firstname', 'lastname','room']

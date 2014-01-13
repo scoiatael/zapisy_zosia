@@ -32,4 +32,6 @@ class ZosiaDefinition(models.Model):
     city_url                    = models.URLField()
     hotel                       = models.CharField(max_length=30)
     hotel_url                   = models.URLField()
+
+    active                      = models.BooleanField(default=False)
     
