@@ -148,12 +148,4 @@ try:
 except ImportError:
     pass
 
-
-ALLOWED_HOSTS = [
-    '.zosia.org',
-    '.zosia2014.pl',
-    '.zosia.dev',
-]
-
-
 AUTH_USER_MODEL = 'users.Participant'
