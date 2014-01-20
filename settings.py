@@ -42,7 +42,10 @@ TIME_ZONE = 'CET'
 # http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
 # http://blogs.law.harvard.edu/tech/stories/storyReader$15
 LANGUAGE_CODE = 'pl'
-
+LANGUAGES = (
+    ('pl', 'Polish'),
+)
+LOCALE_PATHS = (os.path.join(PROJECT_ROOT, 'locale'),)
 SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
@@ -88,6 +91,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.doc.XViewMiddleware',
