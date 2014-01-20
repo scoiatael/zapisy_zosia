@@ -39,10 +39,7 @@ class RegistrationForm(ModelForm):
         password1 = self.cleaned_data.get("password")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(
-                self.error_messages['password_mismatch'],
-                code='password_mismatch',
-            )
+            raise forms.ValidationError(u'Hasła są różne', code='password_mismatch')
         return password2
 
     def save(self, commit=True):

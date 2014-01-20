@@ -230,11 +230,25 @@ form_onload()
                 <label for="id_bus">Jestem zainteresowany zorganizowanym transportem autokarowym na trasie Wrocław - {{ definition.city }} - Wrocław</label>
             </li>
             <li class="nasty_choices_li">
+            {% if pref_form.shirt_size.errors %}
+                <ul class="errorlist">
+                {% for error in pref_form.shirt_size.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
 
-            <label for="id_shirt_size">{% trans "Rozmiar koszulki" %}</label> {{ pref_form.shirt_size}}
+            <label for="id_shirt_size">{% trans "Rozmiar koszulki" %} <span>{% trans "(wymagane)" %}</span></label> {{ pref_form.shirt_size}}
             </li>
             <li class="nasty_choices_li">
-            <label for="id_shirt_type">{% trans "Rodzaj koszulki" %}</label> {{ pref_form.shirt_type}}
+            {% if pref_form.shirt_type.errors %}
+                <ul class="errorlist">
+                {% for error in pref_form.shirt_type.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <label for="id_shirt_type">{% trans "Rodzaj koszulki" %} <span>{% trans "(wymagane)" %}</span></label> {{ pref_form.shirt_type}}
             </li>
             <li>
             {% trans "Rejestrując się na obóz, akceptuję jego " %}<a href="/register/regulations/">{% trans "regulamin" %}</a>.

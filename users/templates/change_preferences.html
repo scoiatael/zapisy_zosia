@@ -189,22 +189,30 @@ Potwierdzenie przyjęcia wpłaty zostanie wysłane na&nbsp;Twój adres e-mail.
             </li>
             <li>
 
-            {% if form.bus_hour.errors %}
-            <ul class="errorlist">
-            {% for error in form.bus_hour.errors %}
-                <li>{{error|escape}}</li>
-            {% endfor %}
-            </ul>
-            {% endif %}
+
                 {{ pref_form.bus }}  <label for="id_bus">{% trans "autokar" %}</label>
 
                <label for="id_want_bus">Interesuje mnie zorganizowany transport autokarowym na trasie Wrocław - {{ city }} - Wrocław</label>
 
             </li>
             <li class="nasty_choices_li">
+            {% if pref_form.shirt_size.errors %}
+                <ul class="errorlist">
+                {% for error in pref_form.shirt_size.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
             <label for="id_shirt_size">{% trans "koszulka" %}</label> {{ pref_form.shirt_size}}
             </li>
             <li class="nasty_choices_li">
+            {% if pref_form.shirt_type.errors %}
+                <ul class="errorlist">
+                {% for error in pref_form.shirt_type.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
             <label for="id_shirt_type">{% trans "rodzaj koszulki" %}</label> {{ pref_form.shirt_type}}
             </li>
         </ol>
