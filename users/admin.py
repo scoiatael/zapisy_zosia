@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.http import Http404
 from django.utils.encoding import smart_unicode
-from models import UserPreferences, SHIRT_TYPES_CHOICES
+from models import UserPreferences, SHIRT_TYPES_CHOICES, Organization
 from common.models import ZosiaDefinition
 
 class UserPreferencesAdmin(admin.ModelAdmin):
@@ -118,5 +118,9 @@ class UserPreferencesAdmin(admin.ModelAdmin):
     days.allow_tags = True
 
 
+class OrganizationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'accepted')
+
 admin.site.unregister(Group)
 admin.site.register(UserPreferences, UserPreferencesAdmin)
+admin.site.register(Organization, OrganizationAdmin)
