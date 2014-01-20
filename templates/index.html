@@ -77,17 +77,21 @@ window.onload=function(){ AddFillerLink("col1_content","col3_content"); }
 			<!-- skiplink anchor: navigation -->
 			<div id="nav_main">
 				<ul>
-                    <li {% ifequal title "Blog" %}id="current"{% endifequal %}><a href="/blog/">{% trans "Blog" %}</a></li>
+                    <li {% if title == "Blog" %}id="current"{% endif %}><a href="/blog/">Blog</a></li>
                     {% load time_block_helpers %}
                     {% if user.is_authenticated %}
-                    <li {% ifequal title "Change preferences" %}id="current"{% endifequal %}><a href="/change_preferences/">{% trans "Change preferences" %}</a></li>
+                        <li {% if title == "Change preferences" %}id="current"{% endif %}><a href="/change_preferences/">Preferencje</a></li>
                     {% else %}
-		    			{% if title %}{% registration_link title %}{% endif %}  {# see registration/templatetags #}
+                        <li {% if title == "Registration" %}id="current"{% endif %}>
+                            <a href="/register/">Rejestracja</a></li>
+                        </li>
                     {% endif %}
-{#                    <li {% ifequal title "Lectures" %}id="current"{% endifequal %}><a href="/lectures/">{% trans "Lectures" %}</a></li>#}
-{#					<li {% ifequal title "Program" %}id="current"{% endifequal %}><a href="/program/">{% trans "Program" %}</a></li>#}
-                    {% if user.is_authenticated %}
-                           {% if title %}{% rooming_link user title %}{% endif %}
+{#                    <li {% if title == "Lectures" %}id="current"{% endif %}><a href="/lectures/">Wykłady</a></li>#}
+{#					<li {% if title == "Program" %}id="current"{% endif %}><a href="/program/">Program</a></li>#}
+                    {% if definition.rooming_is_open %}
+                        <li {% if title == 'Room' %}id="current"{% endif %}>
+                            <a href="/rooms/">Zapisy na pokoje</a></li>
+                        </li>
                     {% endif %}
 				</ul>
 			</div>

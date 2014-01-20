@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 from django.db import models
-from datetime import datetime
+import datetime
+
 
 class ZosiaDefinition(models.Model):
     active_definition			= models.BooleanField()
@@ -34,4 +35,6 @@ class ZosiaDefinition(models.Model):
     hotel_url                   = models.URLField()
 
     active                      = models.BooleanField(default=False)
-    
+
+    def rooming_is_open(self):
+        return self.rooming_start <= datetime.datetime.now() <= self.rooming_final

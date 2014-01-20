@@ -1,10 +1,11 @@
 from django.shortcuts import render_to_response, HttpResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import *
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm, PasswordChangeForm
 from forms import *
+
+from users.models import Participant
 
 def login_view(request):
     # hmm, I've moved too much stuff in here, it's a bit messy
@@ -28,7 +29,7 @@ def login_view(request):
                 email    = form.cleaned_data['email']
                 password = form.cleaned_data['password']
                 try:
-                    usr = User.objects.get(email=email.lower())
+                    usr = Participant.objects.get(email=email.lower())
                     if usr.is_active:
                         usr = authenticate(username=email, password=password)
                         if usr: 

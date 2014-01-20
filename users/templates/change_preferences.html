@@ -1,0 +1,235 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block css %}
+#register_nights, 
+#register_breakfasts, 
+#register_dinners { 
+    display: inline;
+}
+#register_nights     label,
+#register_breakfasts label,
+#register_dinners    label { 
+    width: 10em;
+}
+#register_other label {
+    display: inline;
+    width: 15.3em;
+}
+.nasty_choices_li label { float: left; }
+.nasty_choices_li select { width: 7em; }
+}
+{% endblock css %}
+
+{% block content %}
+{% if user_paid %}
+    <ul class="messages">
+        {#        <li>{% trans "Paid was registered, see you soon!" %}</li> #}
+        <li>Otrzymaliśmy Twoją wpłatę za ZOSIĘ. Jeżeli chcesz dokonać zmian, skontaktuj się z organizatorami.</li>
+    </ul>
+{% else %}
+{% if payment and not user_paid %}
+<h2>Dane do przelewu</h2>
+<table>
+<tr><td>
+<pre>rachunek odbiorcy
+tytuł przelewu
+imię, nazwisko odbiorcy
+adres 
+miejscowość
+kwota
+</pre>
+</td><td>
+<pre>{{ account_number }}
+[ZOSIA{{ year }}] {{user.first_name}} {{user.last_name}}
+{{ account_data_1 }}
+{{ account_data_2 }}
+{{ account_data_3 }}
+{{ payment }} zł
+</pre>
+</table>
+<p>
+Potwierdzenie przyjęcia wpłaty zostanie wysłane na&nbsp;Twój adres e-mail.
+</p>
+{% else %}
+    <ul class="error_messages">
+        <li>{% trans "Repair errors below, please." %}</li>
+    </ul>
+{% endif %}
+{% endif %}
+
+
+<h2>{% trans "Preferencje" %}</h2>
+
+<form action="" method="post" id="register_form">
+    <fieldset id="register_personal">
+        <legend>{% trans "Dane do uwierzytelniania" %}</legend>
+        <ol>
+            <li>
+            <label>e-mail</label>
+                {{ user.email }}
+            </li>
+            <li>
+                <label>{% trans "hasło" %}</label>
+                <a href="/password_change/">{% trans "zmień" %}</a>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_personal">
+        <legend>{% trans "Dane osobowe" %}</legend>
+        <ol>
+            <li>
+            <label>{% trans "imię" %}, {% trans "nazwisko" %}</label>
+                {{ user.first_name }} {{ user.last_name }}
+            </li>
+            <li>
+                {# bw careful with errors here - if there are more than 1 orgs#}
+                {% if form.organization_1.errors %}
+                <ul class="errorlist">
+                {% for error in form.organization_1.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <label for="id_organization_1">
+                   {% trans "organizacja" %}
+                </label>
+                {{ form.organization_1 }}
+                {{ form.org }}
+            </li>
+            <li>
+            <label>{% trans "zapisy na pokoje" %}</label>
+                {{ user_opening_hour|date:"D, d F Y, H:i" }}
+            </li>
+{##}
+{#            <li>#}
+{#            <label>{% trans "bus hour" %}</label> {{ form.bus_hour}}#}
+{#            </li>#}
+
+
+
+        </ol>
+    </fieldset>
+    <fieldset id="register_nights">
+        <legend>{% trans "noclegi" %}</legend>
+        <ol>
+            {% if pref_form.day_3.errors %}
+            <ul class="errorlist">
+            {% for error in pref_form.day_3.errors %}
+                <li>{{error|escape}}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+                        <li>
+            {{ pref_form.day_1 }} <label for="id_day_1">{% ifequal date_1.month date_2.month %}
+                {{ date_1|date:"j" }}/{{ date_2|date:"j E" }}
+            {% else %}
+                {{ date_1|date:"j E" }} / {{ date_2|date:"j E" }}
+            {% endifequal %} </label>
+            </li>
+            <li>
+            {{ pref_form.day_2 }} <label for="id_day_2">{% ifequal date_2.month date_3.month %}
+                {{ date_2|date:"j" }}/{{ date_3|date:"j E" }}
+            {% else %}
+                {{ date_2|date:"j E" }} / {{ date_3|date:"j E" }}
+            {% endifequal %} </label>
+            </li>
+            <li>
+            {{ pref_form.day_3 }} <label for="id_day_3">{% ifequal date_3.month date_4.month %}
+                {{ date_3|date:"j" }}/{{ date_4|date:"j E" }}
+            {% else %}
+                {{ date_3|date:"j E" }} / {{ date_4|date:"j E" }}
+            {% endifequal %} </label>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_dinners">
+        <legend>{% trans "obiady" %}</legend>
+        <ol>
+            {% if pref_form.dinner_3.errors %}
+            <ul class="errorlist">
+            {% for error in form.dinner_3.errors %}<li>{{error|escape}}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            <li>
+            {{ pref_form.dinner_1}} <label for="id_dinner_1">{{ date_1|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.dinner_2}} <label for="id_dinner_2">{{ date_2|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.dinner_3}} <label for="id_dinner_3">{{ date_3|date:"j E" }}</label>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_breakfasts">
+        <legend>{% trans "śniadania" %}</legend>
+        <ol>
+            {% if form.breakfast_4.errors %}
+            <ul class="errorlist">
+            {% for error in form.breakfast_4.errors %}<li>{{error|escape}}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            <li>
+            {{ pref_form.breakfast_2 }} <label for="id_breakfast_2">{{ date_2|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.breakfast_3 }} <label for="id_breakfast_3">{{ date_3|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.breakfast_4 }} <label for="id_breakfast_4">{{ date_4|date:"j E" }}</label>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_other">
+        <legend>{% trans "inne" %}</legend>
+        <ol>
+            <li>
+            {{ pref_form.vegetarian }}  <label for="id_vegetarian">{% trans "preferuję kuchnię wegetariańską" %}</label>
+            </li>
+            <li>
+
+            {% if form.bus_hour.errors %}
+            <ul class="errorlist">
+            {% for error in form.bus_hour.errors %}
+                <li>{{error|escape}}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+                {{ pref_form.bus }}  <label for="id_bus">{% trans "autokar" %}</label>
+
+               <label for="id_want_bus">Interesuje mnie zorganizowany transport autokarowym na trasie Wrocław - {{ city }} - Wrocław</label>
+
+            </li>
+            <li class="nasty_choices_li">
+            <label for="id_shirt_size">{% trans "koszulka" %}</label> {{ pref_form.shirt_size}}
+            </li>
+            <li class="nasty_choices_li">
+            <label for="id_shirt_type">{% trans "rodzaj koszulki" %}</label> {{ pref_form.shirt_type}}
+            </li>
+        </ol>
+    </fieldset>
+
+    {% if user_paid %}
+    {% else %}
+    <fieldset><input type="submit" value="{% trans "Zapisz" %}" /></fieldset>
+    {% endif %}
+</form>
+{% endblock content %}
+
+{% block right_column %}
+<span class="cennik">Cennik</span>
+
+<table>
+<tr><td>nocleg:</td><td>{{ definition.price_overnight }}&nbsp;zł</td></tr>
+<tr><td>nocleg ze śniadaniem:</td><td>{{ definition.price_overnight_breakfast }}&nbsp;zł</td></tr>
+<tr><td>nocleg z obiadokolacją:</td><td>{{ definition.price_overnight_dinner }}&nbsp;zł</td></tr>
+<tr><td>nocleg ze śniadaniem i obiadokolacją:</td><td>{{ definition.price_overnight_full }}&nbsp;zł</td></tr>
+{% if definition.price_organization %}
+    <tr><td>opłata organizacyjna:</td><td>{{ definition.price_organization }}&nbsp;zł</td></tr>
+{% endif %}
+<tr><td>transport:</td><td>{{ definition.price_transport }}&nbsp;zł</td></tr>
+</table>
+    
+<span><a href="/register/regulations/">Regulamin obozu</a></span>
+{% endblock %}

@@ -10,7 +10,11 @@ class BlogPost(models.Model):
     pub_date = models.DateTimeField(editable=False)
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     text = models.TextField(max_length=2048)
-    
+
+    class Meta:
+        verbose_name = 'Wpis na blogu'
+        verbose_name_plural = 'Wpisy na blogu'
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.pub_date = datetime.datetime.now()

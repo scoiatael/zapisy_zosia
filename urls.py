@@ -8,6 +8,7 @@ import rooms.views
 import common.views
 
 from blog.feeds import *
+import users.views
 
 feeds = {
     'blog': LatestBlogEntries,
@@ -34,14 +35,13 @@ urlpatterns = patterns('',
      url(r'^admin/', include(admin.site.urls)),
 
      # registration related
-     # (r'^register/$', registration.views.register),
-     # (r'^register/thanks/$', registration.views.thanks),
-     # (r'^register/regulations/$', registration.views.regulations),
+     (r'^register/$', users.views.register),
+     (r'^register/thanks/$', users.views.thanks),
+     (r'^register/regulations/$', users.views.regulations),
 
-     # (r'^register/add_org/$', registration.views.add_organization),
-     # (r'^register/activate/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', registration.views.activate_user),
+     (r'^register/activate/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', users.views.activate_user),
 
-     # (r'^change_preferences/$', registration.views.change_preferences),
+     (r'^change_preferences/$', users.views.change_preferences),
 
      # login / logout
      (r'^login/$', common.views.login_view),
@@ -77,10 +77,10 @@ urlpatterns = patterns('',
 )
 import settings
 
-# if settings.DEBUG:
-#     urlpatterns += patterns('',
-# #        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
-# #            'document_root': settings.MEDIA_ROOT,
-# #        }),
-#         (r'^static_media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'static_media')})
-#    )
+if settings.DEBUG:
+    urlpatterns += patterns('',
+#        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+#            'document_root': settings.MEDIA_ROOT,
+#        }),
+        (r'^static_media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'static_media')})
+   )

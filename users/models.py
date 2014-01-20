@@ -1,9 +1,15 @@
 # -*- coding: UTF-8 -*-
+from datetime import timedelta
+from django.core.mail import send_mail
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.shortcuts import get_object_or_404
+from django.template import loader, Context
 from django.utils import timezone
+from django.utils.encoding import smart_unicode
 from django.utils.translation import ugettext as _
+from common.models import ZosiaDefinition
 
 SHIRT_SIZE_CHOICES = (
     ('S', 'S'),
@@ -15,8 +21,8 @@ SHIRT_SIZE_CHOICES = (
 )
 
 SHIRT_TYPES_CHOICES = (
-    ('m', _('classic')),
-    ('f', _('women')),
+    ('m', _(u'klasyczna')),
+    ('f', _(u'żeńska')),
 )
 
 BUS_HOUR_CHOICES = (
@@ -26,10 +32,26 @@ BUS_HOUR_CHOICES = (
     ('obojetne', 'obojętne'),
 )
 
+BUS_FIRST_SIZE = 0
+BUS_SECOND_SIZE = 0
+
+
+class OrganizationManager(models.Manager):
+
+    def get_organization_choices(self):
+        l = [ (org.id, org.name)
+               for org in self.get_queryset().filter(accepted=True) ]
+        l = l[:20]
+        l.append(('new', 'inna'))
+        return tuple(l)
+#
+
 
 class Organization(models.Model):
     name     = models.CharField(max_length=64, default='')
     accepted = models.BooleanField(default=False)
+
+    objects = OrganizationManager()
 
     def __unicode__(self):
         return u"%s" % self.name
@@ -53,6 +75,7 @@ class ParticipantManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
 class Participant(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email address'), max_length=254, unique=True)
 
@@ -74,16 +97,19 @@ class Participant(AbstractBaseUser, PermissionsMixin):
         verbose_name = _('user')
         verbose_name_plural = _('users')
 
+    def __unicode__(self):
+        return u"%s" % (self.first_name,)
+
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
         """
-        full_name = '%s %s' % (self.first_name, self.last_name)
-        return full_name.strip()
+        full_name = u'%s %s' % (self.first_name, self.last_name)
+        return smart_unicode(full_name)
 
     def get_short_name(self):
         "Returns the short name for the user."
-        return self.first_name
+        return smart_unicode(self.first_name)
 
     def email_user(self, subject, message, from_email=None):
         """
@@ -114,9 +140,8 @@ class UserPreferences(models.Model):
     # inne
     bus         = models.BooleanField()
     vegetarian  = models.BooleanField()
-    paid        = models.BooleanField()
-    # TODO(karol): remove after successfull verification that rest works.
-    # paid_for_bus = models.BooleanField() # we need this after all :/
+    paid        = models.BooleanField(default=False)
+
     shirt_size  = models.CharField(max_length=5, choices=SHIRT_SIZE_CHOICES)
     shirt_type  = models.CharField(max_length=1, choices=SHIRT_TYPES_CHOICES)
 
@@ -126,19 +151,18 @@ class UserPreferences(models.Model):
     # e.g. 5 means room registration will open 5 minutes before global datetime
     # e.g. -5 means room registration will open 5 minutes after global datetime
     # FIXME needs actual implementation, so far it's only a stub field
-    minutes_early = models.IntegerField()
+    minutes_early = models.IntegerField(default=0)
 
 
     # used to differ from times on which buses leave
     bus_hour = models.CharField(max_length=10, choices=BUS_HOUR_CHOICES, null=True, default=None)
 
-    # ? anonimowy - nie chce zeby jego imie/nazwisko/mail pojawialy sie na stronie
-
 
     def __unicode__(self):
-        return u"%s %s" % (self.user.first_name, self.user.last_name)
+        return u"%s" % (self.user.first_name,)
 
-    def save(self):
+    def save(self, *args, **kwargs):
+        from common.models import ZosiaDefinition
         # at this moment object probably is different from one in
         # database - lets check if 'paid' field is different
         try:
@@ -156,11 +180,11 @@ class UserPreferences(models.Model):
             # oh, we're saving for the first time - it's ok
             # move along, nothing to see here
             pass
-        super(UserPreferences, self).save()
+        super(UserPreferences, self).save(*args, **kwargs)
 
     @property
     def get_room(self):
-        from newrooms.models import UserInRoom
+        from rooms.models import UserInRoom
         if not hasattr(self, 'user_room'):
             try:
                 self.user_room = UserInRoom.objects.get(locator=self.user).room
@@ -174,11 +198,58 @@ class UserPreferences(models.Model):
 
     @staticmethod
     def get_first_time():
-        return  (BUS_FIRST_SIZE - UserPreferences.objects.filter(bus=True, bus_hour=BUS_HOUR_CHOICES[1][0]).count()) > 0
+        return (BUS_FIRST_SIZE - UserPreferences.objects.filter(bus=True, bus_hour=BUS_HOUR_CHOICES[1][0]).count()) > 0
 
     @staticmethod
     def get_second_time():
-        return  (BUS_SECOND_SIZE - UserPreferences.objects.filter(bus=True, bus_hour=BUS_HOUR_CHOICES[2][0]).count()) > 0
+        return (BUS_SECOND_SIZE - UserPreferences.objects.filter(bus=True, bus_hour=BUS_HOUR_CHOICES[2][0]).count()) > 0
 
+    def count_payment(self):
+        # returns how much money user is going to pay
+        # hmm, we want to work for preferences, too
 
+        definition = get_object_or_404(ZosiaDefinition, active_definition=True)
 
+        payment = 0
+
+        # payments: overnight stays + board
+        if self.day_1 and self.dinner_1 and self.breakfast_2:
+            payment += definition.price_overnight_full
+        else:
+            if self.day_1:
+                if self.dinner_1:
+                    payment += definition.price_overnight_dinner
+                elif self.breakfast_2:
+                    payment += definition.price_overnight_breakfast
+                else:
+                    payment += definition.price_overnight
+
+        if self.day_2 and self.dinner_2 and self.breakfast_3:
+            payment += definition.price_overnight_full
+        else:
+            if self.day_2:
+                if self.dinner_2:
+                    payment += definition.price_overnight_dinner
+                elif self.breakfast_3:
+                    payment += definition.price_overnight_breakfast
+                else:
+                    payment += definition.price_overnight
+
+        if self.day_3 and self.dinner_3 and self.breakfast_4:
+            payment += definition.price_overnight_full
+        else:
+            if self.day_3:
+                if self.dinner_3:
+                    payment += definition.price_overnight_dinner
+                elif self.breakfast_4:
+                    payment += definition.price_overnight_breakfast
+                else:
+                    payment += definition.price_overnight
+
+        # payment: transport
+        if self.bus:
+            payment += definition.price_transport
+
+        # payment: organization fee
+        payment += definition.price_organization
+        return payment

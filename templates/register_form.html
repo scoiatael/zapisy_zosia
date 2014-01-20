@@ -1,0 +1,263 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block css %}
+#register_nights, 
+#register_breakfasts, 
+#register_dinners { 
+    display: inline;
+}
+#register_nights     label,
+#register_breakfasts label,
+#register_dinners    label { 
+    width: 10em;
+}
+#register_other label {
+    display: inline;
+    width: 15.3em;
+}
+.nasty_choices_li label { float: left; }
+.nasty_choices_li select { width: 7em; }
+
+input[type=text],
+input[type=email],
+input[type=password] {
+	width: 15em;
+}
+
+input[type=password]:valid,
+input[type=email]:valid,
+#id_name:valid,
+#id_surname:valid {
+	outline: 1px #03de03 solid;
+}
+
+{# This is introduced due to the bug #24. #}
+.float_right { float: right; }
+{% endblock css %}
+
+{% block javascript %}
+function switch_org_form(selEl,addEl) {
+    if(selEl.value == 'new') {
+        addEl.style.display = 'inline';
+        var f_new_org = document.getElementById('id_organization_2');
+        f_new_org.focus();
+    } else {
+        addEl.style.display = 'none';
+    }
+}
+
+function form_onload() {
+    var f_org      = document.getElementById('id_organization_1');
+    var f_add_org  = document.getElementById('id_add_org_1');
+    f_org.onchange = function () { switch_org_form(f_org,f_add_org); };
+    switch_org_form(f_org,f_add_org);
+}
+{% endblock %}
+
+{% block onload %}
+form_onload()
+{% endblock onload %}
+
+{% block content %}
+<h2>Rejestracja</h2>
+
+<form action="../register/" method="post" id="register_form">
+    <fieldset id="register_auth">
+        <legend>Dane do uwierzytelniania</legend>
+        <ol>
+            <li>
+                {% if user_form.email.errors %}
+                <ul class="errorlist float_right">
+                {% for error in user_form.email.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+				<label for="id_email">e-mail <span>(wymagane)</span></label>
+				<input type="email" name="email" id="id_email" required /> {# form.email #}
+            </li>
+            <li>
+                {% if user_form.password.errors %}
+                <ul class="errorlist float_right">
+                {% for error in user_form.password.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <label for="id_password">{% trans "hasło" %} <span>{% trans "(wymagane)" %}</span></label>
+				<input type="password" name="password" id="id_password" required pattern=".{6,}" /> {# form.password #}
+            </li>
+            <li>
+                {% if user_form.password2.errors %}
+                <ul class="errorlist float_right">
+                {% for error in user_form.password2.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <label for="id_password2">{% trans "powtórz hasło" %} <span>{% trans "(wymagane)" %}</span></label>
+				<input type="password" name="password2" id="id_password2" required pattern=".{6,}" /> {# form.password2 #}
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_personal">
+        <legend>{% trans "Dane osobowe" %}</legend>
+        <ol>
+            <li>
+                {% if user_form.name.errors %}
+                <ul class="errorlist float_right">
+                {% for error in user_form.name.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <label for="id_first_name">{% trans "imię" %} <span>{% trans "(wymagane)" %}</span></label>
+				<input type="text" name="first_name" id="id_first_name" required pattern="[^\d\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\;\:\'\,\<\.\>\/\?]+" />
+            </li>
+            <li>
+                {% if form.last_name.errors %}
+                <ul class="errorlist float_right">
+                {% for error in form.last_name.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <label for="id_last_name">{% trans "nazwisko" %} <span>{% trans "(wymagane)" %}</span></label>
+				<input type="text" name="last_name" id="id_last_name" required pattern="[^\d\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\;\:\'\,\<\.\>\/\?]+" />
+            </li>
+	    <li>
+	        <label><span/></label>
+		<comment>{% trans "dodanie organizacji możliwe jest jedynie podczas rejestracji" %}</comment>
+	    </li>
+            <li>
+                {# bw careful with errors here - if there are more than 1 orgs#}
+                {% if org_form.organization_1.errors %}
+                <ul class="errorlist float_right">
+                {% for error in org_form.organization_1.errors %}
+                    <li>{{error|escape}}</li>
+                {% endfor %}
+                </ul>
+                {% endif %}
+                <label for="id_organization_1">
+                   {% trans "organizacja" %} <span>{% trans "(wymagane)" %}</span>
+                </label>
+                {{ org_form.organization_1 }}
+                <div id="id_add_org_1" class="hidden">{{ org_form.organization_2 }}</div>
+            </li>
+
+        </ol>
+    </fieldset>
+    <fieldset id="register_nights">
+        <legend>{% trans "noclegi" %}</legend>
+        <ol>
+            {% if pref_form.day_3.errors %}
+            <ul class="errorlist float_right">
+            {% for error in pref_form.day_3.errors %}
+                <li>{{error|escape}}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+            <li>
+            {{ pref_form.day_1 }} <label for="id_day_1">{% ifequal date_1.month date_2.month %}
+                {{ date_1|date:"j" }}/{{ date_2|date:"j E" }}
+            {% else %}
+                {{ date_1|date:"j E" }} / {{ date_2|date:"j E" }}
+            {% endifequal %} </label>
+            </li>
+            <li>
+            {{ pref_form.day_2 }} <label for="id_day_2">{% ifequal date_2.month date_3.month %}
+                {{ date_2|date:"j" }}/{{ date_3|date:"j E" }}
+            {% else %}
+                {{ date_2|date:"j E" }} / {{ date_3|date:"j E" }}
+            {% endifequal %} </label>
+            </li>
+            <li>
+            {{ pref_form.day_3 }} <label for="id_day_3">{% ifequal date_3.month date_4.month %}
+                {{ date_3|date:"j" }}/{{ date_4|date:"j E" }}
+            {% else %}
+                {{ date_3|date:"j E" }} / {{ date_4|date:"j E" }}
+            {% endifequal %} </label>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_dinners">
+        <legend>{% trans "obiady" %}</legend>
+        <ol>
+            {% if pref_form.dinner_3.errors %}
+            <ul class="errorlist float_right">
+            {% for error in pref_form.dinner_3.errors %}<li>{{error|escape}}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            <li>
+            {{ pref_form.dinner_1}} <label for="id_dinner_1">{{ date_1|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.dinner_2}} <label for="id_dinner_2">{{ date_2|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.dinner_3}} <label for="id_dinner_3">{{ date_3|date:"j E" }}</label>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_breakfasts">
+        <legend>{% trans "śniadania" %}</legend>
+        <ol>
+            {% if pref_form.breakfast_4.errors %}
+            <ul class="errorlist float_right">
+            {% for error in pref_form.breakfast_4.errors %}<li>{{error|escape}}</li>{% endfor %}
+            </ul>
+            {% endif %}
+            <li>
+            {{ pref_form.breakfast_2 }} <label for="id_breakfast_2">{{ date_2|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.breakfast_3 }} <label for="id_breakfast_3">{{ date_3|date:"j E" }}</label>
+            </li>
+            <li>
+            {{ pref_form.breakfast_4 }} <label for="id_breakfast_4">{{ date_4|date:"j E" }}</label>
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset id="register_other">
+        <legend>{% trans "inne" %}</legend>
+        <ol>
+            <li>
+            {{ pref_form.vegetarian }}  <label for="id_vegetarian">{% trans "preferuję kuchnię wegetariańską" %}</label>
+            </li>
+            <li>
+                {{ pref_form.bus }}
+                <label for="id_bus">Jestem zainteresowany zorganizowanym transportem autokarowym na trasie Wrocław - {{ definition.city }} - Wrocław</label>
+            </li>
+            <li class="nasty_choices_li">
+
+            <label for="id_shirt_size">{% trans "Rozmiar koszulki" %}</label> {{ pref_form.shirt_size}}
+            </li>
+            <li class="nasty_choices_li">
+            <label for="id_shirt_type">{% trans "Rodzaj koszulki" %}</label> {{ pref_form.shirt_type}}
+            </li>
+            <li>
+            {% trans "Rejestrując się na obóz, akceptuję jego " %}<a href="/register/regulations/">{% trans "regulamin" %}</a>.
+            </li>
+        </ol>
+    </fieldset>
+    <fieldset><input type="submit" value="{% trans "rejestruj" %}" /></fieldset>
+</form>
+{% endblock content %}
+
+{% block right_column %}
+<span class="cennik">Cennik</span>
+
+<table>
+<tr><td>nocleg:</td><td>{{ definition.price_overnight }}&nbsp;zł</td></tr>
+<tr><td>nocleg ze śniadaniem:</td><td>{{ definition.price_overnight_breakfast }}&nbsp;zł</td></tr>
+<tr><td>nocleg z obiadokolacją:</td><td>{{ definition.price_overnight_dinner }}&nbsp;zł</td></tr>
+<tr><td>nocleg ze śniadaniem i obiadokolacją:</td><td>{{ definition.price_overnight_full }}&nbsp;zł</td></tr>
+{% if definition.price_organization %}
+    <tr><td>opłata organizacyjna:</td><td>{{ definition.price_organization }}&nbsp;zł</td></tr>
+{% endif %}
+<tr><td>transport:</td><td>{{ definition.price_transport }}&nbsp;zł</td></tr>
+</table>
+
+{% endblock %}
+

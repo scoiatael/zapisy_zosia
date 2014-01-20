@@ -13,7 +13,7 @@ PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
-    ('dreamer_', 'patryk.obara@gmail.com')
+    ('Maciek', 'xberus@gmail.com')
 )
 
 MANAGERS = ADMINS
@@ -51,14 +51,13 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-#MEDIA_ROOT = 'site_media'  
 
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'site_media')
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'static_media')
 
 # URL that handles the media served from MEDIA_ROOT.
 # Example: "http://media.lawrence.com"
 #MEDIA_URL = '/site_media'
-STATIC_URL = '/static_media/'
+STATIC_URL = '/static/'
 
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -82,6 +81,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
+    'sponsors.processors.sponsors'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -121,7 +121,9 @@ INSTALLED_APPS = (
     'common',
     'blurb',
     'south',
-    'users'
+    'users',
+    'sponsors',
+    'django_extensions',
 )
 
 #AUTHENTICATION_BACKENDS = (
