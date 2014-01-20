@@ -144,7 +144,7 @@ def register(request):
         user = user_form.save()
         org = org_form.save()
 
-        # send_confirmation_mail(request, user, definition)
+        send_confirmation_mail(request, user, definition)
         preference = pref_form.save(commit=False)
         preference.user = user
         preference.org = org
