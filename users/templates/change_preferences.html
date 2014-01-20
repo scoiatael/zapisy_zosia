@@ -28,34 +28,34 @@
         <li>Otrzymaliśmy Twoją wpłatę za ZOSIĘ. Jeżeli chcesz dokonać zmian, skontaktuj się z organizatorami.</li>
     </ul>
 {% else %}
-{% if payment and not user_paid %}
-<h2>Dane do przelewu</h2>
-<table>
-<tr><td>
-<pre>rachunek odbiorcy
-tytuł przelewu
-imię, nazwisko odbiorcy
-adres 
-miejscowość
-kwota
-</pre>
-</td><td>
-<pre>{{ definition.account_number }}
-[ZOSIA{{ year }}] {{user.first_name}} {{user.last_name}}
-{{ definition.account_data_1 }}
-{{ definition.account_data_2 }}
-{{ definition.account_data_3 }}
-{{ payment }} zł
-</pre>
-</table>
-<p>
-Potwierdzenie przyjęcia wpłaty zostanie wysłane na&nbsp;Twój adres e-mail.
-</p>
-{% else %}
-    <ul class="error_messages">
-        <li>{% trans "Repair errors below, please." %}</li>
-    </ul>
-{% endif %}
+    {% if payment and not user_paid %}
+    <h2>Dane do przelewu</h2>
+    <table>
+    <tr><td>
+    <pre>rachunek odbiorcy
+    tytuł przelewu
+    imię, nazwisko odbiorcy
+    adres
+    miejscowość
+    kwota
+    </pre>
+    </td><td>
+    <pre>{{ definition.account_number }}
+    [ZOSIA{{ year }}] {{user.first_name}} {{user.last_name}}
+    {{ definition.account_data_1 }}
+    {{ definition.account_data_2 }}
+    {{ definition.account_data_3 }}
+    {{ payment }} zł
+    </pre>
+    </table>
+    <p>
+    Potwierdzenie przyjęcia wpłaty zostanie wysłane na&nbsp;Twój adres e-mail.
+    </p>
+    {% else %}
+        <ul class="error_messages">
+            <li>{% trans "Musisz zaznaczyć przynajmniej jedną opcję" %}</li>
+        </ul>
+    {% endif %}
 {% endif %}
 
 
