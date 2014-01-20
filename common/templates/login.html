@@ -8,12 +8,12 @@ label { min-width:3em; }
 
 {% block content %}
 {% if user.is_authenticated %}
-    <h2>{% trans "loggedalready" %}</h2>
+    <h2>{% trans "Jesteś zalogowany" %}</h2>
 {% else %}
     {% if reason %} {# atheistic template ;) #}
-        <h2>{% trans "loginfail" %}</h2>
+        <h2>{% trans "Zapraszamy do zalogowania się." %}</h2>
         {# <p>{{ reason }}</p> #}
-        <p>{% trans "loginfailrecover" %}</p>
+        <p>{% trans "Wprowadź poprawny adres e-mail." %}</p>
     {% else %}
         <h2>{% trans "stranger" %}</h2>
     {% endif %}
@@ -41,7 +41,7 @@ label { min-width:3em; }
             {% endfor %}
             {% endif %}
             </ul>
-            <label for="id_password">{% trans "password" %}</label>
+            <label for="id_password">{% trans "hasło" %}</label>
             {{ form.password }}
             </li>
             </ol>
