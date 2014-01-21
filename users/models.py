@@ -81,9 +81,6 @@ class Participant(AbstractBaseUser, PermissionsMixin):
 
     first_name = models.TextField()
     last_name = models.TextField()
-    is_staff = models.BooleanField(_('staff status'), default=False,
-        help_text=_('Designates whether the user can log into this admin '
-                    'site.'))
     is_active = models.BooleanField(_('active'), default=True,
         help_text=_('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
@@ -96,6 +93,11 @@ class Participant(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+
+    @property
+    def is_staff(self):
+        return self.is_superuser
 
     def __unicode__(self):
         return self.get_full_name()
