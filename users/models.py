@@ -98,7 +98,7 @@ class Participant(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
 
     def __unicode__(self):
-        return u"%s" % (self.first_name,)
+        return self.get_full_name()
 
     def get_full_name(self):
         """
