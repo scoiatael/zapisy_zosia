@@ -4,8 +4,13 @@ from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.http import Http404
 from django.utils.encoding import smart_unicode
-from models import UserPreferences, SHIRT_TYPES_CHOICES, Organization
+from models import UserPreferences, SHIRT_TYPES_CHOICES, Organization, Participant
 from common.models import ZosiaDefinition
+
+
+class ParticipantInline(admin.TabularInline):
+    model = Participant
+    can_delete = False
 
 class UserPreferencesAdmin(admin.ModelAdmin):
     list_display = ('user_name', 'user_email', 'org',
@@ -15,8 +20,6 @@ class UserPreferencesAdmin(admin.ModelAdmin):
         'vegetarian',
         'shirt',
         'bus',
-        'bus_hour',
-        'want_bus',
         'ZOSIA_cost',
         'paid',
         'minutes_early',)
