@@ -70,9 +70,9 @@ urlpatterns = patterns('',
      url(r'^reset/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
          'django.contrib.auth.views.password_reset_confirm',
          { 'template_name':'password_reset_confirm.html' }, name='password_reset_confirm'),
-     (r'^reset/done/$',
+     url(r'^reset/done/$',
          'django.contrib.auth.views.password_reset_complete',
-         { 'template_name':'password_reset_complete.html' }),
+         { 'template_name':'password_reset_complete.html' }, name='password_reset_complete'),
      (r'^static_media/(.*)$', 'django.views.static.serve', {'document_root': os.path.join(os.path.dirname(__file__), 'static_media')})
 )
 import settings
