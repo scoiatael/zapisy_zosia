@@ -86,7 +86,7 @@ window.onload=function(){ AddFillerLink("col1_content","col3_content"); }
                             <a href="/register/">Rejestracja</a></li>
                         </li>
                     {% endif %}
-{#                    <li {% if title == "Lectures" %}id="current"{% endif %}><a href="/lectures/">Wykłady</a></li>#}
+                    <li {% if title == "Lectures" %}id="current"{% endif %}><a href="/lectures/">Wykłady</a></li>
 {#					<li {% if title == "Program" %}id="current"{% endif %}><a href="/program/">Program</a></li>#}
                     {% if definition.rooming_is_open %}
                         <li {% if title == 'Room' %}id="current"{% endif %}>
