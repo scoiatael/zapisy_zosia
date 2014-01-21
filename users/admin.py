@@ -2,15 +2,13 @@
 
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from django.http import Http404
 from django.utils.encoding import smart_unicode
 from models import UserPreferences, SHIRT_TYPES_CHOICES, Organization, Participant
-from common.models import ZosiaDefinition
 
 
-class ParticipantInline(admin.TabularInline):
-    model = Participant
-    can_delete = False
+class ParticipantAdmin(admin.ModelAdmin):
+    pass
+
 
 class UserPreferencesAdmin(admin.ModelAdmin):
     list_display = ('user_name', 'user_email', 'org',
@@ -127,3 +125,4 @@ class OrganizationAdmin(admin.ModelAdmin):
 admin.site.unregister(Group)
 admin.site.register(UserPreferences, UserPreferencesAdmin)
 admin.site.register(Organization, OrganizationAdmin)
+admin.site.register(Participant, ParticipantAdmin)
