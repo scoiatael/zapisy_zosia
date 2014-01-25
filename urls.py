@@ -31,7 +31,7 @@ urlpatterns = patterns('',
      (r'^feeds/$', LatestBlogEntries()),
 
      # admin related
-     # (r'^admin/register_payment/$', registration.views.register_payment),
+     (r'^admin/register_payment/$', users.views.register_payment),
      url(r'^admin/', include(admin.site.urls)),
 
      # registration related

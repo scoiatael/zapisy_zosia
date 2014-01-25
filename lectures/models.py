@@ -26,6 +26,7 @@ class LectureManager(models.Manager):
 type_choices = ((0, u'Wykład'), (1, u'Warsztaty'))
 person_type_choices = ((0, u'Sponsor'), (1, u'Gość'), (2, u'Normalny'))
 
+
 class Lecture(models.Model):
     title     = models.CharField(max_length=256)
     duration  = models.PositiveIntegerField(max_length=3)
@@ -48,6 +49,10 @@ class Lecture(models.Model):
     #sprezentujpl_email = models.EmailField()
 
     objects = LectureManager()
+
+    class Meta:
+        verbose_name = u'Wykład'
+        verbose_name_plural = u'Wykłady'
 
     def __unicode__(self):
         return u"%s - %s" % (self.author, self.title)
