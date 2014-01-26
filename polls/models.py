@@ -57,10 +57,12 @@ class Poll(models.Model):
 class Question(models.Model):
     poll = models.ForeignKey('Poll', verbose_name=u'Ankieta')
     question = models.CharField(max_length=255, verbose_name=u'Pytanie')
+    order = models.IntegerField(default=100)
 
     class Meta:
         verbose_name = u'Pytanie'
         verbose_name_plural = u'Pytanie'
+        ordering = ['order', 'id']
 
     def __unicode__(self):
         return u"%s" % (self.question,)

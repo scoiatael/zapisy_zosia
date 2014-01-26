@@ -8,7 +8,7 @@ class PollAdmin(admin.ModelAdmin):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('poll', 'question', 'votes')
+    list_display = ('order', 'question', 'votes')
     list_filter = ['poll__title']
 
     def votes(self, item):
