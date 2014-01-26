@@ -1,124 +1,19 @@
 # -*- coding: UTF-8 -*-
 from datetime import timedelta
-from django import forms
 from django.contrib.auth.decorators import login_required
-from django.contrib.sites.models import RequestSite
-from django.core.mail import send_mail
-from django.forms import ModelForm
 from django.shortcuts import render_to_response, get_object_or_404
-from django.template import loader, Context
-from django.utils.http import int_to_base36
-from django.utils.translation import ugettext as _
 from django.contrib.auth.tokens import default_token_generator as token_generator
-from django.utils.http import base36_to_int, int_to_base36
-from django.http import Http404, HttpResponseRedirect
+from django.utils.http import base36_to_int
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views.decorators.cache import never_cache
 
 from common.helpers import is_registration_disabled
 from common.models import ZosiaDefinition
+from users.forms import RegistrationForm, PreferencesForm, OrganizationForm
 
-from users.models import UserPreferences, Participant, Organization
+from users.models import UserPreferences, Participant
+from users.utils import send_confirmation_mail, prepare_data
 
-
-class RegistrationForm(ModelForm):
-    email = forms.EmailField(required = True)
-    first_name = forms.CharField(required = False)
-    last_name = forms.CharField(required = False)
-
-    password = forms.CharField(label=_("Password"),
-        widget=forms.PasswordInput)
-    password2 = forms.CharField(label=_("Password confirmation"),
-        widget=forms.PasswordInput,
-        help_text=_("Enter the same password as above, for verification."))
-
-    class Meta:
-        fields = ('email', 'first_name', 'last_name')
-        model = Participant
-
-    def clean_password2(self):
-        password1 = self.cleaned_data.get("password")
-        password2 = self.cleaned_data.get("password2")
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(u'Hasła są różne', code='password_mismatch')
-        return password2
-
-    def save(self, commit=True):
-        user = super(ModelForm, self).save(commit=False)
-        user.is_active = False
-        user.set_password(self.cleaned_data["password"])
-        if commit:
-            user.save()
-        return user
-
-
-class PreferencesForm(ModelForm):
-
-    class Meta:
-        fields = ('day_1', 'day_2', 'day_3',
-                  'breakfast_2', 'breakfast_3', 'breakfast_4',
-                  'dinner_1', 'dinner_2', 'dinner_3',
-                  'bus', 'vegetarian', 'shirt_size', 'shirt_type')
-        model = UserPreferences
-
-
-class OrganizationForm(ModelForm):
-    organization_1 = forms.ChoiceField(choices=Organization.objects.get_organization_choices())
-    organization_2 = forms.CharField(required=False, max_length=255)
-
-    class Meta:
-        fields = ()
-        model = Organization
-
-    def save(self, commit=True):
-        try:
-            org1 = self.cleaned_data['organization_1']
-            org2 = self.cleaned_data['organization_2']
-
-            if org1 == 'new':
-                org = Organization(name=org2, accepted=False)
-            else:
-                org = Organization.objects.get(id=org1)
-        except:
-            org = Organization("fail",accepted=False)
-
-        if commit:
-            org.save()
-
-        return org
-
-
-def send_confirmation_mail(request, user, definition):
-        t = loader.get_template("activation_email.txt")
-        c = {
-            'site_name': RequestSite(request),
-            'uid': int_to_base36(user.id),
-            'token': token_generator.make_token(user),
-            'payment_deadline': definition.payment_deadline,
-            }
-        send_mail( u'Potwierdź założenie konta na zosia.org',
-            t.render(Context(c)),
-            'ksi@cs.uni.wroc.pl',
-            [ user.email ],
-            fail_silently=True )
-
-def prepare_data(post, preference):
-    if preference.paid:
-        rewritten_post = {}
-        for k in post.keys():
-            rewritten_post[k] = post[k]
-        for k in [ 'day_1', 'day_2', 'day_3',
-                   'breakfast_2', 'breakfast_3', 'breakfast_4',
-                   'dinner_1', 'dinner_3', 'dinner_2', 'bus', 'vegetarian' ]:
-            if preference.__dict__[k]:
-                rewritten_post[k] = u'on'
-            elif k in rewritten_post:
-                del rewritten_post[k]
-        rewritten_post['shirt_type'] = preference.__dict__['shirt_type']
-        rewritten_post['shirt_size'] = preference.__dict__['shirt_size']
-
-        return rewritten_post
-
-    return post
 
 def register(request):
     if is_registration_disabled():
@@ -182,6 +77,7 @@ def change_preferences(request):
     user_wants_bus = prefs.bus
     return render_to_response('change_preferences.html', locals())
 
+
 def activate_user(request, uidb36=None, token=None):
     assert uidb36 is not None and token is not None
     try:
@@ -208,6 +104,7 @@ def regulations(request):
     zosia_final = definition.zosia_final
     return render_to_response('regulations.html', locals())
 
+
 def thanks(request):
     user = request.user
     title = "Registration"
@@ -224,6 +121,7 @@ def users_status(request):
     #list = zip(users,prefs)
     list = []
     return render_to_response('the_great_table.html', locals())
+
 
 def register_payment(request):
     user = request.user

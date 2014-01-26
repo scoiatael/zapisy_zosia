@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'south',
     'users',
     'sponsors',
+    'polls',
     'django_extensions',
 )
 

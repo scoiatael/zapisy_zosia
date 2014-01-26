@@ -2,7 +2,6 @@
 {% load i18n %}
 {% load cache %}
 {% load blurb_edit %}
-{% cache 60 header_index_template %}
 <html lang="pl">
 <head>
     <title>ZOSIA 2014</title>
@@ -21,7 +20,6 @@
 window.onload=function(){ AddFillerLink("col1_content","col3_content"); }
 </script>
 <script type="text/javascript">
-{% endcache %}
 {% block javascript %}{% endblock %}
 </script>
 <style type="text/css">
@@ -81,6 +79,7 @@ window.onload=function(){ AddFillerLink("col1_content","col3_content"); }
                     {% load time_block_helpers %}
                     {% if user.is_authenticated %}
                         <li {% if title == "Change preferences" %}id="current"{% endif %}><a href="/change_preferences/">Preferencje</a></li>
+                        <li {% if title == "Polls" %}id="current"{% endif %}><a href="{% url 'polls:main' %}">Ankiety</a></li>
                     {% else %}
                         <li {% if title == "Registration" %}id="current"{% endif %}>
                             <a href="/register/">Rejestracja</a></li>

@@ -15,6 +15,7 @@ class ZosiaDefinition(models.Model):
     rooming_final				= models.DateTimeField()
     zosia_start                 = models.DateTimeField()
     zosia_final                 = models.DateTimeField()
+    bus_limit                   = models.IntegerField(default=90)
     # prices
     price_overnight             = models.IntegerField()
     price_overnight_breakfast   = models.IntegerField()
@@ -36,5 +37,17 @@ class ZosiaDefinition(models.Model):
 
     active                      = models.BooleanField(default=False)
 
+    class Meta:
+        verbose_name = u'Ustawienie'
+        verbose_name_plural = u'Ustawienia'
+
     def rooming_is_open(self):
         return self.rooming_start <= datetime.datetime.now() <= self.rooming_final
+
+    @property
+    def bus_is_full(self):
+        from users.models import UserPreferences
+        if not hasattr(self, '_bus_is_full'):
+            self._bus_is_full = UserPreferences.objects.filter(state=self, bus=True).count() < self.bus_limit
+
+        return self._bus_is_full

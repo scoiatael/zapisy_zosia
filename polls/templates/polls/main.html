@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+{% block content %}<br/>
+{% for poll in polls %}
+    <div>
+        <h2>{{ poll.title }}</h2>
+        {% if poll.description %}
+        <p>{{ poll.description|safe }}</p>
+        {% endif %}
+        <form action="{% url 'polls:vote' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="poll_id" value="{{ poll.id }}">
+            {{ poll.form }}
+            <input type="submit">
+        </form>
+    </div>
+{% empty %}
+    Nie masz aktywnych ankiet :(
+{% endfor %}
+{% endblock %}

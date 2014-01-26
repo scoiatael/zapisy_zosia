@@ -53,6 +53,10 @@ class Organization(models.Model):
 
     objects = OrganizationManager()
 
+    class Meta:
+        verbose_name = u'Organizacja'
+        verbose_name_plural = u'Organizacje'
+
     def __unicode__(self):
         return u"%s" % self.name
 
@@ -159,6 +163,8 @@ class UserPreferences(models.Model):
     # used to differ from times on which buses leave
     bus_hour = models.CharField(max_length=10, choices=BUS_HOUR_CHOICES, null=True, default=None)
 
+    class Meta:
+        verbose_name_plural = u'Preferencje'
 
     def __unicode__(self):
         return u"%s" % (self.user.first_name,)

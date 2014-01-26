@@ -33,6 +33,7 @@ urlpatterns = patterns('',
      # admin related
      (r'^admin/register_payment/$', users.views.register_payment),
      url(r'^admin/', include(admin.site.urls)),
+     url(r'^polls/', include('polls.urls', namespace='polls')),
 
      # registration related
      (r'^register/$', users.views.register),
