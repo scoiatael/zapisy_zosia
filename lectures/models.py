@@ -30,7 +30,7 @@ person_type_choices = ((0, u'Sponsor'), (1, u'Gość'), (2, u'Normalny'))
 class Lecture(models.Model):
     title     = models.CharField(max_length=256)
     duration  = models.PositiveIntegerField(max_length=3)
-    abstract  = models.TextField(max_length=512)
+    abstract  = models.TextField(max_length=768)
     info      = models.TextField(max_length=2048, blank=True)
     #dodatkowe info dla organizatorów
 #
