@@ -121,7 +121,7 @@ msgstr "Abstrakt"
 
 #: lectures/templates/lectures.html:67
 msgid "(max chars)"
-msgstr " (do 512 znaków)"
+msgstr " (do 768 znaków)"
 
 #: lectures/templates/lectures.html:73
 msgid "Additional information"
