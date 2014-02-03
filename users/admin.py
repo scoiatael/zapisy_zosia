@@ -11,6 +11,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 
 class UserPreferencesAdmin(admin.ModelAdmin):
+    list_per_page = 400
     list_display = ('user_name', 'user_email', 'org',
         'days',
         'breakfasts',
