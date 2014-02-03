@@ -66,13 +66,13 @@ def change_preferences(request):
         # bug with settings not updateble
         # after user paid
         post = prepare_data(request.POST, prefs)
-        pref_form = PreferencesForm(post, instance=prefs)
+        pref_form = preferences_form_fabric(definition, prefs)(post, instance=prefs)
         if pref_form.is_valid():
             prefs = pref_form.save()
             payment = prefs.count_payment()
 
     else:
-        pref_form = PreferencesForm(instance=prefs)
+        pref_form = preferences_form_fabric(definition, prefs)(instance=prefs)
         payment = prefs.count_payment()
     user_wants_bus = prefs.bus
     return render_to_response('change_preferences.html', locals())

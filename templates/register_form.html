@@ -228,7 +228,7 @@ form_onload()
         {% if pref_form.bus %}
             <li>
                 {{ pref_form.bus }}
-                <label for="id_bus">{% if definition.bus_is_full %}<strong>UWAGA!</strong> w autobusie skończyły się miejsca. Odznaczenie tej opcji może skutkować zablokowaniem tej opcji{% endif %}Interesuje mnie zorganizowany transport autokarowym na trasie Wrocław - {{ definition.city }} - Wrocław. Uwaga: autokar wyjeżdża w czwartek</label>
+                <label for="id_bus">{% if definition.bus_is_full %}<strong>UWAGA!</strong> w autobusie skończyły się miejsca. Odznaczenie może skutkować zablokowaniem tej opcji{% endif %} Interesuje mnie zorganizowany transport autokarowym na trasie Wrocław - {{ definition.city }} - Wrocław. Uwaga: autokar wyjeżdża w czwartek</label>
             </li>
         {% else %}
             <li>
