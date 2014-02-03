@@ -46,6 +46,23 @@ class PreferencesForm(ModelForm):
         model = UserPreferences
 
 
+class PreferencesNoBusForm(ModelForm):
+
+    class Meta:
+        fields = ('day_1', 'day_2', 'day_3',
+                  'breakfast_2', 'breakfast_3', 'breakfast_4',
+                  'dinner_1', 'dinner_2', 'dinner_3',
+                  'want_bus', 'vegetarian', 'shirt_size', 'shirt_type')
+        model = UserPreferences
+
+
+def preferences_form_fabric(definition, preferences=None):
+    if definition.bus_is_full and preferences and not preferences.bus:
+        return PreferencesNoBusForm
+    else:
+        return PreferencesForm
+
+
 class OrganizationForm(ModelForm):
     organization_1 = forms.ChoiceField(choices=Organization.objects.get_organization_choices())
     organization_2 = forms.CharField(required=False, max_length=255)
