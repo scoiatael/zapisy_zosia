@@ -48,6 +48,6 @@ class ZosiaDefinition(models.Model):
     def bus_is_full(self):
         from users.models import UserPreferences
         if not hasattr(self, '_bus_is_full'):
-            self._bus_is_full = UserPreferences.objects.filter(state=self, bus=True).count() < self.bus_limit
+            self._bus_is_full = UserPreferences.objects.filter(state=self, bus=True).count() >= self.bus_limit
 
         return self._bus_is_full

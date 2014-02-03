@@ -144,7 +144,7 @@ class UserPreferences(models.Model):
     dinner_3 = models.BooleanField()
 
     # inne
-    bus         = models.BooleanField()
+    bus         = models.BooleanField(default=False)
     vegetarian  = models.BooleanField()
     paid        = models.BooleanField(default=False)
 

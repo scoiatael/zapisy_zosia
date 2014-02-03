@@ -18,6 +18,7 @@ class UserPreferencesAdmin(admin.ModelAdmin):
         'vegetarian',
         'shirt',
         'bus',
+        'want_bus',
         'ZOSIA_cost',
         'paid',
         'minutes_early',)

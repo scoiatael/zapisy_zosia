@@ -225,10 +225,17 @@ form_onload()
             <li>
             {{ pref_form.vegetarian }}  <label for="id_vegetarian">{% trans "preferuję kuchnię wegetariańską" %}</label>
             </li>
+        {% if pref_form.bus %}
             <li>
                 {{ pref_form.bus }}
-                <label for="id_bus">Jestem zainteresowany zorganizowanym transportem autokarowym na trasie Wrocław - {{ definition.city }} - Wrocław. Uwaga: autokar wyjeżdża w czwartek</label>
+                <label for="id_bus">{% if definition.bus_is_full %}<strong>UWAGA!</strong> w autobusie skończyły się miejsca. Odznaczenie może skutkować zablokowaniem tej opcji{% endif %} Interesuje mnie zorganizowany transport autokarowym na trasie Wrocław - {{ definition.city }} - Wrocław. Uwaga: autokar wyjeżdża w czwartek</label>
             </li>
+        {% else %}
+            <li>
+                {{ pref_form.want_bus }}
+                <label for="id_want_bus">Proszę o wpisanie na listę rezerwową zorganizowanego transportu autokarowego na trasie Wrocław - {{ definition.city }} - Wrocław. Uwaga: autokar wyjeżdża w czwartek</label>
+            </li>
+        {% endif %}
             <li class="nasty_choices_li">
             {% if pref_form.shirt_size.errors %}
                 <ul class="errorlist">
