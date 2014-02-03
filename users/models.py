@@ -163,6 +163,10 @@ class UserPreferences(models.Model):
     # used to differ from times on which buses leave
     bus_hour = models.CharField(max_length=10, choices=BUS_HOUR_CHOICES, null=True, default=None)
 
+
+    photo_url = models.CharField(max_length=250, null=True, blank=True)
+    description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
+
     class Meta:
         verbose_name_plural = u'Preferencje'
 
