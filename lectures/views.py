@@ -1,40 +1,34 @@
 # -*- coding: UTF-8 -*-
 
 from django.utils.translation import ugettext as _
-from django.http import *
-from django.template import Context
-from django.template.loader import get_template
 from django.shortcuts import render_to_response
 
-from django.contrib.auth.decorators import login_required
 from common.forms import LoginForm
 from common.helpers import *
 
-from models import *
 from forms import *
+
 
 def index(request):
     title = "Lectures"
     user = request.user
     sponslectures = Lecture.objects.filter(accepted=True, person_type=0).order_by('order')
-    lectures = Lecture.objects.filter(accepted=True, person_type__gte=1, photo_url__isnull=False).exclude(photo_url='').order_by('person_type', 'order')
-    lectures_normal = Lecture.objects.filter(accepted=True, person_type__gte=1, photo_url='').order_by('person_type', 'order')
-    lectures_null = Lecture.objects.filter(accepted=True, person_type__gte=1, photo_url__isnull=True).order_by('person_type', 'order')
+    lectures = Lecture.objects.filter(accepted=True, person_type__gte=1).order_by('person_type', 'order')
+    lectures_null = Lecture.objects.filter(accepted=True, person_type__gte=1).order_by('person_type', 'order')
 
 
     workshops = Lecture.objects.filter(accepted=True, person_type__gte=1, type=1).order_by('person_type', 'order')
     if is_lecture_suggesting_enabled():
         login_form = LoginForm()
         if user.is_authenticated() and user.is_active:
-            if request.method == 'POST':
-                lecture_proposition_form = NewLectureForm(request.POST)
-                if lecture_proposition_form.is_valid():
-                    form = lecture_proposition_form
-                    Lecture.objects.create_lecture(form, request.user)
-                    messages = [ _("thankyou") ]
-                    lecture_proposition_form = NewLectureForm()
-            else:
-                lecture_proposition_form = NewLectureForm()
+            lecture_proposition_form = LectureForm(request.POST or None)
+            if lecture_proposition_form.is_valid():
+                lecture = lecture_proposition_form.save(commit=False)
+                lecture.author = request.user
+                lecture.save()
+                messages = [ _("thankyou") ]
+                lecture_proposition_form = LectureForm()
+
     return render_to_response('lectures.html', locals())
 
 
