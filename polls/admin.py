@@ -16,7 +16,8 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class UserAnswerAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'question', 'created', 'edited')
+    list_filter = ['question']
 
 
 admin.site.register(Poll, PollAdmin)
