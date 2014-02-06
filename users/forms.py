@@ -57,7 +57,7 @@ class PreferencesNoBusForm(ModelForm):
 
 
 def preferences_form_fabric(definition, preferences=None):
-    if definition.bus_is_full or (preferences and not preferences.bus):
+    if definition.bus_is_full and (not preferences or not preferences.bus):
         return PreferencesNoBusForm
     else:
         return PreferencesForm
