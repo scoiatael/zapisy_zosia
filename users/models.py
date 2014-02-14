@@ -10,7 +10,6 @@ from django.utils import timezone
 from django.utils.encoding import smart_unicode
 from django.utils.translation import ugettext as _
 from common.models import ZosiaDefinition
-
 SHIRT_SIZE_CHOICES = (
     ('S', 'S'),
     ('M', 'M'),
@@ -89,6 +88,7 @@ class Participant(AbstractBaseUser, PermissionsMixin):
         help_text=_('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+    committee = models.BooleanField(default=False, verbose_name='komitet programowy')
 
     objects = ParticipantManager()
 

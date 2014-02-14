@@ -4,7 +4,6 @@ from django.contrib import admin
 from django.conf.urls import patterns, url, include
 import blog.views
 import lectures.views
-import rooms.views
 import common.views
 
 from blog.feeds import *
@@ -34,6 +33,7 @@ urlpatterns = patterns('',
      (r'^admin/register_payment/$', users.views.register_payment),
      url(r'^admin/', include(admin.site.urls)),
      url(r'^polls/', include('polls.urls', namespace='polls')),
+     url(r'^committee/', include('committee.urls', namespace='committee')),
 
      # registration related
      (r'^register/$', users.views.register),

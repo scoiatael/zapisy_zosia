@@ -40,6 +40,7 @@ class Lecture(models.Model):
     author    = models.ForeignKey(settings.AUTH_USER_MODEL)
     author_show = models.CharField(max_length=256, null=True, blank=True)
     date_time = models.DateTimeField(auto_now_add=True)
+    for_committe = models.BooleanField(default=True, verbose_name=u'Dla komitetu programowego')
     accepted  = models.BooleanField(default=False)
 
     order = models.IntegerField(default=99)

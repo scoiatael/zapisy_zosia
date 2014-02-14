@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     'users',
     'sponsors',
     'polls',
+    'committee',
     'django_extensions',
 )
 
