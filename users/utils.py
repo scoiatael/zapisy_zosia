@@ -6,6 +6,18 @@ from django.contrib.auth.tokens import default_token_generator as token_generato
 from django.utils.http import int_to_base36
 
 
+def send_time_email(preference):
+        t = loader.get_template("users/emails/time.txt")
+        c = {
+            'time': preference.get_records_time()
+            }
+        send_mail( u'[ZOSIA 2014] Twój czas otwarcia zapisów na pokoje',
+            t.render(Context(c)),
+            'ksi@cs.uni.wroc.pl',
+            [ preference.user.email ],
+            fail_silently=True )
+
+
 def send_confirmation_mail(request, user, definition):
         t = loader.get_template("activation_email.txt")
         c = {

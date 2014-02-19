@@ -153,10 +153,6 @@ class UserPreferences(models.Model):
 
     want_bus = models.BooleanField(default=False)
 
-    # used for opening rooms faster per-user;
-    # e.g. 5 means room registration will open 5 minutes before global datetime
-    # e.g. -5 means room registration will open 5 minutes after global datetime
-    # FIXME needs actual implementation, so far it's only a stub field
     minutes_early = models.IntegerField(default=0)
 
 
@@ -265,3 +261,6 @@ class UserPreferences(models.Model):
         # payment: organization fee
         payment += definition.price_organization
         return payment
+
+    def get_records_time(self):
+        return self.state.rooming_start - timedelta(minutes=self.minutes_early)

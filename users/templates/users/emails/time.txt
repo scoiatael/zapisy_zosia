@@ -1,0 +1,5 @@
+Nie przegap zapisu na pokoje na ZOSIA 2014.
+Twój czas: {{time|date:"H:i, d m Y"}}. Zapisy będą otwarce przez cały następny dzień.
+
+
+Osobom, które nie wybiorą pokoju, zostanie on przydzielony przez organizatorów.
