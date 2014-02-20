@@ -75,11 +75,9 @@ article.normal  {min-height: 0;}
     {% include 'show_lecture.html' with lectures=sponslectures %}
 {% endif %}
 
-    {% if lectures or lectures_normal %}
+    {% if lectures %}
     <h2>Wykłady uczestników</h2>
      {% include "show_lecture.html" with lectures=lectures %}
-     {% include "show_lecture.html" with lectures=lectures_normal %}
-     {% include "show_lecture.html" with lectures=lectures_null %}
       {% else %}
         <p>
         {% trans "Nie opublikowaliśmy jeszcze wykładów. Pojawią się one po konsultacji z Komitetem Programowym." %}</label>

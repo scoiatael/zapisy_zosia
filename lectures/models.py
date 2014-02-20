@@ -36,7 +36,7 @@ class Lecture(models.Model):
     person_type = models.IntegerField(choices=person_type_choices, verbose_name=u'Typ wykładowcy', default=2)
 
 
-    # description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
+    description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
     author    = models.ForeignKey(settings.AUTH_USER_MODEL)
     author_show = models.CharField(max_length=256, null=True, blank=True)
     date_time = models.DateTimeField(auto_now_add=True)
