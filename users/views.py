@@ -54,7 +54,6 @@ def change_preferences(request):
     title = "Change preferences"
     prefs = UserPreferences.objects.get(user=user)
     user_paid = prefs.paid
-    free_seats = UserPreferences.get_free_seats() or prefs.bus
     definition = get_object_or_404(ZosiaDefinition, active_definition=True)
     user_opening_hour = definition.rooming_start - timedelta(minutes=prefs.minutes_early) # for sure to change
 

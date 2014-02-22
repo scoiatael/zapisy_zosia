@@ -36,7 +36,36 @@ class RegistrationForm(ModelForm):
         return user
 
 
-class PreferencesForm(ModelForm):
+
+class PreferencesNoBusForm(ModelForm):
+
+    class Meta:
+        fields = ('day_1', 'day_2', 'day_3',
+                  'breakfast_2', 'breakfast_3', 'breakfast_4',
+                  'dinner_1', 'dinner_2', 'dinner_3',
+                  'want_bus', 'vegetarian', 'shirt_size', 'shirt_type')
+        model = UserPreferences
+
+
+    def __init__(self, *args, **kwargs):
+        preference = kwargs.get('instance', None)
+        super(PreferencesNoBusForm,self).__init__(*args, **kwargs)
+        if preference and preference.paid:
+            self.fields['day_1'].widget.attrs['disabled'] = True
+            self.fields['day_2'].widget.attrs['disabled'] = True
+            self.fields['day_3'].widget.attrs['disabled'] = True
+            self.fields['breakfast_2'].widget.attrs['disabled'] = True
+            self.fields['breakfast_3'].widget.attrs['disabled'] = True
+            self.fields['breakfast_4'].widget.attrs['disabled'] = True
+            self.fields['dinner_1'].widget.attrs['disabled'] = True
+            self.fields['dinner_2'].widget.attrs['disabled'] = True
+            self.fields['dinner_3'].widget.attrs['disabled'] = True
+            self.fields['shirt_size'].widget.attrs['disabled'] = True
+            self.fields['shirt_type'].widget.attrs['disabled'] = True
+            self.fields['vegetarian'].widget.attrs['disabled'] = True
+
+
+class PreferencesForm(PreferencesNoBusForm):
 
     class Meta:
         fields = ('day_1', 'day_2', 'day_3',
@@ -54,19 +83,12 @@ class PreferencesForm(ModelForm):
                 options += [('16:00', '16:00')]
             if preference.bus18_available():
                 options += [('18:00', '18:00')]
-            
+
+            if preference.paid:
+                self.fields['bus'].widget.attrs['disabled'] = True
+
             self.fields['bus_hour'].choices = options
 
-
-
-class PreferencesNoBusForm(ModelForm):
-
-    class Meta:
-        fields = ('day_1', 'day_2', 'day_3',
-                  'breakfast_2', 'breakfast_3', 'breakfast_4',
-                  'dinner_1', 'dinner_2', 'dinner_3',
-                  'want_bus', 'vegetarian', 'shirt_size', 'shirt_type')
-        model = UserPreferences
 
 
 def preferences_form_fabric(definition, preferences=None):
