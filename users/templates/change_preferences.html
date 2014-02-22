@@ -96,9 +96,12 @@ kwota
                 </label>
                 {{ prefs.org }}
             </li>
-{#            <li>#}
-{#            <label>{% trans "bus hour" %}</label> {{ form.bus_hour}}#}
-{#            </li>#}
+            {% if pref_form.bus_hour %}
+            <li>
+
+            <label>{% trans "bus hour" %}</label> {{ pref_form.bus_hour}}
+            </li>
+        {% endif %}
 
 
 

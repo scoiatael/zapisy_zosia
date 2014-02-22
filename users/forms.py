@@ -42,8 +42,21 @@ class PreferencesForm(ModelForm):
         fields = ('day_1', 'day_2', 'day_3',
                   'breakfast_2', 'breakfast_3', 'breakfast_4',
                   'dinner_1', 'dinner_2', 'dinner_3',
-                  'bus', 'vegetarian', 'shirt_size', 'shirt_type')
+                  'bus', 'vegetarian', 'shirt_size', 'shirt_type', 'bus_hour')
         model = UserPreferences
+
+    def __init__(self, *args, **kwargs):
+        options = [('', u'obojętne')]
+        preference = kwargs.get('instance', None)
+        super(PreferencesForm,self).__init__(*args, **kwargs)
+        if preference:
+            if preference.bus16_available():
+                options += [('16:00', '16:00')]
+            if preference.bus18_available():
+                options += [('18:00', '18:00')]
+            
+            self.fields['bus_hour'].choices = options
+
 
 
 class PreferencesNoBusForm(ModelForm):

@@ -15,7 +15,9 @@ class ZosiaDefinition(models.Model):
     rooming_final				= models.DateTimeField()
     zosia_start                 = models.DateTimeField()
     zosia_final                 = models.DateTimeField()
-    bus_limit                   = models.IntegerField(default=90)
+    bus_limit                   = models.IntegerField(default=98)
+    bus16_limit                 = models.IntegerField(default=48)
+    bus18_limit                 = models.IntegerField(default=48)
     # prices
     price_overnight             = models.IntegerField()
     price_overnight_breakfast   = models.IntegerField()

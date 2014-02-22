@@ -25,10 +25,9 @@ SHIRT_TYPES_CHOICES = (
 )
 
 BUS_HOUR_CHOICES = (
-    ('brak',''),
+    ('','obojętne'),
     ('16:00', '16:00'),
-    ('18:00', '18:00'),
-    ('obojetne', 'obojętne'),
+    ('18:00', '18:00')
 )
 
 BUS_FIRST_SIZE = 0
@@ -211,6 +210,12 @@ class UserPreferences(models.Model):
     @staticmethod
     def get_second_time():
         return (BUS_SECOND_SIZE - UserPreferences.objects.filter(bus=True, bus_hour=BUS_HOUR_CHOICES[2][0]).count()) > 0
+
+    def bus16_available(self):
+        return UserPreferences.objects.filter(bus_hour='16:00').exclude(user=self.user).count() < self.state.bus16_limit
+
+    def bus18_available(self):
+        return UserPreferences.objects.filter(bus_hour='18:00').exclude(user=self.user).count() < self.state.bus18_limit
 
     def count_payment(self):
         # returns how much money user is going to pay
