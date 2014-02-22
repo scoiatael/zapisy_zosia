@@ -81,8 +81,9 @@ Rooms.modify_room = function(room_id)
             }
         }
     }
-    var post_data = 'rid='+room_id+';';
+    var post_data = 'rid='+room_id;
     xhr.open('POST', '/rooms/modify/', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhr.send(post_data);
 }
 
@@ -143,6 +144,7 @@ Rooms.closeRoom = function(key)
     }
     var post_data = 'key='+key+';';
     xhr.open('POST', '/rooms/close/', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
     xhr.send(post_data);
 }
 
@@ -170,6 +172,7 @@ Rooms.tryGetIn = function(rid)
     input = document.getElementById('in_key');
     var post_data = 'key='+input.value+';rid='+rid+';';
     xhr.open('POST', '/rooms/trytogetin/', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
     xhr.send(post_data);
 }
 
@@ -189,6 +192,7 @@ Rooms.hideDialog = function(key)
     }
     var post_data = 'key='+key+';';
     xhr.open('POST', '/rooms/open/', true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
     xhr.send(post_data);
 }
 

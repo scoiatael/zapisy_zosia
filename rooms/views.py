@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 import random
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from models import *
 from datetime import *
@@ -27,6 +28,7 @@ def index(request):
 
 #@login_required
 @cache_page(30)
+@csrf_exempt
 def json_rooms_list(request):
     json = Room.objects.to_json(request)
     return HttpResponse(json, mimetype="application/json")
@@ -64,6 +66,7 @@ def trytogetin_room(request):
     return HttpResponse('fail')
 
 @login_required
+@csrf_exempt
 def open_room(request):
     if not request.POST: raise Http404
     if not has_user_opened_records(request.user): return HttpResponse('fail')
@@ -76,6 +79,7 @@ def open_room(request):
             return HttpResponse('ok')
 
 @login_required
+@csrf_exempt
 def close_room(request):
     if not request.POST: raise Http404
     if not has_user_opened_records(request.user): return HttpResponse('fail')
@@ -86,7 +90,7 @@ def close_room(request):
         if room.password == request.POST['key']:
             no_locators = UserInRoom.objects.filter(room=room).count()
         if no_locators == 1: # user is still alone in this room
-                timeout = timedelta(0,10800,0) # 3h == 10800s
+                timeout = timedelta(0,21600,0) # 6h == 21600
                 occupation.room.short_unlock_time = datetime.now() + timeout
                 occupation.room.save()
                 return HttpResponse('ok')
@@ -103,6 +107,7 @@ CONST_FORM = u"""<form><input type=\'submit\' value=\'Ustaw hasło\'/></form>"""
 
 
 @login_required
+@csrf_exempt
 def leave_room(request):
     try:
         prev_occupation = UserInRoom.objects.get(locator=request.user)
@@ -114,6 +119,7 @@ def leave_room(request):
 
 @require_POST
 @login_required
+@csrf_exempt
 def modify_room(request):
     # get correct room based on rid
     room_number = request.POST['rid'][1:]
