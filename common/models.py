@@ -44,7 +44,7 @@ class ZosiaDefinition(models.Model):
         verbose_name_plural = u'Ustawienia'
 
     def rooming_is_open(self):
-        return self.rooming_start <= datetime.datetime.now() <= self.rooming_final
+        return datetime.datetime.now() <= self.rooming_final
 
     @property
     def bus_is_full(self):

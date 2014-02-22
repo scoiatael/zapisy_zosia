@@ -7,6 +7,7 @@ import lectures.views
 import common.views
 
 from blog.feeds import *
+import rooms.views
 import users.views
 
 feeds = {
@@ -22,7 +23,13 @@ urlpatterns = patterns('',
     # (r'^zapisy_zosia/', include('zapisy_zosia.foo.urls')),
 
      (r'^$', blog.views.index),
-     # url(r'^rooms/$', include('rooms.url', namespace='rooms')),
+     (r'^rooms/$', rooms.views.index),
+     (r'^rooms/list.json$', rooms.views.json_rooms_list),
+     (r'^rooms/modify/$', rooms.views.modify_room),
+     (r'^rooms/open/$', rooms.views.open_room),
+     (r'^rooms/close/$', rooms.views.close_room),
+     (r'^rooms/trytogetin/$', rooms.views.trytogetin_room),
+     (r'^leave_room/$', rooms.views.leave_room),
 
      (r'^blog/$', blog.views.index),
 

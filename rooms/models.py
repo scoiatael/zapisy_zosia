@@ -43,6 +43,7 @@ class RoomManager(models.Manager):
 class Room(models.Model):
     number              = models.CharField(max_length=16)
     capacity            = models.PositiveIntegerField(max_length=1) # burżuje jesteśmy :P
+    description         = models.CharField(max_length=255, null=True, blank=True)
     password            = models.CharField(max_length=16)
 
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='UserInRoom')
@@ -99,8 +100,8 @@ class Room(models.Model):
         if self.short_locked():
             optional = ',"lt":"%s"' % ( self.short_unlock_time.ctime()[10:-8] )
 
-        return '{"id":"%s","st":%s,"nl":%s,"mx":%s%s}' % (self.number, 
-                status, no_locators, self.capacity, optional)
+        return '{"id":"%s","st":%s,"nl":%s,"mx":%s%s, "dsc":"%s"}' % (self.number,
+                status, no_locators, self.capacity, optional, self.description)
 
 
     def short_locked(self):

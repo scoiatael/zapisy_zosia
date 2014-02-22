@@ -110,7 +110,7 @@ Rooms.update_table = function()
     {
         var r = Rooms.list[i];
         tr = document.getElementById( Rooms.row_id(r) );
-        html = '<td>'+Rooms.status_img(r.st)+'</td><td>'+r.id+'</td><td>'+r.nl+'</td><td>'+r.mx+'</td><td>'+Rooms.lock_time(r.lt,r.nl)+'</td>';
+        html = '<td>'+Rooms.status_img(r.st)+'</td><td>'+r.id+'</td><td>'+r.nl+'</td><td>'+r.mx+'</td><td>' + r.dsc + '</td><td>'+Rooms.lock_time(r.lt,r.nl)+'</td>';
         if(tr)
         { 
             tr.innerHTML = html;
@@ -120,7 +120,7 @@ Rooms.update_table = function()
             table = document.getElementById('roomz');
             newtr = document.createElement('tr');
             newtr.setAttribute('id', Rooms.row_id(r));
-            newtr.onclick = function (e) { /* alert('id'+this.id);*/ Rooms.modify_room(this.id); };
+            newtr.onclick = function (e) { Rooms.modify_room(this.id); };
             newtr.innerHTML = html;
             table.appendChild(newtr);
         }
@@ -240,7 +240,7 @@ Rooms.main = function()
 <table class="sortable" style="">
     <thead id="thead">
     <tr>
-        <th>Status</abbr></th><th class="sorttable_sorted">Numer</th><th>Liczba lokatorów</th><th>Miejsca</th><th>Zablokowany do</th>
+        <th>Status</th><th class="sorttable_sorted">Numer</th><th>Liczba lokatorów</th><th>Miejsca</th><th>Opis</th><th>Zablokowany do</th>
     </tr>
     </thead>
 

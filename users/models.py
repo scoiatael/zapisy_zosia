@@ -1,9 +1,10 @@
 # -*- coding: UTF-8 -*-
-from datetime import timedelta
+from datetime import timedelta, datetime
 from django.core.mail import send_mail
 
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template import loader, Context
 from django.utils import timezone
@@ -121,6 +122,15 @@ class Participant(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email])
+
+    @property
+    def has_opened_records(self):
+        try:
+            preference = UserPreferences.objects.select_related('state').get(user=self)
+        except Exception:
+            raise Http404
+        user_openning_hour = preference.state.rooming_start - timedelta(minutes=preference.minutes_early)
+        return user_openning_hour <= datetime.now() <= preference.state.rooming_final
 
 
 class UserPreferences(models.Model):

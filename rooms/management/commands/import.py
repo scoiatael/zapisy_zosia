@@ -15,6 +15,7 @@ class Command(BaseCommand):
                 room = Room()
                 room.number            = l[0]
                 room.capacity          = int(l[1])
+                room.description       = " ".join(l[2:])
                 room.short_unlock_time = datetime.now()
                 room.save()
 

@@ -8,6 +8,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 import random
+from django.views.decorators.http import require_POST
 from models import *
 from datetime import *
 from common.helpers import *
@@ -111,9 +112,9 @@ def leave_room(request):
     return HttpResponseRedirect('/rooms/')
 
 
+@require_POST
 @login_required
 def modify_room(request):
-    if not request.POST: raise Http404
     # get correct room based on rid
     room_number = request.POST['rid'][1:]
     room = Room.objects.get(number=room_number)

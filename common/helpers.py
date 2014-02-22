@@ -4,6 +4,8 @@ from common.models import ZosiaDefinition
 from django.http import Http404
 
 # TODO: this module should be replaced by calls to database
+from users.models import UserPreferences
+
 
 def is_registration_enabled():
     # this is the only place that should be changed
@@ -53,12 +55,7 @@ def is_rooming_enabled(request = None):
 
 
 def has_user_opened_records(user):
-    try:
-        definition = ZosiaDefinition.objects.get(active_definition=True)
-    except Exception:
-        raise Http404
-    user_openning_hour = definition.rooming_start - timedelta(minutes=user.minutes_early)
-    return user_openning_hour <= datetime.now() <= definition.rooming_final
+    return user.has_opened_records
 
 
 def is_rooming_disabled(request=None):
