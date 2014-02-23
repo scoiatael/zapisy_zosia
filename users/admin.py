@@ -2,12 +2,48 @@
 
 from django.contrib import admin
 from django.contrib.auth.models import Group
+from django.db.models import Count
 from django.utils.encoding import smart_unicode
 from models import UserPreferences, SHIRT_TYPES_CHOICES, Organization, Participant
 
 
 class ParticipantAdmin(admin.ModelAdmin):
     pass
+
+
+class RoomsFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = 'posiada pokój'
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'room'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return (
+            ('Yes', 'Tak'),
+            ('No', 'Nie'),
+        )
+
+    def queryset(self, request, queryset):
+        """
+        Returns the filtered queryset based on the value
+        provided in the query string and retrievable via
+        `self.value()`.
+        """
+        # Compare the requested value (either '80s' or '90s')
+        # to decide how to filter the queryset.
+        if self.value() == 'Yes':
+            return queryset.annotate(num_rooms=Count('user__userinroom')).filter(num_rooms=1)
+        if self.value() == 'No':
+            return queryset.annotate(num_rooms=Count('user__userinroom')).filter(num_rooms=0)
 
 
 class UserPreferencesAdmin(admin.ModelAdmin):
@@ -23,7 +59,7 @@ class UserPreferencesAdmin(admin.ModelAdmin):
         'ZOSIA_cost',
         'paid',
         'minutes_early',)
-    list_filter = ['bus_hour', 'paid', 'bus', 'want_bus', 'breakfast_2', 'breakfast_3',
+    list_filter = ['bus_hour', 'paid', 'bus', 'want_bus', RoomsFilter, 'breakfast_2', 'breakfast_3',
                    'breakfast_4', 'dinner_1', 'dinner_2', 'dinner_3', 'day_1', 'day_2', 'day_3', 'shirt_size', 'shirt_type', 'org']
     list_editable = ('minutes_early', 'paid')
 
