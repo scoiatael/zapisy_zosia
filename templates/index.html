@@ -86,7 +86,7 @@ window.onload=function(){ AddFillerLink("col1_content","col3_content"); }
                         </li>
                     {% endif %}
                     <li {% if title == "Lectures" %}id="current"{% endif %}><a href="/lectures/">Wykłady</a></li>
-{#					<li {% if title == "Program" %}id="current"{% endif %}><a href="/program/">Program</a></li>#}
+					<li {% if title == "Program" %}id="current"{% endif %}><a href="/program/">Program</a></li>
                     {% if user.has_opened_records %}
                         <li {% if title == 'Room' %}id="current"{% endif %}>
                             <a href="/rooms/">Zapisy na pokoje</a></li>
