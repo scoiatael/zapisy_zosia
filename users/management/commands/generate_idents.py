@@ -46,27 +46,27 @@ def generate_name(preference):
 def generate_meals(preference):
     result = ''
     if preference.dinner_1:
-        result += u'{ Czw - obiad, 20:00-21:30 ('+ str(preference.get_room) + str(is_vegetarian(preference))  +')}'
+        result += u'{ Czw - obiad, 20:00-21:30 ' + str(is_vegetarian(preference))  +'}'
     else:
         result += u'{}'
     if preference.breakfast_2:
-        result += u'{ Pią - śniadanie, 7:30-9:30 ('+ str(preference.get_room) + str(is_vegetarian(preference))  +')}'
+        result += u'{ Pią - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference))  +'}'
     else:
         result += u'{}'
     if preference.dinner_2:
-        result += u'{ Pią - obiad, 17:30-19:00 ('+ str(preference.get_room) + str(is_vegetarian(preference))  +')}'
+        result += u'{ Pią - obiad, 17:30-19:00 '+ str(is_vegetarian(preference))  +'}'
     else:
         result += u'{}'
     if preference.breakfast_3:
-        result += u'{ Sob - śniadanie, 7:30-9:30 ('+ str(preference.get_room) + str(is_vegetarian(preference))  +')}'
+        result += u'{ Sob - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference))  +'}'
     else:
         result += u'{}'
     if preference.dinner_3:
-        result += u'{ Sob - obiad, 17:30-19:00 ('+ str(preference.get_room) + str(is_vegetarian(preference))  +')}'
+        result += u'{ Sob - obiad, 17:30-19:00 '+  str(is_vegetarian(preference))  +'}'
     else:
         result += u'{}'
     if preference.breakfast_4:
-        result += u'{ Nie - śniadanie, 7:30-9:30 ('+ str(preference.get_room) + str(is_vegetarian(preference)) + ')}'
+        result += u'{ Nie - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference)) + '}'
     else:
         result += u'{}'
 
