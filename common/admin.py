@@ -1,5 +1,5 @@
 from django.contrib import admin
-from models import *
+from .models import *
 
 class ZosiaDefinitionsAdmin(admin.ModelAdmin):
     list_display = [ 'active_definition', 'registration_start', 'registration_final',

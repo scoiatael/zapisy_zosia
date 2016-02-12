@@ -62,7 +62,7 @@ form_onload()
 {% block content %}
 <h2>Rejestracja</h2>
 
-<form action="../register/" method="post" id="register_form">
+<form action="../register/" method="post" id="register_form">{% csrf_token %}
     <fieldset id="register_auth">
         <legend>Dane do uwierzytelniania</legend>
         <ol>

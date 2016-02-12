@@ -1,5 +1,13 @@
-Nie przegap zapisu na pokoje na ZOSIA 2014.
-Twój czas: {{time|date:"H:i, d m Y"}}. Zapisy będą otwarte przez cały następny dzień.
+Drogi uczestniku, droga uczestniczko ZOSIA 2016.
 
+ZOSIA zbliża się wielkimi krokami. Już niedługo zaczynamy zapisy na pokoje w ośrodku.
+Twój czas otwarcia zapisów: {{time|date:"H:i, d m Y"}}
 
-Osobom, które nie wybiorą pokoju, zostanie on przydzielony przez organizatorów.
+Jeśli chciałbyś podczas ZOSI mieszkać ze swoimi znajomymi masz oczywiście taką możliwość. Po prostu w czasie zajmowania pokoju dodaj do niego hasło i podziel się nim z wybranymi osobami :)
+Uwaga: Jeśli nikt nie zapisze się do zamkniętego pokoju przez długi czas, pokój zostanie otwarty dla innych użytkowników!
+
+W tym roku, zgodnie z postulatem części z was, zostały wydłużone czasy działania blokad.
+
+Pozdrawiamy serdecznie
+Organizatorzy ZOSIA2016
+

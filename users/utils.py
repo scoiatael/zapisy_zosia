@@ -11,9 +11,9 @@ def send_time_email(preference):
         c = {
             'time': preference.get_records_time()
             }
-        send_mail( u'[ZOSIA 2014] Twój czas otwarcia zapisów na pokoje',
+        send_mail( '[ZOSIA 2016] Twój czas otwarcia zapisów na pokoje',
             t.render(Context(c)),
-            'ksi@cs.uni.wroc.pl',
+            None,
             [ preference.user.email ],
             fail_silently=True )
 
@@ -26,9 +26,9 @@ def send_confirmation_mail(request, user, definition):
             'token': token_generator.make_token(user),
             'payment_deadline': definition.payment_deadline,
             }
-        send_mail( u'Potwierdź założenie konta na zosia.org',
+        send_mail( 'Potwierdź założenie konta na zosia.org',
             t.render(Context(c)),
-            'ksi@cs.uni.wroc.pl',
+            None,
             [ user.email ],
             fail_silently=True )
 
@@ -36,13 +36,13 @@ def send_confirmation_mail(request, user, definition):
 def prepare_data(post, preference):
     if preference.paid:
         rewritten_post = {}
-        for k in post.keys():
+        for k in list(post.keys()):
             rewritten_post[k] = post[k]
         for k in [ 'day_1', 'day_2', 'day_3',
                    'breakfast_2', 'breakfast_3', 'breakfast_4',
                    'dinner_1', 'dinner_3', 'dinner_2', 'bus', 'vegetarian' ]:
             if preference.__dict__[k]:
-                rewritten_post[k] = u'on'
+                rewritten_post[k] = 'on'
             elif k in rewritten_post:
                 del rewritten_post[k]
         rewritten_post['shirt_type'] = preference.__dict__['shirt_type']

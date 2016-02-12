@@ -1,82 +1,53 @@
 # -*- coding: utf-8 -*-
-from south.utils import datetime_utils as datetime
-from south.db import db
-from south.v2 import SchemaMigration
-from django.db import models
+from __future__ import unicode_literals
+
+from django.db import models, migrations
 
 
-class Migration(SchemaMigration):
+class Migration(migrations.Migration):
 
-    def forwards(self, orm):
-        # Adding model 'ZosiaDefinition'
-        db.create_table(u'common_zosiadefinition', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('active_definition', self.gf('django.db.models.fields.BooleanField')()),
-            ('registration_start', self.gf('django.db.models.fields.DateTimeField')()),
-            ('registration_final', self.gf('django.db.models.fields.DateTimeField')()),
-            ('payment_deadline', self.gf('django.db.models.fields.DateTimeField')()),
-            ('lectures_suggesting_start', self.gf('django.db.models.fields.DateTimeField')()),
-            ('lectures_suggesting_final', self.gf('django.db.models.fields.DateTimeField')()),
-            ('rooming_start', self.gf('django.db.models.fields.DateTimeField')()),
-            ('rooming_final', self.gf('django.db.models.fields.DateTimeField')()),
-            ('zosia_start', self.gf('django.db.models.fields.DateTimeField')()),
-            ('zosia_final', self.gf('django.db.models.fields.DateTimeField')()),
-            ('price_overnight', self.gf('django.db.models.fields.IntegerField')()),
-            ('price_overnight_breakfast', self.gf('django.db.models.fields.IntegerField')()),
-            ('price_overnight_dinner', self.gf('django.db.models.fields.IntegerField')()),
-            ('price_overnight_full', self.gf('django.db.models.fields.IntegerField')()),
-            ('price_transport', self.gf('django.db.models.fields.IntegerField')()),
-            ('price_organization', self.gf('django.db.models.fields.IntegerField')()),
-            ('account_number', self.gf('django.db.models.fields.CharField')(max_length=32)),
-            ('account_data_1', self.gf('django.db.models.fields.CharField')(max_length=40)),
-            ('account_data_2', self.gf('django.db.models.fields.CharField')(max_length=40)),
-            ('account_data_3', self.gf('django.db.models.fields.CharField')(max_length=40)),
-            ('city', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('city_c', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('city_url', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('hotel', self.gf('django.db.models.fields.CharField')(max_length=30)),
-            ('hotel_url', self.gf('django.db.models.fields.URLField')(max_length=200)),
-            ('active', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal(u'common', ['ZosiaDefinition'])
+    dependencies = [
+    ]
 
-
-    def backwards(self, orm):
-        # Deleting model 'ZosiaDefinition'
-        db.delete_table(u'common_zosiadefinition')
-
-
-    models = {
-        u'common.zosiadefinition': {
-            'Meta': {'object_name': 'ZosiaDefinition'},
-            'account_data_1': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
-            'account_data_2': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
-            'account_data_3': ('django.db.models.fields.CharField', [], {'max_length': '40'}),
-            'account_number': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'active': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'active_definition': ('django.db.models.fields.BooleanField', [], {}),
-            'city': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'city_c': ('django.db.models.fields.CharField', [], {'max_length': '20'}),
-            'city_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'hotel': ('django.db.models.fields.CharField', [], {'max_length': '30'}),
-            'hotel_url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'lectures_suggesting_final': ('django.db.models.fields.DateTimeField', [], {}),
-            'lectures_suggesting_start': ('django.db.models.fields.DateTimeField', [], {}),
-            'payment_deadline': ('django.db.models.fields.DateTimeField', [], {}),
-            'price_organization': ('django.db.models.fields.IntegerField', [], {}),
-            'price_overnight': ('django.db.models.fields.IntegerField', [], {}),
-            'price_overnight_breakfast': ('django.db.models.fields.IntegerField', [], {}),
-            'price_overnight_dinner': ('django.db.models.fields.IntegerField', [], {}),
-            'price_overnight_full': ('django.db.models.fields.IntegerField', [], {}),
-            'price_transport': ('django.db.models.fields.IntegerField', [], {}),
-            'registration_final': ('django.db.models.fields.DateTimeField', [], {}),
-            'registration_start': ('django.db.models.fields.DateTimeField', [], {}),
-            'rooming_final': ('django.db.models.fields.DateTimeField', [], {}),
-            'rooming_start': ('django.db.models.fields.DateTimeField', [], {}),
-            'zosia_final': ('django.db.models.fields.DateTimeField', [], {}),
-            'zosia_start': ('django.db.models.fields.DateTimeField', [], {})
-        }
-    }
-
-    complete_apps = ['common']
+    operations = [
+        migrations.CreateModel(
+            name='ZosiaDefinition',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('active_definition', models.BooleanField()),
+                ('registration_start', models.DateTimeField()),
+                ('registration_final', models.DateTimeField()),
+                ('registration_limit', models.IntegerField(default=170)),
+                ('payment_deadline', models.DateTimeField()),
+                ('lectures_suggesting_start', models.DateTimeField()),
+                ('lectures_suggesting_final', models.DateTimeField()),
+                ('rooming_start', models.DateTimeField()),
+                ('rooming_final', models.DateTimeField()),
+                ('zosia_start', models.DateTimeField()),
+                ('zosia_final', models.DateTimeField()),
+                ('bus_limit', models.IntegerField(default=98)),
+                ('bus16_limit', models.IntegerField(default=48)),
+                ('bus18_limit', models.IntegerField(default=48)),
+                ('price_overnight', models.IntegerField()),
+                ('price_overnight_breakfast', models.IntegerField()),
+                ('price_overnight_dinner', models.IntegerField()),
+                ('price_overnight_full', models.IntegerField()),
+                ('price_transport', models.IntegerField()),
+                ('price_organization', models.IntegerField()),
+                ('account_number', models.CharField(max_length=32)),
+                ('account_data_1', models.CharField(max_length=40)),
+                ('account_data_2', models.CharField(max_length=40)),
+                ('account_data_3', models.CharField(max_length=40)),
+                ('city', models.CharField(max_length=20)),
+                ('city_c', models.CharField(verbose_name='miasto w celowniku', max_length=20)),
+                ('city_url', models.URLField()),
+                ('hotel', models.CharField(max_length=30)),
+                ('hotel_url', models.URLField()),
+                ('active', models.BooleanField(default=False)),
+            ],
+            options={
+                'verbose_name': 'Ustawienie',
+                'verbose_name_plural': 'Ustawienia',
+            },
+        ),
+    ]

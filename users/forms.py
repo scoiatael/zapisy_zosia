@@ -2,7 +2,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.utils.translation import ugettext as _
-from users.models import UserPreferences, Participant, Organization
+from users.models import UserPreferences, Participant, Organization, Waiting
 
 
 class RegistrationForm(ModelForm):
@@ -24,7 +24,7 @@ class RegistrationForm(ModelForm):
         password1 = self.cleaned_data.get("password")
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError(u'Hasła są różne', code='password_mismatch')
+            raise forms.ValidationError('Hasła są różne', code='password_mismatch')
         return password2
 
     def save(self, commit=True):
@@ -75,7 +75,7 @@ class PreferencesForm(PreferencesNoBusForm):
         model = UserPreferences
 
     def __init__(self, *args, **kwargs):
-        options = [('', u'obojętne')]
+        options = [('', 'obojętne')]
         preference = kwargs.get('instance', None)
         super(PreferencesForm,self).__init__(*args, **kwargs)
         if preference:
@@ -122,3 +122,10 @@ class OrganizationForm(ModelForm):
             org.save()
 
         return org
+
+
+class WaitingForm(ModelForm):
+
+    class Meta:
+        model = Waiting
+        fields = ('day_1', 'day_2', 'day_3')

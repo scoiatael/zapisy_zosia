@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.utils import timezone
 from rooms.models import Room
-from datetime import datetime
 
 
 class Command(BaseCommand):
@@ -16,7 +16,7 @@ class Command(BaseCommand):
                 room.number            = l[0]
                 room.capacity          = int(l[1])
                 room.description       = " ".join(l[2:])
-                room.short_unlock_time = datetime.now()
+                room.short_unlock_time = timezone.now()
                 room.save()
 
             self.stdout.write('Successfully imported\n')

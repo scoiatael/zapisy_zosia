@@ -12,7 +12,7 @@ class WikiBlurbNode(template.Node):
         self.is_staff  = is_staff
 
     def render(self, context):
-        return u"<strong>bar</strong> <a>[edit:%s] %s</a>" % (self.id_string, self.is_staff)
+        return "<strong>bar</strong> <a>[edit:%s] %s</a>" % (self.id_string, self.is_staff)
 
 
 @register.tag(name="wiki_blurb")
@@ -21,6 +21,6 @@ def do_wiki_blurb(parser, token):
         # split_contents() knows not to split quoted strings.
         tag_name, id_string, is_staff = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError, "%r tag requires id_string argument" % token.contents.split()[0]
+        raise template.TemplateSyntaxError("%r tag requires id_string argument" % token.contents.split()[0])
     return WikiBlurbNode(id_string, is_staff)
 

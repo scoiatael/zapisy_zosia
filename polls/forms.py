@@ -6,7 +6,7 @@ from .models import Question, UserAnswer
 
 
 class PollForm(forms.Form):
-    answer = forms.ModelChoiceField(queryset=Question.objects.all(), widget=forms.RadioSelect, empty_label=None, label=u'Odpowiedź')
+    answer = forms.ModelChoiceField(queryset=Question.objects.all(), widget=forms.RadioSelect, empty_label=None, label='Odpowiedź')
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)

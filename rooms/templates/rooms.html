@@ -90,13 +90,13 @@ Rooms.modify_room = function(room_id)
 Rooms.row_id = function(r) { return 'r'+r.id; }
 
 Rooms.status_img = function(s) {
-if( s==0 ) return '<img alt="a" src="/static_media/images/go-next.png" />';
+if( s==0 ) return '<img alt="a" src="/static/images/go-next.png" />';
 else
-if( s==1 ) return '<img alt="b" src="/static_media/images/locked16.png" />';
+if( s==1 ) return '<img alt="b" src="/static/images/locked16.png" />';
 else
-if( s==2 ) return '<img alt="c" src="/static_media/images/dialog-ok.png" />';
+if( s==2 ) return '<img alt="c" src="/static/images/dialog-ok.png" />';
 else
-if( s==3 ) return '<img alt="b" src="/static_media/images/locked16.png" />';
+if( s==3 ) return '<img alt="b" src="/static/images/locked16.png" />';
 }
 
 Rooms.lock_time = function (lt,nl) {
@@ -205,14 +205,14 @@ Rooms.btn_enable = function()
 {
     btn = document.getElementById("btn");
     btn.disabled = false;
-    btn.innerHTML = '<img alt="refresh" src="/static_media/images/view-refresh.png"/>';
+    btn.innerHTML = '<img alt="refresh" src="/static/images/view-refresh.png"/>';
 }
 
 Rooms.btn_click = function()
 {
     btn = document.getElementById("btn");
     btn.disabled = true;
-    btn.innerHTML = '<img alt="refresh" src="/static_media/images/view-refresh-disabled.png"/>';
+    btn.innerHTML = '<img alt="refresh" src="/static/images/view-refresh-disabled.png"/>';
     Rooms.update();
     setTimeout(Rooms.btn_enable,1000);
 }
@@ -226,9 +226,9 @@ Rooms.main = function()
 {% endblock %}
 
 {% block superextra %}
-<link href="/static_media/css/dialog_box.css" rel="stylesheet" type="text/css"/>
-<script src="/static_media/javascript/sorttable.js"></script>
-<script src="/static_media/javascript/dialog_box.js"></script>
+<link href="/static/css/dialog_box.css" rel="stylesheet" type="text/css"/>
+<script src="/static/javascript/sorttable.js"></script>
+<script src="/static/javascript/dialog_box.js"></script>
 {% endblock %}
 
 {% block onload %}Rooms.main();{% endblock%}
@@ -240,7 +240,7 @@ Rooms.main = function()
 </div>
 <![endif]-->
 {# <h1>TESTY ZAPISÓW NA POKOJE</h1> #}
-<button title="Odśwież tabelę" id="btn" onclick="Rooms.btn_click()" style="margin-bottom:0.2em;"><img alt="refresh" src="/static_media/images/view-refresh.png"/></button>
+<button title="Odśwież tabelę" id="btn" onclick="Rooms.btn_click()" style="margin-bottom:0.2em;"><img alt="refresh" src="/static/images/view-refresh.png"/></button>
 <table class="sortable" style="">
     <thead id="thead">
     <tr>
@@ -261,16 +261,16 @@ Rooms.main = function()
 <h3>Legenda</h3>
 Kliknij w pokój aby się zapisać lub wypisać.
 <table>
-    <tr><td><img alt="a" src="/static_media/images/go-next.png" /></td><td>oznacza pokój, do którego można się dopisać</td></tr>
-    <tr><td><img alt="b" src="/static_media/images/locked16.png" /></td><td>pokój jest zamknięty lub tymczasowo zabezpieczony kluczem</td></tr>
-    <tr><td><img alt="c" src="/static_media/images/dialog-ok.png" /></td><td>pokój jest pełny</td></tr>
+    <tr><td><img alt="a" src="/static/images/go-next.png" /></td><td>oznacza pokój, do którego można się dopisać</td></tr>
+    <tr><td><img alt="b" src="/static/images/locked16.png" /></td><td>pokój jest zamknięty lub tymczasowo zabezpieczony kluczem</td></tr>
+    <tr><td><img alt="c" src="/static/images/dialog-ok.png" /></td><td>pokój jest pełny</td></tr>
 </table>
 <h3>Uwaga!</h3>
 <p>
     Pierwszy lokator pokoju ma <strong>2&nbsp;minuty</strong> na podjęcie decyzji, czy chce go zamknąć. Po tym czasie pokój zostanie otwarty dla wszystkich chętnych.
 </p>
 <p>
-    Pokój zabezpieczony kluczem pozostaje zamknięty przez <strong>3&nbsp;godziny</strong>.
+    Pokój zabezpieczony kluczem pozostaje zamknięty przez <strong>4&nbsp;godziny</strong>.
 </p>
 {# <p style="color:#aaa; position:absolute; bottom: 0em;">response time: <span id="ms">0</span> s</p>  #}
 {% endblock %}

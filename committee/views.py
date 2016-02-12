@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import redirect
@@ -29,14 +28,14 @@ def lectures(request):
 @require_POST
 def vote(request):
     if not request.user.committee:
-        raise Http404
+        raise Http404('There is no user.committee')
 
     formset = VoteFormset(request.POST)
-    if formset.is_valid():
-        formset.save()
+    if not formset.is_valid():
+        raise Http404('Invalid formset')
+    formset.save()
 
-        return redirect('committee:main')
+    return redirect('committee:main')
 
-    raise Http404
 
 

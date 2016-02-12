@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from django.core.management.base import BaseCommand
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_text
 from users.models import UserPreferences
 
 
@@ -17,58 +17,58 @@ class Command(BaseCommand):
             first_meals = generate_meals(preferences[i])
             second_meals = generate_meals(b)
 
-            print smart_unicode(get_ping(preferences[i])) + smart_unicode(first_name) + smart_unicode(get_ping(b)) + smart_unicode(second_name) + smart_unicode(get_rot(preferences[i])) +\
-                  smart_unicode(first_name) + smart_unicode(get_rot(b)) + smart_unicode(second_name) + " \confpinfood" + \
-                  smart_unicode(first_meals) + " \confpinfood" + smart_unicode(second_meals)
-            print ''
+            print(smart_text(get_ping(preferences[i])) + smart_text(first_name) + smart_text(get_ping(b)) + smart_text(second_name) + smart_text(get_rot(preferences[i])) +\
+                  smart_text(first_name) + smart_text(get_rot(b)) + smart_text(second_name) + " \confpinfood" + \
+                  smart_text(first_meals) + " \confpinfood" + smart_text(second_meals))
+            print('')
 
 
 def get_ping(preference):
-    if preference.org.name.strip() <> '':
-        return u' \confpin'
+    if preference.org.name.strip() != '':
+        return ' \confpin'
     else:
-        return u' \confpinnoorg'
+        return ' \confpinnoorg'
 
 def get_rot(preference):
-    if preference.org.name.strip() <> '':
-        return u' \confpinrot'
+    if preference.org.name.strip() != '':
+        return ' \confpinrot'
     else:
-        return u' \confpinnoorgrot'
+        return ' \confpinnoorgrot'
 
 
 def generate_name(preference):
-    result = u"{" + smart_unicode(preference.user.get_full_name()) + u"}"
-    if preference.org.name.strip() <> '':
-        result += "{ " + smart_unicode(preference.org.name.strip()) + u"}"
+    result = "{" + smart_text(preference.user.get_full_name()) + "}"
+    if preference.org.name.strip() != '':
+        result += "{ " + smart_text(preference.org.name.strip()) + "}"
     return result
 
 
 def generate_meals(preference):
     result = ''
     if preference.dinner_1:
-        result += u'{ Czw - obiad, 20:00-21:30 ' + str(is_vegetarian(preference))  +'}'
+        result += '{ Czw - obiad, 20:00-21:30 ' + str(is_vegetarian(preference))  +'}'
     else:
-        result += u'{}'
+        result += '{}'
     if preference.breakfast_2:
-        result += u'{ Pią - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference))  +'}'
+        result += '{ Pią - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference))  +'}'
     else:
-        result += u'{}'
+        result += '{}'
     if preference.dinner_2:
-        result += u'{ Pią - obiad, 17:30-19:00 '+ str(is_vegetarian(preference))  +'}'
+        result += '{ Pią - obiad, 17:30-19:00 '+ str(is_vegetarian(preference))  +'}'
     else:
-        result += u'{}'
+        result += '{}'
     if preference.breakfast_3:
-        result += u'{ Sob - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference))  +'}'
+        result += '{ Sob - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference))  +'}'
     else:
-        result += u'{}'
+        result += '{}'
     if preference.dinner_3:
-        result += u'{ Sob - obiad, 17:30-19:00 '+  str(is_vegetarian(preference))  +'}'
+        result += '{ Sob - obiad, 17:30-19:00 '+  str(is_vegetarian(preference))  +'}'
     else:
-        result += u'{}'
+        result += '{}'
     if preference.breakfast_4:
-        result += u'{ Nie - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference)) + '}'
+        result += '{ Nie - śniadanie, 7:30-9:30 '+ str(is_vegetarian(preference)) + '}'
     else:
-        result += u'{}'
+        result += '{}'
 
     return result
 

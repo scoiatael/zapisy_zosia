@@ -61,7 +61,7 @@ kwota
 
 <h2>{% trans "Preferencje" %}</h2>
 
-<form action="" method="post" id="register_form">
+<form action="" method="post" id="register_form">{% csrf_token %}
     <fieldset id="register_personal">
         <legend>{% trans "Dane do uwierzytelniania" %}</legend>
         <ol>

@@ -10,7 +10,7 @@ prints json to standard output
 import datetime
 import sys
 
-print '[',
+print('[', end=' ')
 
 id_start = 100
 
@@ -19,12 +19,12 @@ try:
     for line in file.readlines()[1:-1]:
         try:
             room = line.split(',')
-            print "{\"pk\": " + str(id_start) + ", \"model\": \"newrooms.nroom\", \"fields\": {\"short_unlock_time\": \"" + \
-                                         str(datetime.datetime.now()) + "\", \"capacity\": " + str(room[2]) + ", \"number\": \"" + str(room[0]) + "\"}}, "
+            print("{\"pk\": " + str(id_start) + ", \"model\": \"newrooms.nroom\", \"fields\": {\"short_unlock_time\": \"" + \
+                                         str(datetime.datetime.now()) + "\", \"capacity\": " + str(room[2]) + ", \"number\": \"" + str(room[0]) + "\"}}, ")
             id_start += 1
         except IndexError:
             pass
 except IndexError:
-    print "type: python get_corp.py filename_in filename_out"
+    print("type: python get_corp.py filename_in filename_out")
 
-print ' ]'
+print(' ]')

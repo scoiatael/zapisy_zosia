@@ -1,10 +1,8 @@
-# -*- coding: UTF-8 -*-
 from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import datetime
+from django.utils import timezone
 from common.helpers import *
-import random
 
 # feature tasks (microbacklog ;) )
 # - blocking datatimes
@@ -35,21 +33,23 @@ class RoomManager(models.Manager):
     
     def to_json(self, request=None):
         if self.update_required:
-            self.cache = [ x.to_json(request) for x in self.all() ]
+            self.cache = [ x.to_json(request) for x in self.filter(hidden=False) ]
             # self.update_required = False # comment this line to disable caching
-        return "[%s]" % (','.join(self.cache))
+        return '[{}]'.format(','.join(self.cache))
 
 
 class Room(models.Model):
     number              = models.CharField(max_length=16)
-    capacity            = models.PositiveIntegerField(max_length=1) # burżuje jesteśmy :P
+    capacity            = models.PositiveIntegerField()
     description         = models.CharField(max_length=255, null=True, blank=True)
     password            = models.CharField(max_length=16)
+
+    hidden = models.BooleanField(default=False)
 
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, through='UserInRoom')
 
     # unlock time for first locator
-    short_unlock_time   = models.DateTimeField()
+    short_unlock_time   = models.DateTimeField(default=timezone.now)
     #long unlock time
     #long_unlock_time   = models.DateTimeField()
 
@@ -58,6 +58,9 @@ class Room(models.Model):
     # this should be refactored after ZOSIA09
     # locators = models.ManyToManyField(User, through='RoomMembership')
     objects = RoomManager()
+
+    class Meta:
+        ordering = ('number',)
 
     def get_no_locators(self):
         return UserInRoom.objects.filter(room=self.id).count()
@@ -106,7 +109,7 @@ class Room(models.Model):
 
     def short_locked(self):
         # returns true when time is still in future
-        ret = self.short_unlock_time > datetime.now()
+        ret = self.short_unlock_time > timezone.now()
         return ret
 
 
@@ -115,13 +118,13 @@ class Room(models.Model):
     #    # set cached data in manager to be updated
     #    # self.__class__.objects.update_required = True
 
-    def __unicode__(self):
-        return u"%s" % self.number
+    def __str__(self):
+        return str(self.number)
 
 
 class UserInRoom(models.Model):
-    # user-room-ownership relation # it REALLY should be better implemented...
-    locator   = models.ForeignKey(settings.AUTH_USER_MODEL, unique=True)
+    # user-room-ownership relation #FIXME: it REALLY should be better implemented...
+    locator   = models.OneToOneField(settings.AUTH_USER_MODEL)
     room      = models.ForeignKey(Room)
     ownership = models.BooleanField()
 

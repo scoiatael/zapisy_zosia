@@ -80,13 +80,26 @@ article.normal  {min-height: 0;}
      {% include "show_lecture.html" with lectures=lectures %}
       {% else %}
         <p>
-        {% trans "Nie opublikowaliśmy jeszcze wykładów. Pojawią się one po konsultacji z Komitetem Programowym." %}</label>
+        {% trans "Nie opublikowaliśmy jeszcze wykładów." %}</label>
         </p>
     {% endif %}
 
 
 
 {% if not messages %}
+    {% if my_lectures %}
+        <h2>Twoje propozycje</h2>
+        <ul>
+        {% for lecture in my_lectures %}
+        <li>
+            <h3>{{ lecture.title }}</h3>
+            <p>{{ lecture.duration }}</p>
+            <p>{{ lecture.abstract }}</p>
+            <p>{{ lecture.info }}</p>
+        </li>
+        {% endfor %}
+        </ul>
+    {% endif %}
 {% if lecture_proposition_form %}
 <h2>{% trans "Suggest your lecture" %}</h2>
     <form action="." method="post">{% csrf_token %}

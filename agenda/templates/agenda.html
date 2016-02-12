@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+{% load i18n %}
+
+{% block css %}
+
+    .lecture p, #lecture_abstract {
+    text-indent: 1.5em;
+    text-align: justify;
+    text-justify: inter-word;
+    text-align-last: left;
+    max-width: 45em;
+    }
+    strong.lecture_author + p { text-indent: 0; }
+    #lecture_author { margin-bottom: 2px;}
+    #lecture_abstract { margin-bottom: 5px;text-indent: 0;}
+    #lecture_time { margin-bottom: 1em;}
+    #note {
+    color: #444444;
+    font-family: 'Lucida Grande','Trebuchet MS',Verdana,Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    }
+
+    div.program {background: #fff; display: block;}
+    .cell_text1{margin-left: 10px; display:inline; }
+    .cell_text2{margin-left: 10px; display:inline; }
+    .cell_text3{margin-left: 30px; display:inline; }
+    div.cell_part_hour {margin-left: 30px; display: inline;}
+    div.cell_hour {display: inline; margin-top:10px;}
+    div.cell_hour_1 {display: inline; margin-left:6px;}
+
+{% endblock css %}
+
+{% block content %}
+
+{% if agenda %}
+    {{ agenda.content|safe }}
+{% else %}   
+    Program ogłosimy już wkrótce :)
+{% endif %}
+
+{% endblock content %}

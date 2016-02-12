@@ -13,7 +13,7 @@
         <header>
             <h4>{{ lecture.title }}</h4>
         </header>
-		{{ lecture.abstract }}
+		{{ lecture.abstract|safe }}
 
         <p class="author_description">
             <strong class="lecture_author">{% if lecture.author_show %}{{ lecture.author_show|safe }}{% else %}{{ lecture.author }}{% endif %}</strong>{% if lecture.description %}, {{ lecture.description|safe }}{% endif %}</p>

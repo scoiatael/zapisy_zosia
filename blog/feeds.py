@@ -1,7 +1,5 @@
-# -*- coding: UTF-8 -*-
 from django.contrib.syndication.views import Feed
-
-from models import BlogPost
+from .models import BlogPost
 
 class LatestBlogEntries(Feed):
     title = "ZOSIA feed"

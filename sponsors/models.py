@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 from django.db import models
 
 
@@ -10,8 +9,8 @@ class Sponsor(models.Model):
 
     class Meta:
         ordering = ['order', 'id']
-        verbose_name = u'sponsor'
-        verbose_name_plural = u'sponsorzy'
+        verbose_name = 'sponsor'
+        verbose_name_plural = 'sponsorzy'
 
-    def __unicode__(self):
-        return str(self.name)
+    def __str__(self):
+        return self.name

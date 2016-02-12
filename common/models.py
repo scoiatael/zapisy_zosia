@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 from django.db import models
-import datetime
+from django.utils import timezone
 
 
 class ZosiaDefinition(models.Model):
@@ -8,6 +7,9 @@ class ZosiaDefinition(models.Model):
     # dates
     registration_start			= models.DateTimeField()
     registration_final			= models.DateTimeField()
+
+    registration_limit          = models.IntegerField(default=170)
+
     payment_deadline            = models.DateTimeField()
     lectures_suggesting_start	= models.DateTimeField()
     lectures_suggesting_final	= models.DateTimeField()
@@ -40,11 +42,11 @@ class ZosiaDefinition(models.Model):
     active                      = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = u'Ustawienie'
-        verbose_name_plural = u'Ustawienia'
+        verbose_name = 'Ustawienie'
+        verbose_name_plural = 'Ustawienia'
 
     def rooming_is_open(self):
-        return datetime.datetime.now() <= self.rooming_final
+        return timezone.now() <= self.rooming_final
 
     @property
     def bus_is_full(self):

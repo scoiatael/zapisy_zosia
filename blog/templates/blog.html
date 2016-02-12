@@ -14,8 +14,9 @@
 {% endblock %}
 
 {% block css %}
-    .sponsor_logo {
-    margin: 20px;
+    .spnsr_logo {
+    margin-bottom: 20px;
+    width: 100%;
     }
 {% endblock css %}
 
@@ -28,9 +29,9 @@
 
 <h4>Organizator</h4>
 <p>
-    <a href="http://www.uni.wroc.pl/"><img src='/static_media/images/logo_uwr.jpg' alt='Uniwersytet Wrocławski'
+    <a href="http://www.uni.wroc.pl/"><img src='/static/images/logo_uwr.jpg' alt='Uniwersytet Wrocławski'
                                            title='Uniwersytet Wrocławski'/></a>
-	<img src='/static_media/images/logo_ksi.png' alt='Koło Studentów Informatyki' title='Koło Studentów Informatyki UWr'/>
+	<img src='/static/images/logo_ksi.png' alt='Koło Studentów Informatyki' title='Koło Studentów Informatyki UWr'/>
 <span style="display: block; text-align: center"><a href="mailto:ksi@cs.uni.wroc.pl">ksi@cs.uni.wroc.pl</a></span>
 </p>
 
@@ -38,7 +39,7 @@
 {#<h4 style="margin-bottom:20px;">Sponsor główny</h4>#}
 {#    <p style="text-align: center">#}
 {##}
-{#    <a href="http://www.pl.capgemini-sdm.com/"><img  style="margin-bottom:10px;" src='/static_media/images/capgemini.png' alt='Capgemini' title='Capgemini'/></a>#}
+{#    <a href="http://www.pl.capgemini-sdm.com/"><img  style="margin-bottom:10px;" src='/static/images/capgemini.png' alt='Capgemini' title='Capgemini'/></a>#}
 {#    </p>#}
 
 
@@ -68,11 +69,11 @@
 {#   </ul>#}
 {#   </p>#}
 {% if sponsors %}
-<h4 style="margin-bottom:20px;">Partnerzy i sponsorzy</h4>
+<h4 style="margin-bottom:10px;">Partnerzy i sponsorzy</h4>
     {% for sponsor in sponsors %}
    <p style="text-align: center">
-       <a href="{{ sponsor.url }}">
-            <img style="margin-bottom:30px;" src='/static_media/{{ sponsor.logo }}' alt='{{ sponsor.name }}' title='{{ sponsor.name }}'/>
+       <a href="{{ sponsor.url }}" target="_blank">
+            <img class="spnsr_logo" src="{{ sponsor.logo.url }}" alt="{{ sponsor.name }}" title="{{ sponsor.name }}"/>
        </a>
    </p>
     {% endfor %}

@@ -7,8 +7,7 @@
         {% if poll.description %}
         <p>{{ poll.description|safe }}</p>
         {% endif %}
-        <form action="{% url 'polls:vote' %}" method="POST">
-            {% csrf_token %}
+        <form action="{% url 'polls:vote' %}" method="POST">{% csrf_token %}
             <input type="hidden" name="poll_id" value="{{ poll.id }}">
             {{ poll.form }}
             <input type="submit">

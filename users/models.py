@@ -1,16 +1,17 @@
-# -*- coding: UTF-8 -*-
-from datetime import timedelta, datetime
-from django.core.mail import send_mail
-
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.core.mail import send_mail
+from django.contrib.auth.models import (
+    BaseUserManager, AbstractBaseUser, PermissionsMixin)
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.template import loader, Context
 from django.utils import timezone
-from django.utils.encoding import smart_unicode
 from django.utils.translation import ugettext as _
+from django.utils import timezone
+from django.utils.timezone import timedelta
+
 from common.models import ZosiaDefinition
+
 SHIRT_SIZE_CHOICES = (
     ('S', 'S'),
     ('M', 'M'),
@@ -21,8 +22,8 @@ SHIRT_SIZE_CHOICES = (
 )
 
 SHIRT_TYPES_CHOICES = (
-    ('m', _(u'klasyczna')),
-    ('f', _(u'żeńska')),
+    ('m', _('klasyczna')),
+    ('f', _('żeńska')),
 )
 
 BUS_HOUR_CHOICES = (
@@ -36,14 +37,12 @@ BUS_SECOND_SIZE = 0
 
 
 class OrganizationManager(models.Manager):
-
     def get_organization_choices(self):
         l = [ (org.id, org.name)
                for org in self.get_queryset().filter(accepted=True) ]
         l = l[:20]
         l.append(('new', 'inna'))
         return tuple(l)
-#
 
 
 class Organization(models.Model):
@@ -53,69 +52,80 @@ class Organization(models.Model):
     objects = OrganizationManager()
 
     class Meta:
-        verbose_name = u'Organizacja'
-        verbose_name_plural = u'Organizacje'
+        verbose_name = 'Organizacja'
+        verbose_name_plural = 'Organizacje'
 
-    def __unicode__(self):
-        return u"%s" % self.name
+    def __str__(self):
+        return self.name
 
 
 class ParticipantManager(BaseUserManager):
     def create_user(self, email, password=None):
+        """
+        Creates and saves a User with the given email and password.
+        """
         if not email:
             raise ValueError('Users must have an email address')
 
-        user = self.model(email=ParticipantManager.normalize_email(email))
+        user = self.model(
+            email=self.normalize_email(email))
+
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password):
-        user = self.create_user(email, password=password)
-        user.is_admin = True
-        user.is_staff = True
+        """
+        Creates and saves a superuser with the given email and password.
+        """
+        user = self.create_user(
+            email,
+            password=password)
         user.is_superuser = True
         user.save(using=self._db)
         return user
 
 
 class Participant(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(_('email address'), max_length=254, unique=True)
-
+    email = models.EmailField(
+        _('email address'),
+        max_length=254,
+        unique=True)
     first_name = models.TextField()
     last_name = models.TextField()
-    is_active = models.BooleanField(_('active'), default=True,
+    is_active = models.BooleanField(
+        _('active'),
+        default=True,
         help_text=_('Designates whether this user should be treated as '
-                    'active. Unselect this instead of deleting accounts.'))
-    date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-    committee = models.BooleanField(default=False, verbose_name='komitet programowy')
+                    'active. Unselect this instead of deleting accounts.'),
+    )
+    date_joined = models.DateTimeField(
+        _('date joined'),
+        default=timezone.now)
+    committee = models.BooleanField(
+        _('programme committee'),
+        default=False)
 
     objects = ParticipantManager()
 
     USERNAME_FIELD = 'email'
 
     class Meta:
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = _('participant')
+        verbose_name_plural = _('participants')
 
-
-    @property
-    def is_staff(self):
-        return self.is_superuser
-
-    def __unicode__(self):
+    def __str__(self):
         return self.get_full_name()
 
     def get_full_name(self):
         """
         Returns the first_name plus the last_name, with a space in between.
         """
-        full_name = u'%s %s' % (self.first_name, self.last_name)
-        return smart_unicode(full_name)
+        return ' '.join((self.first_name, self.last_name))
 
     def get_short_name(self):
         "Returns the short name for the user."
-        return smart_unicode(self.first_name)
+        return self.first_name
 
     def email_user(self, subject, message, from_email=None):
         """
@@ -124,18 +134,19 @@ class Participant(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email])
 
     @property
+    def is_staff(self):
+        return self.is_superuser
+
+    @property
     def has_opened_records(self):
-        try:
-            preference = UserPreferences.objects.select_related('state').get(user=self)
-        except Exception:
-            raise Http404
-        user_openning_hour = preference.state.rooming_start - timedelta(minutes=preference.minutes_early)
-        return user_openning_hour <= datetime.now() <= preference.state.rooming_final
+        preference = get_object_or_404(UserPreferences.objects.select_related('state'), user=self)
+        user_opening_hour = preference.state.rooming_start - timedelta(minutes=preference.minutes_early)
+        return user_opening_hour <= timezone.now() <= preference.state.rooming_final
 
 
 class UserPreferences(models.Model):
     # This is the only required field
-    user = models.ForeignKey(Participant, unique=True)
+    user = models.OneToOneField(Participant)
     state = models.ForeignKey('common.ZosiaDefinition')
     org = models.ForeignKey(Organization)
 
@@ -170,13 +181,13 @@ class UserPreferences(models.Model):
 
 
     photo_url = models.CharField(max_length=250, null=True, blank=True)
-    description = models.TextField(max_length=2048, blank=True, verbose_name=u'Opis')
+    description = models.TextField(_('description'), max_length=2048, blank=True)
 
     class Meta:
-        verbose_name_plural = u'Preferencje'
+        verbose_name_plural = 'Preferencje'
 
-    def __unicode__(self):
-        return u"%s" % (self.user.first_name,)
+    def __str__(self):
+        return self.user.first_name
 
     def save(self, *args, **kwargs):
         from common.models import ZosiaDefinition
@@ -188,9 +199,9 @@ class UserPreferences(models.Model):
             rooming_time = definition.rooming_start
             if self.paid and not old.paid:
                 t = loader.get_template('payment_registered_email.txt')
-                send_mail( u'Wpłata została zaksięgowana.',
+                send_mail( 'Wpłata została zaksięgowana.',
                              t.render(Context({'rooming_time': rooming_time - timedelta(minutes=self.minutes_early)})),
-                             'from@example.com',
+                             None,
                              [ self.user.email ],
                              fail_silently=True )
         except Exception:
@@ -279,3 +290,13 @@ class UserPreferences(models.Model):
 
     def get_records_time(self):
         return self.state.rooming_start - timedelta(minutes=self.minutes_early)
+
+
+class Waiting(models.Model):
+
+    user = models.OneToOneField(Participant)
+    state = models.ForeignKey('common.ZosiaDefinition')
+
+    day_1 = models.BooleanField()
+    day_2 = models.BooleanField()
+    day_3 = models.BooleanField()

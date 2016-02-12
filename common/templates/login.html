@@ -1,4 +1,4 @@
-{% extends "index.html"%}
+{% extends "index.html" %}
 {% load i18n %}
 
 {% block css %}
@@ -10,43 +10,32 @@ label { min-width:3em; }
 {% if user.is_authenticated %}
     <h2>{% trans "Jesteś zalogowany" %}</h2>
 {% else %}
-    {% if reason %} {# atheistic template ;) #}
-        <h2>{% trans "Zapraszamy do zalogowania się." %}</h2>
-        {# <p>{{ reason }}</p> #}
-        <p>{% trans "Wprowadź poprawny adres e-mail." %}</p>
-    {% else %}
-        <h2>{% trans "stranger" %}</h2>
+    <h2>{% trans "Zapraszamy do zalogowania się." %}</h2>
+    {% if form.errors %}
+        <p>Podany adres e-mail i hasło są niepoprawne.</p>
     {% endif %}
-    <form action="/login/{% if get_redir %}?next={{ get_redir }}{% endif %}" method="post" id="login_form">
+    <form action="{% url 'login' %}" method="post" id="login_form">{% csrf_token %}
         <table>
         </table>
         <fieldset>
             <ol>
-            <li>
-            {% if form.email.errors %}
-            <ul class="errorlist">
-            {% for error in form.email.errors %}
-                <li>{{error|escape}}</li>
+           {% for field in form %}
+                <li>
+                {% if field.errors %}
+                    <ul class="errorlist">
+                    {% for error in field.errors %}
+                        <li>{{error|escape}}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                <label>{{ field.label }}</label>
+                {{ field }}
+                </li>
             {% endfor %}
-            {% endif %}
-            </ul>
-            <label for="id_email">{% trans "email" %}</label>
-            {{ form.email }}
-            </li>
-            <li>
-            {% if form.email.errors %}
-            <ul class="errorlist">
-            {% for error in form.password.errors %}
-                <li>{{error|escape}}</li>
-            {% endfor %}
-            {% endif %}
-            </ul>
-            <label for="id_password">{% trans "hasło" %}</label>
-            {{ form.password }}
-            </li>
             </ol>
         </fieldset>
         <input type="submit" value="{% trans "loginbutton" %}" id="submitbutton"/>
+        <input type="hidden" name="next" value="{{ next }}" />
     </form>
 {% endif %}
 {% endblock %}

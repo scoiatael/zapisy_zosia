@@ -370,7 +370,7 @@ msgstr "Zmień hasło"
 msgid "passwordchanged"
 msgstr ""
 "Udało Ci się zmienić hasło.<br />Zanotuj je na żółtej karteczce "
-"samoprzylepnej i umieść na monitorze.<br /><img src='/static_media/images/"
+"samoprzylepnej i umieść na monitorze.<br /><img src='/static/images/"
 "kartka.jpg' width='200'/>"
 
 #: templates/index.html:32
